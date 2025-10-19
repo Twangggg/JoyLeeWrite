@@ -234,7 +234,7 @@
                 <!-- Editable Title -->
                 <TextBox x:Name="TitleTextBox"
                  Grid.Column="1"
-                 Text="Untitled Story 1"
+                 Text="Untitled Story"
                  FontSize="24"
                  FontWeight="Bold"
                  Foreground="#333"
@@ -273,7 +273,7 @@
         x:Name="SidebarBorder" Width="300">
                 <DockPanel LastChildFill="True">
                     <!-- Header Top -->
-                    <Border Padding="15,10"
+                    <Border Padding="15,10,15,0"
                 DockPanel.Dock="Top"
                 BorderBrush="#E0E0E0">
                         <Grid>
@@ -360,14 +360,14 @@
                 <!-- Toolbar -->
                 <Border Grid.Row="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,0,1" Padding="15,10">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="B" FontWeight="Bold" Margin="5,0"/>
-                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="I" FontStyle="Italic" Margin="5,0"/>
-                        <Button Style="{StaticResource ToolbarButtonStyle}" Margin="5,0">
+                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="B" FontWeight="Bold" Margin="5,0" Command="{Binding ToggleBoldCommand}" Focusable="False" IsTabStop="False"/>
+                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="I" FontStyle="Italic" Margin="5,0" Command="{Binding ToggleItalicCommand}" Focusable="False" IsTabStop="False"/>
+                        <Button Style="{StaticResource ToolbarButtonStyle}" Margin="5,0" Command="{Binding ToggleUnderlineCommand}" Focusable="False" IsTabStop="False">
                             <TextBlock Text="U" TextDecorations="Underline"/>
                         </Button>
-                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="−" Margin="5,0"/>
-                        <TextBlock Text="16px" VerticalAlignment="Center" Margin="10,0" FontSize="13"/>
-                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="+" Margin="5,0"/>
+                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="−" Margin="5,0" Command="{Binding ToggleDownSize}" Focusable="False" IsTabStop="False"/>
+                        <TextBlock x:Name="FontSize" Text="16" VerticalAlignment="Center" Margin="10,0" FontSize="13"/>
+                        <Button Style="{StaticResource ToolbarButtonStyle}" Content="+" Margin="5,0" Command="{Binding ToggleUpSize}" Focusable="False" IsTabStop="False"/>
                         <Button Style="{StaticResource ToolbarButtonStyle}" Content="🎨" Margin="10,0,5,0"/>
                         <Button Style="{StaticResource ToolbarButtonStyle}" ToolTip="Align Left" Click="AlignLeft_Click" Margin="5,0">
                             <Path Data="M0,0 L16,0 L16,2 L0,2 Z M0,5 L10,5 L10,7 L0,7 Z M0,10 L16,10 L16,12 L0,12 Z M0,15 L10,15 L10,17 L0,17 Z"
@@ -399,24 +399,27 @@
                     <Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                             <Grid>
-                                <!-- "Giấy" viết -->
                                 <Border Background="#F8FBFF"
                         CornerRadius="6"
                         Margin="30,20,30,40"
-                        Padding="40"
+                        Padding="25"
                         Effect="{DynamicResource DropShadowEffect}">
-                                    <TextBox x:Name="EditorTextBox"
-                             Text="Start writing your story..."
-                             FontSize="16"
-                             Foreground="#333"
-                             Background="Transparent"
-                             BorderThickness="0"
-                             Padding="0"
-                             TextWrapping="Wrap"
-                             AcceptsReturn="True"
-                             VerticalAlignment="Top"
-                             GotFocus="TextBox_GotFocus"
-                             />
+                                    <RichTextBox x:Name="EditorRichTextBox"
+                                 FontSize="16"
+                                 Foreground="#333"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Padding="0"
+                                 VerticalAlignment="Top"
+                                 AcceptsReturn="True"
+                                 GotFocus="EditorRichTextBox_GotFocus"
+                                 LostFocus="EditorRichTextBox_LostFocus">
+                                        <FlowDocument>
+                                            <Paragraph>
+                                                Start writing your story...
+                                            </Paragraph>
+                                        </FlowDocument>
+                                    </RichTextBox>
                                 </Border>
                             </Grid>
                         </ScrollViewer>

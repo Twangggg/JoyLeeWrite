@@ -1,7 +1,10 @@
-﻿using System;
+﻿using JoyLeeWrite;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -10,12 +13,20 @@ namespace JoyLeeBookWriter
 {
     public partial class MainWindow : Window
     {
+
         private bool isPlaceholder = true;
+        private readonly EditorToolbarViewModel editorToolbar;
 
         public MainWindow()
         {
             InitializeComponent();
+
             this.WindowState = WindowState.Maximized;
+            editorToolbar = new EditorToolbarViewModel(this, EditorRichTextBox);
+            this.DataContext = editorToolbar;
+            this.PreviewKeyDown += editorToolbar.OnPreviewKeyDown;
+
+            Debug.WriteLine(DataContext?.GetType().Name ?? "DataContext = null");
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -45,52 +56,60 @@ namespace JoyLeeBookWriter
 
         private void EditorTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            //if (isPlaceholder)
-            //{
-            //    EditorTextBox.Text = "";
-            //    EditorTextBox.Foreground = new SolidColorBrush(Color.FromRgb(31, 41, 55));
-            //    isPlaceholder = false;
-            //}
+            if (isPlaceholder)
+            {
+                EditorRichTextBox.Foreground = new SolidColorBrush(Color.FromRgb(31, 41, 55));
+                isPlaceholder = false;
+            }
         }
 
-        private void EditorTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void EditorRichTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            //if (string.IsNullOrWhiteSpace(EditorTextBox.Text))
-            //{
-            //    EditorTextBox.Text = "Start writing your story...";
-            //    EditorTextBox.Foreground = new SolidColorBrush(Color.FromRgb(156, 163, 175));
-            //    isPlaceholder = true;
-            //}
-        }
+            if (EditorRichTextBox != null)
+            {
+                TextRange textRange = new TextRange(
+                    EditorRichTextBox.Document.ContentStart,
+                    EditorRichTextBox.Document.ContentEnd
+                );
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
+                string text = textRange.Text.Trim();
 
+                if (string.IsNullOrEmpty(text) || text == "\r\n")
+                {
+                    EditorRichTextBox.Document.Blocks.Clear();
+                    EditorRichTextBox.AppendText("Start writing your story...");
+                    isPlaceholder = true;
+                }
+            }
         }
 
         private bool isSidebarOpen = true;
 
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void EditorRichTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
-            if (tb.Text == "Start writing your story...")
+            var richText = sender as RichTextBox;
+            if (richText != null)
             {
-                tb.Text = "";
-                tb.Foreground = new SolidColorBrush(Colors.Black);
+                TextRange textRange = new TextRange(richText.Document.ContentStart, richText.Document.ContentEnd);
+                if (textRange.Text.Trim() == "Start writing your story...")
+                {
+                    textRange.Text = "";
+                }
             }
         }
+
 
         private void AIButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Hỏi AI gì đây?", "AI Assistant", MessageBoxButton.OK, MessageBoxImage.Question);
         }
+
         private bool isSidebarCollapsed = false;
 
         private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
         {
             if (isSidebarCollapsed)
             {
-                // Mở rộng
                 AnimateSidebarWidth(SidebarBorder.ActualWidth, 300);
                 SidebarContent.Visibility = Visibility.Visible;
                 ToggleIcon.Text = "<";
@@ -98,9 +117,8 @@ namespace JoyLeeBookWriter
             }
             else
             {
-                // Thu nhỏ
                 AnimateSidebarWidth(SidebarBorder.ActualWidth, 75);
-                SidebarContent.Visibility = Visibility.Collapsed;  // Ẩn toàn bộ phần dưới
+                SidebarContent.Visibility = Visibility.Collapsed;
                 ToggleIcon.Text = ">";
                 isSidebarCollapsed = true;
             }
@@ -140,8 +158,7 @@ namespace JoyLeeBookWriter
         private void TitleTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             var box = sender as TextBox;
-            box.BorderThickness = new Thickness(1);
-            box.BorderBrush = new SolidColorBrush(Color.FromRgb(180, 180, 180));
+            TitleTextBox.Text = "";
             box.Background = Brushes.White;
             box.Cursor = Cursors.IBeam;
         }
@@ -149,11 +166,12 @@ namespace JoyLeeBookWriter
         private void TitleTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var box = sender as TextBox;
+            if (string.IsNullOrWhiteSpace(box.Text))
+                TitleTextBox.Text = "Untitled Story";
             box.BorderThickness = new Thickness(0);
             box.Background = Brushes.Transparent;
             box.Cursor = Cursors.Arrow;
 
-            // Cập nhật tiêu đề cửa sổ
             if (!string.IsNullOrWhiteSpace(box.Text))
                 this.Title = $"JoyLeeWrite - {box.Text}";
         }
@@ -163,7 +181,7 @@ namespace JoyLeeBookWriter
             if (e.Key == Key.Enter)
             {
                 e.Handled = true;
-                Keyboard.ClearFocus(); // Mất focus để lưu tiêu đề
+                Keyboard.ClearFocus();
             }
         }
     }
