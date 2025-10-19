@@ -22,6 +22,10 @@ namespace JoyLeeBookWriter
         public ICommand ToggleUnderlineCommand { get; }
         public ICommand ToggleUpSize { get; }
         public ICommand ToggleDownSize { get; }
+        public ICommand ToggleAlignLeft { get; }
+        public ICommand ToggleAlignCenter { get; }
+        public ICommand ToggleAlignRight { get; }
+        public ICommand ToggleAlignJustify { get; }
 
         public EditorToolbarViewModel(MainWindow mainWindow, RichTextBox editor)
         {
@@ -32,6 +36,10 @@ namespace JoyLeeBookWriter
             ToggleUnderlineCommand = new RelayCommand(_ => ToggleUnderline(), _ => CanFormat());
             ToggleUpSize = new RelayCommand(_ => UpSize(), _ => CanFormat());
             ToggleDownSize = new RelayCommand(_ => DownSize(), _ => CanFormat());
+            ToggleAlignLeft = new RelayCommand(_ => AlignLeft(), _ => CanFormat());
+            ToggleAlignCenter = new RelayCommand(_ => AlignCenter(), _ => CanFormat());
+            ToggleAlignRight = new RelayCommand(_ => AlignRight(), _ => CanFormat());
+            ToggleAlignJustify = new RelayCommand(_ => AlignJustify(), _ => CanFormat());
         }
 
         private bool CanFormat()
@@ -154,6 +162,41 @@ namespace JoyLeeBookWriter
 
             Selection.ApplyPropertyValue(TextElement.FontSizeProperty, newSize);
             _mainWindow.FontSize.Text = $"{newSize:0}";
+        }
+        private void AlignSelection (TextAlignment alignment)
+        {
+            if (_editor.Selection == null) return;
+            TextPointer start = _editor.Selection.Start;
+            TextPointer end = _editor.Selection.End;
+
+            var paragraphs = _editor.Document.Blocks
+                .OfType<Paragraph>()
+                .Where(p => p.ContentStart.CompareTo(end) < 0 &&
+                            p.ContentEnd.CompareTo(start) > 0);
+
+            foreach (Paragraph p in paragraphs)
+            {
+                p.TextAlignment = alignment;
+            }
+        }
+        private void AlignLeft()
+        {
+           AlignSelection(TextAlignment.Left);
+        }
+
+        private void AlignCenter()
+        {
+            AlignSelection(TextAlignment.Center);
+        }
+
+        private void AlignRight()
+        {
+            AlignSelection(TextAlignment.Right);
+        }
+
+        private void AlignJustify()
+        {
+            AlignSelection(TextAlignment.Justify);
         }
     }
 }
