@@ -1,4 +1,5 @@
 ﻿using JoyLeeWrite;
+using JoyLeeWrite.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -8,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+
 
 namespace JoyLeeBookWriter
 {
@@ -25,8 +27,6 @@ namespace JoyLeeBookWriter
             editorToolbar = new EditorToolbarViewModel(this, EditorRichTextBox);
             this.DataContext = editorToolbar;
             this.PreviewKeyDown += editorToolbar.OnPreviewKeyDown;
-
-            Debug.WriteLine(DataContext?.GetType().Name ?? "DataContext = null");
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -183,6 +183,65 @@ namespace JoyLeeBookWriter
                 e.Handled = true;
                 Keyboard.ClearFocus();
             }
+        }
+
+        // Xử lý khi click nút 🎨
+        private void ColorButton_Click(object sender, RoutedEventArgs e)
+        {
+            ColorPopup.IsOpen = !ColorPopup.IsOpen;
+        }
+
+        // Xử lý khi click màu nhanh
+        private void QuickColor_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is string colorHex)
+            {
+                var color = (Color)ColorConverter.ConvertFromString(colorHex);
+
+                // Cập nhật qua ViewModel
+                editorToolbar.SelectedFontColor = color;
+
+                // Đóng popup
+                ColorPopup.IsOpen = false;
+            }
+        }
+
+        private void FileButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button?.ContextMenu != null)
+            {
+                button.Tag = "Active";  // Set active ngay khi click
+
+                button.ContextMenu.PlacementTarget = button;
+                button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                button.ContextMenu.IsOpen = true;
+            }
+        }
+
+        private void NewStory_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic tạo truyện mới
+        }
+
+        private void OpenStory_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic mở truyện
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic lưu truyện
+        }
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic export
+        }
+
+        private void FileMenu_Closed(object sender, RoutedEventArgs e)
+        {
+            FileButton.Tag = null;
         }
     }
 }

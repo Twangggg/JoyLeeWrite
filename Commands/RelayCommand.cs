@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace JoyLeeBookWriter
+namespace JoyLeeWrite.Commands
 {
     public class RelayCommand : ICommand
     {
