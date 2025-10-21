@@ -1,4 +1,5 @@
 ﻿using JoyLeeWrite;
+using JoyLeeWrite.Services;
 using JoyLeeWrite.ViewModels;
 using System;
 using System.Diagnostics;
@@ -22,9 +23,9 @@ namespace JoyLeeBookWriter
         public MainWindow()
         {
             InitializeComponent();
-
             this.WindowState = WindowState.Maximized;
-            editorToolbar = new EditorToolbarViewModel(this, EditorRichTextBox);
+            TextFormattingService textService = new TextFormattingService(EditorRichTextBox);
+            editorToolbar = new EditorToolbarViewModel(textService);
             this.DataContext = editorToolbar;
             this.PreviewKeyDown += editorToolbar.OnPreviewKeyDown;
         }
@@ -211,8 +212,7 @@ namespace JoyLeeBookWriter
             Button button = sender as Button;
             if (button?.ContextMenu != null)
             {
-                button.Tag = "Active";  // Set active ngay khi click
-
+                button.Tag = "Active";
                 button.ContextMenu.PlacementTarget = button;
                 button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
                 button.ContextMenu.IsOpen = true;

@@ -20,6 +20,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border
                             x:Name="border"
+                            Margin="3,5,3,5"
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             CornerRadius="6">
@@ -30,10 +31,10 @@
                                 <Setter TargetName="border" Property="Background" Value="#F3F4F6" />
                             </Trigger>
                             <Trigger Property="Tag" Value="Active">
-                                <Setter TargetName="border" Property="Background" Value="#E5E7EB" />
+                                <Setter TargetName="border" Property="Background" Value="#EFF8FF" />
                             </Trigger>
                             <DataTrigger Binding="{Binding ContextMenu.IsOpen, RelativeSource={RelativeSource Self}}" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#E5E7EB" />
+                                <Setter TargetName="border" Property="Background" Value="#EFF8FF" />
                             </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -53,12 +54,18 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border
+                            x:Name="border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="#DDD"
                             BorderThickness="1"
                             CornerRadius="4">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Tag" Value="Active">
+                                <Setter TargetName="border" Property="Background" Value="#EFF8FF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -658,7 +665,7 @@
                         </Button>
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleDownSize}"
+                            Command="{Binding DownSizeCommand}"
                             Content="−"
                             Focusable="False"
                             IsTabStop="False"
@@ -668,10 +675,10 @@
                             Margin="10,0"
                             VerticalAlignment="Center"
                             FontSize="13"
-                            Text="16" />
+                            Text="{Binding SelectedFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleUpSize}"
+                            Command="{Binding UpSizeCommand}"
                             Content="+"
                             Focusable="False"
                             IsTabStop="False"
@@ -884,7 +891,7 @@
 
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleAlignLeft}"
+                            Command="{Binding AlignLeftCommand}"
                             Focusable="False"
                             IsTabStop="False"
                             Style="{StaticResource ToolbarButtonStyle}"
@@ -901,7 +908,7 @@
                         <!--  Align Center  -->
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleAlignCenter}"
+                            Command="{Binding AlignCenterCommand}"
                             Focusable="False"
                             IsTabStop="False"
                             Style="{StaticResource ToolbarButtonStyle}"
@@ -917,7 +924,7 @@
                         <!--  Align Right  -->
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleAlignRight}"
+                            Command="{Binding AlignRightCommand}"
                             Focusable="False"
                             IsTabStop="False"
                             Style="{StaticResource ToolbarButtonStyle}"
@@ -933,7 +940,7 @@
                         <!--  Align Justify  -->
                         <Button
                             Margin="5,0"
-                            Command="{Binding ToggleAlignJustify}"
+                            Command="{Binding AlignJustifyCommand}"
                             Focusable="False"
                             IsTabStop="False"
                             Style="{StaticResource ToolbarButtonStyle}"
@@ -967,7 +974,7 @@
                                         Background="Transparent"
                                         BorderThickness="0"
                                         FontSize="16"
-                                        Foreground="#333"
+                                        Foreground="Black"
                                         GotFocus="EditorRichTextBox_GotFocus"
                                         LostFocus="EditorRichTextBox_LostFocus">
                                         <FlowDocument>
