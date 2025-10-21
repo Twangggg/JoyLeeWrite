@@ -18,16 +18,14 @@ namespace JoyLeeBookWriter
     {
 
         private bool isPlaceholder = true;
-        private readonly EditorToolbarViewModel editorToolbar;
-
+        private readonly MainViewModel mainVM;
         public MainWindow()
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
-            TextFormattingService textService = new TextFormattingService(EditorRichTextBox);
-            editorToolbar = new EditorToolbarViewModel(textService);
-            this.DataContext = editorToolbar;
-            this.PreviewKeyDown += editorToolbar.OnPreviewKeyDown;
+            this.mainVM = new MainViewModel(EditorRichTextBox);
+            this.DataContext = mainVM;
+            this.PreviewKeyDown += mainVM.EditorToolbarVM.OnPreviewKeyDown;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -200,7 +198,7 @@ namespace JoyLeeBookWriter
                 var color = (Color)ColorConverter.ConvertFromString(colorHex);
 
                 // Cập nhật qua ViewModel
-                editorToolbar.SelectedFontColor = color;
+                mainVM.EditorToolbarVM.SelectedFontColor = color;
 
                 // Đóng popup
                 ColorPopup.IsOpen = false;
