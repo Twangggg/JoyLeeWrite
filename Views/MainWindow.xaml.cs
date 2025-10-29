@@ -18,16 +18,17 @@ namespace JoyLeeBookWriter
     {
 
         private bool isPlaceholder = true;
-        private readonly EditorToolbarViewModel editorToolbar;
-
+        private MainViewModel _mainVM;
         public MainWindow()
         {
             InitializeComponent();
-            this.WindowState = WindowState.Maximized;
-            TextFormattingService textService = new TextFormattingService(EditorRichTextBox);
-            editorToolbar = new EditorToolbarViewModel(textService);
-            this.DataContext = editorToolbar;
-            this.PreviewKeyDown += editorToolbar.OnPreviewKeyDown;
+            this.Loaded += (s, e) =>
+            {
+                TextFormattingService _textService = new TextFormattingService(EditorRichTextBox);
+                this._mainVM = new MainViewModel(_textService);
+                this.DataContext = _mainVM;
+                this.PreviewKeyDown += _mainVM.EditorToolbarVM.OnPreviewKeyDown;
+            };
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -113,6 +114,7 @@ namespace JoyLeeBookWriter
             {
                 AnimateSidebarWidth(SidebarBorder.ActualWidth, 300);
                 SidebarContent.Visibility = Visibility.Visible;
+                SaveTime.Visibility = Visibility.Visible;
                 ToggleIcon.Text = "<";
                 isSidebarCollapsed = false;
             }
@@ -120,6 +122,7 @@ namespace JoyLeeBookWriter
             {
                 AnimateSidebarWidth(SidebarBorder.ActualWidth, 75);
                 SidebarContent.Visibility = Visibility.Collapsed;
+                SaveTime.Visibility = Visibility.Collapsed;
                 ToggleIcon.Text = ">";
                 isSidebarCollapsed = true;
             }
@@ -135,26 +138,6 @@ namespace JoyLeeBookWriter
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseInOut }
             };
             SidebarBorder.BeginAnimation(WidthProperty, animation);
-        }
-
-        private void AlignLeft_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void AlignCenter_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void AlignRight_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void AlignJustify_Click(object sender, RoutedEventArgs e)
-        {
-
         }
         private void TitleTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -186,27 +169,6 @@ namespace JoyLeeBookWriter
             }
         }
 
-        // Xử lý khi click nút 🎨
-        private void ColorButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorPopup.IsOpen = !ColorPopup.IsOpen;
-        }
-
-        // Xử lý khi click màu nhanh
-        private void QuickColor_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is string colorHex)
-            {
-                var color = (Color)ColorConverter.ConvertFromString(colorHex);
-
-                // Cập nhật qua ViewModel
-                editorToolbar.SelectedFontColor = color;
-
-                // Đóng popup
-                ColorPopup.IsOpen = false;
-            }
-        }
-
         private void FileButton_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -217,31 +179,6 @@ namespace JoyLeeBookWriter
                 button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
                 button.ContextMenu.IsOpen = true;
             }
-        }
-
-        private void NewStory_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic tạo truyện mới
-        }
-
-        private void OpenStory_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic mở truyện
-        }
-
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic lưu truyện
-        }
-
-        private void Export_Click(object sender, RoutedEventArgs e)
-        {
-            // Logic export
-        }
-
-        private void FileMenu_Closed(object sender, RoutedEventArgs e)
-        {
-            FileButton.Tag = null;
         }
     }
 }
