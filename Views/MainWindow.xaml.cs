@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 
-namespace JoyLeeBookWriter
+namespace JoyLeeWrite
 {
     public partial class MainWindow : Window
     {
@@ -24,8 +24,7 @@ namespace JoyLeeBookWriter
             InitializeComponent();
             this.Loaded += (s, e) =>
             {
-                TextFormattingService _textService = new TextFormattingService(EditorRichTextBox);
-                this._mainVM = new MainViewModel(_textService);
+                this._mainVM = new MainViewModel(EditorRichTextBox);
                 this.DataContext = _mainVM;
                 this.PreviewKeyDown += _mainVM.EditorToolbarVM.OnPreviewKeyDown;
             };
@@ -179,6 +178,11 @@ namespace JoyLeeBookWriter
                 button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
                 button.ContextMenu.IsOpen = true;
             }
+        }
+
+        private void BackToSeries_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

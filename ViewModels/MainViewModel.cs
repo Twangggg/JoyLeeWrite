@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace JoyLeeWrite.ViewModels
 {
     class MainViewModel
     {
         public EditorToolbarViewModel EditorToolbarVM { get; set; }
-
-        public MainViewModel(TextFormattingService _textService)
+        public HeaderButtonViewModel HeaderButtonVM { get; set; }
+        public MainViewModel(RichTextBox richTextBox)
         {
+            TextFormattingService _textService = new TextFormattingService(richTextBox);
+            HeaderButtonVM = new HeaderButtonViewModel(richTextBox);
             EditorToolbarVM = new EditorToolbarViewModel(_textService);
         }
 

@@ -1,9 +1,9 @@
 ﻿<Window
-    x:Class="JoyLeeBookWriter.MainWindow"
+    x:Class="JoyLeeWrite.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:JoyLeeWrite.Views"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     Title="JoyLeeWrite"
     Width="1000"
     Height="600"
@@ -384,36 +384,10 @@
                     FontSize="18"
                     Style="{StaticResource MenuButtonStyle}" />
 
-                <!--  Preview + Save Buttons  -->
-                <StackPanel
+                <local:HeaderButtonView
                     Grid.Column="3"
-                    Margin="0,0,15,0"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Button
-                        Width="100"
-                        Height="38"
-                        Margin="0,0,10,0"
-                        Background="#F5F5F5"
-                        BorderBrush="#CCC"
-                        BorderThickness="1"
-                        Content="👁️ Preview"
-                        Cursor="Hand"
-                        FontWeight="SemiBold"
-                        Foreground="#333"
-                        Style="{StaticResource MenuButtonStyle}" />
-
-                    <Button
-                        Width="90"
-                        Height="38"
-                        Background="#1DB954"
-                        BorderThickness="0"
-                        Content="💾 Save"
-                        Cursor="Hand"
-                        FontWeight="Bold"
-                        Foreground="White"
-                        Style="{StaticResource MenuButtonStyle}" />
-                </StackPanel>
+                    DataContext="{Binding HeaderButtonVM}"
+                    DockPanel.Dock="Right" />
             </Grid>
         </Border>
 
@@ -444,21 +418,52 @@
                         DockPanel.Dock="Top">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
+                                <!--  Nút Back  -->
+                                <ColumnDefinition Width="*" />
+                                <!--  Phần trống giữa  -->
+                                <ColumnDefinition Width="Auto" />
+                                <!--  Nút Toggle  -->
                             </Grid.ColumnDefinitions>
 
+                            <!--  🔙 Nút Back to Series  -->
                             <Button
-                                Grid.Column="1"
+                                Grid.Column="0"
+                                Width="100"
+                                Height="40"
+                                Margin="0,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                BorderBrush="#CCC"
+                                BorderThickness="1"
+                                Click="BackToSeries_Click"
+                                Cursor="Hand"
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Foreground="#333"
+                                Style="{StaticResource ToggleSidebarButtonStyle}">
+                                <TextBlock FontSize="16" Text="🡠 Back" />
+                            </Button>
+
+                            <!--  📂 Nút Toggle Sidebar  -->
+                            <Button
+                                Grid.Column="2"
                                 Width="40"
                                 Height="40"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Click="ToggleSidebar_Click"
                                 Style="{StaticResource ToggleSidebarButtonStyle}">
-                                <TextBlock x:Name="ToggleIcon" Text="&lt;" />
+                                <TextBlock
+                                    x:Name="ToggleIcon"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="18"
+                                    Text="&lt;" />
                             </Button>
                         </Grid>
+
+
                     </Border>
 
                     <!--  Footer  -->
