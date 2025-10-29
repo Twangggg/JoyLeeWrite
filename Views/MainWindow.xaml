@@ -2,7 +2,8 @@
     x:Class="JoyLeeBookWriter.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+    xmlns:local="clr-namespace:JoyLeeWrite.Views"
+    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
     Title="JoyLeeWrite"
     Width="1000"
     Height="600"
@@ -223,54 +224,6 @@
             Direction="270"
             ShadowDepth="2"
             Color="#22000000" />
-        <Style x:Key="ColorButtonStyle" TargetType="Button">
-            <Setter Property="Width" Value="30" />
-            <Setter Property="Height" Value="30" />
-            <Setter Property="Margin" Value="2" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="#CCCCCC" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="3">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <!--  Hover effect  -->
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#333333" />
-                                <Setter TargetName="border" Property="BorderThickness" Value="2" />
-                                <Setter TargetName="border" Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect
-                                            BlurRadius="8"
-                                            Opacity="0.4"
-                                            ShadowDepth="2"
-                                            Color="Black" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                            <!--  Pressed effect  -->
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <Style x:Key="ModernContextMenu" TargetType="ContextMenu">
             <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
@@ -371,8 +324,8 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
 
         <!--  Top Menu Bar  -->
@@ -384,11 +337,12 @@
             <Grid Height="60">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Left Menu  -->
+                <!--  Left Logo  -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Image
                         Width="220"
@@ -396,114 +350,31 @@
                         Margin="15,0,10,0"
                         VerticalAlignment="Center"
                         Source="H:/C#Code/JoyLeeWrite/Resources/img/logo.png" />
-
-                    <Button
-                        x:Name="FileButton"
-                        Click="FileButton_Click"
-                        Style="{StaticResource MenuButtonStyle}">
-                        <Button.ContextMenu>
-                            <ContextMenu
-                                x:Name="FileMenu"
-                                Closed="FileMenu_Closed"
-                                Style="{StaticResource ModernContextMenu}">
-                                <!--  New Story  -->
-                                <MenuItem
-                                    Click="NewStory_Click"
-                                    Header="New Story"
-                                    InputGestureText="Ctrl + N"
-                                    Style="{StaticResource ModernMenuItem}">
-                                    <MenuItem.Icon>
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Text="➕" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <!--  Open Story  -->
-                                <MenuItem
-                                    Click="OpenStory_Click"
-                                    Header="Open Story"
-                                    InputGestureText="Ctrl + O"
-                                    Style="{StaticResource ModernMenuItem}">
-                                    <MenuItem.Icon>
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Text="📂" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <Separator Style="{StaticResource ModernSeparator}" />
-
-                                <!--  Save  -->
-                                <MenuItem
-                                    Click="Save_Click"
-                                    Header="Save"
-                                    InputGestureText="Ctrl + S"
-                                    Style="{StaticResource ModernMenuItem}">
-                                    <MenuItem.Icon>
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Text="💾" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-
-                                <!--  Export  -->
-                                <MenuItem
-                                    Click="Export_Click"
-                                    Header="Export"
-                                    Style="{StaticResource ModernMenuItem}">
-                                    <MenuItem.Icon>
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="16"
-                                            Text="⬇️" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Button.ContextMenu>
-
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="0,0,5,0" Text="📄" />
-                            <TextBlock Text="File" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Style="{StaticResource MenuButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="0,0,5,0" Text="🏠" />
-                            <TextBlock Text="Home" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Style="{StaticResource MenuButtonStyle}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="0,0,5,0" Text="❓" />
-                            <TextBlock Text="Help" />
-                        </StackPanel>
-                    </Button>
                 </StackPanel>
 
                 <!--  Editable Title  -->
-                <TextBox
+                <TextBlock
                     x:Name="TitleTextBox"
                     Grid.Column="1"
-                    Width="220"
+                    Margin="0,4,0,0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
                     Background="Transparent"
-                    BorderThickness="0"
                     Cursor="Arrow"
                     FontSize="24"
                     FontWeight="Bold"
                     Foreground="#333"
-                    GotFocus="TitleTextBox_GotFocus"
-                    KeyDown="TitleTextBox_KeyDown"
-                    LostFocus="TitleTextBox_LostFocus"
-                    Text="Untitled Story"
+                    Text="Chapter 5: Khởi Đầu Mới"
                     TextAlignment="Left" />
+
+                <!--  Subtitle  -->
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="0,34,0,0"
+                    VerticalAlignment="Top"
+                    FontSize="14"
+                    Foreground="#888"
+                    Text="Hành Trình Phiêu Lưu" />
 
                 <!--  Settings Button  -->
                 <Button
@@ -512,8 +383,40 @@
                     Content="⚙️"
                     FontSize="18"
                     Style="{StaticResource MenuButtonStyle}" />
+
+                <!--  Preview + Save Buttons  -->
+                <StackPanel
+                    Grid.Column="3"
+                    Margin="0,0,15,0"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="100"
+                        Height="38"
+                        Margin="0,0,10,0"
+                        Background="#F5F5F5"
+                        BorderBrush="#CCC"
+                        BorderThickness="1"
+                        Content="👁️ Preview"
+                        Cursor="Hand"
+                        FontWeight="SemiBold"
+                        Foreground="#333"
+                        Style="{StaticResource MenuButtonStyle}" />
+
+                    <Button
+                        Width="90"
+                        Height="38"
+                        Background="#1DB954"
+                        BorderThickness="0"
+                        Content="💾 Save"
+                        Cursor="Hand"
+                        FontWeight="Bold"
+                        Foreground="White"
+                        Style="{StaticResource MenuButtonStyle}" />
+                </StackPanel>
             </Grid>
         </Border>
+
 
 
         <!--  Main Content Area  -->
@@ -523,15 +426,17 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+
             <!--  Left Sidebar  -->
             <Border
                 x:Name="SidebarBorder"
-                Grid.Column="0"
                 Width="300"
                 Background="White"
                 BorderBrush="#E0E0E0"
                 BorderThickness="0,0,1,0">
+
                 <DockPanel LastChildFill="True">
+
                     <!--  Header Top  -->
                     <Border
                         Padding="15,10,15,0"
@@ -543,7 +448,6 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
-                            <!--  Toggle Button  -->
                             <Button
                                 Grid.Column="1"
                                 Width="40"
@@ -557,58 +461,169 @@
                         </Grid>
                     </Border>
 
-                    <!--  Nội dung chính  -->
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel x:Name="SidebarContent" Margin="15">
-                            <Button Margin="0,10,0,15" Style="{StaticResource NewStoryButtonStyle}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,5,0"
-                                        FontSize="16"
-                                        Text="+ " />
-                                    <TextBlock Text="New Story" />
-                                </StackPanel>
-                            </Button>
-
-                            <Button Margin="0,0,0,20" Style="{StaticResource SidebarButtonStyle}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,5,0"
-                                        FontSize="14"
-                                        Text="+ " />
-                                    <TextBlock Text="New Chapter" />
-                                </StackPanel>
-                            </Button>
-
+                    <!--  Footer  -->
+                    <Border
+                        x:Name="SaveTime"
+                        Padding="20,10,20,10"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="0,1,0,0"
+                        DockPanel.Dock="Bottom">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock
-                                Margin="10,10,0,10"
+                                Margin="0,0,5,0"
+                                FontFamily="Segoe Fluent Icons"
                                 FontSize="12"
+                                Foreground="#888"
+                                Text="&#xE74E;" />
+                            <TextBlock
+                                FontSize="12"
+                                Foreground="#888"
+                                Text="Saved just now" />
+                        </StackPanel>
+                    </Border>
+
+                    <!--  Main Scrollable Content  -->
+                    <ScrollViewer
+                        Background="White"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="SidebarContent" Margin="20">
+
+                            <!--  CURRENT SERIES  -->
+                            <TextBlock
+                                Margin="0,0,0,8"
+                                FontSize="12"
+                                FontWeight="Bold"
                                 Foreground="#999"
-                                Text="Stories" />
+                                Text="CURRENT SERIES" />
 
-                            <Button
-                                Background="#E0E7FF"
-                                Foreground="#2563EB"
-                                Style="{StaticResource SidebarButtonStyle}">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Margin="0,0,5,0" Text="📖 " />
-                                    <TextBlock Text="Untitled Story 1" />
+                            <Border
+                                Margin="0,0,0,20"
+                                Padding="10"
+                                Background="#EEF2FF"
+                                CornerRadius="8">
+                                <StackPanel>
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,6,0"
+                                            FontFamily="Segoe Fluent Icons"
+                                            FontSize="16"
+                                            Foreground="#2563EB"
+                                            Text="&#xE8D2;" />
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Foreground="#1E3A8A"
+                                            Text="Hành Trình Phiêu Lưu" />
+                                    </StackPanel>
+                                    <TextBlock
+                                        Margin="22,3,0,0"
+                                        FontSize="12"
+                                        Foreground="#666"
+                                        Text="Chapter 5" />
                                 </StackPanel>
-                            </Button>
+                            </Border>
 
-                            <StackPanel Margin="15,5,0,0">
-                                <Button Style="{StaticResource SelectedChapterStyle}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Margin="0,0,5,0" Text="📄 " />
-                                        <TextBlock Text="Chapter 1" />
+                            <!--  CHAPTER  -->
+                            <TextBlock
+                                Margin="0,0,0,8"
+                                FontSize="12"
+                                FontWeight="Bold"
+                                Foreground="#999"
+                                Text="CHAPTER" />
+
+                            <Border
+                                Margin="0,0,0,20"
+                                Padding="12"
+                                Background="#F3F4F6"
+                                CornerRadius="8">
+                                <StackPanel>
+                                    <TextBlock
+                                        Margin="0,0,0,6"
+                                        FontSize="14"
+                                        FontWeight="Bold"
+                                        Foreground="#333"
+                                        Text="Khởi Đầu Mới" />
+
+                                    <StackPanel Margin="0,0,0,4">
+                                        <TextBlock FontSize="12" Foreground="#555">
+                                            <Run Text="Words: " />
+                                            <Run FontWeight="Bold" Text="0 / 3000" />
+                                        </TextBlock>
+                                        <TextBlock FontSize="12" Foreground="#555">
+                                            <Run Text="Characters: " />
+                                            <Run FontWeight="Bold" Text="0" />
+                                        </TextBlock>
+                                        <TextBlock FontSize="12" Foreground="#555">
+                                            <Run Text="Progress: " />
+                                            <Run FontWeight="Bold" Text="0%" />
+                                        </TextBlock>
+                                    </StackPanel>
+
+                                    <ProgressBar
+                                        Height="6"
+                                        Background="#E5E7EB"
+                                        Foreground="#2563EB"
+                                        Maximum="100"
+                                        Minimum="0"
+                                        Value="0" />
+                                </StackPanel>
+                            </Border>
+
+                            <!--  OPTIONS  -->
+                            <StackPanel Margin="0,0,0,20">
+                                <Button Margin="0,5,0,0" Style="{StaticResource SidebarButtonStyle}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,8,0"
+                                            FontFamily="Segoe Fluent Icons"
+                                            FontSize="14"
+                                            Foreground="#333"
+                                            Text="&#xE721;" />
+                                        <TextBlock
+                                            FontSize="13"
+                                            Foreground="#333"
+                                            Text="Find" />
                                     </StackPanel>
                                 </Button>
-                                <!--  Các Chapter khác  -->
+
+                                <Button Margin="0,5,0,0" Style="{StaticResource SidebarButtonStyle}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,8,0"
+                                            FontFamily="Segoe Fluent Icons"
+                                            FontSize="14"
+                                            Foreground="#333"
+                                            Text="&#xE8A1;" />
+                                        <TextBlock
+                                            FontSize="13"
+                                            Foreground="#333"
+                                            Text="Preview" />
+                                    </StackPanel>
+                                </Button>
+
+                                <Button Margin="0,5,0,0" Style="{StaticResource SidebarButtonStyle}">
+                                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,8,0"
+                                            FontFamily="Segoe Fluent Icons"
+                                            FontSize="14"
+                                            Foreground="#333"
+                                            Text="&#xE159;" />
+                                        <TextBlock
+                                            FontSize="13"
+                                            Foreground="#333"
+                                            Text="Export" />
+                                    </StackPanel>
+                                </Button>
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </DockPanel>
             </Border>
+
+
 
 
             <!--  Toggle Button when Sidebar is Closed  -->
@@ -632,330 +647,11 @@
                 </Grid.RowDefinitions>
 
                 <!--  Toolbar  -->
-                <Border
-                    Grid.Row="0"
-                    Padding="15,10"
-                    Background="White"
-                    BorderBrush="#E0E0E0"
-                    BorderThickness="0,0,0,1">
-                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding ToggleBoldCommand}"
-                            Content="B"
-                            Focusable="False"
-                            FontWeight="Bold"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}" />
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding ToggleItalicCommand}"
-                            Content="I"
-                            Focusable="False"
-                            FontStyle="Italic"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}" />
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding ToggleUnderlineCommand}"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}">
-                            <TextBlock Text="U" TextDecorations="Underline" />
-                        </Button>
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding DownSizeCommand}"
-                            Content="−"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}" />
-                        <TextBlock
-                            x:Name="FontSize"
-                            Margin="10,0"
-                            VerticalAlignment="Center"
-                            FontSize="13"
-                            Text="{Binding SelectedFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding UpSizeCommand}"
-                            Content="+"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}" />
-                        <Grid>
-                            <!--  Nút màu  -->
-                            <Button
-                                x:Name="ColorButton"
-                                Width="40"
-                                Height="40"
-                                Click="ColorButton_Click"
-                                Content="🎨"
-                                Focusable="False"
-                                IsTabStop="False"
-                                Style="{StaticResource ToolbarButtonStyle}"
-                                ToolTip="Chọn màu chữ" />
-                            <!--  Popup chọn màu  -->
-                            <Popup
-                                x:Name="ColorPopup"
-                                AllowsTransparency="True"
-                                Focusable="False"
-                                Placement="Bottom"
-                                PlacementTarget="{Binding ElementName=ColorButton}"
-                                PopupAnimation="Fade"
-                                StaysOpen="False">
-                                <Border
-                                    Padding="10"
-                                    Background="White"
-                                    BorderBrush="#CCCCCC"
-                                    BorderThickness="1"
-                                    CornerRadius="8"
-                                    Focusable="False">
-                                    <Border.Effect>
-                                        <DropShadowEffect
-                                            BlurRadius="10"
-                                            Opacity="0.3"
-                                            ShadowDepth="2"
-                                            Color="Black" />
-                                    </Border.Effect>
+                <local:EditorToolbarView DataContext="{Binding EditorToolbarVM}" DockPanel.Dock="Top" />
 
-                                    <StackPanel>
-                                        <!--  Tiêu đề  -->
-                                        <TextBlock
-                                            Margin="0,0,0,8"
-                                            Focusable="False"
-                                            FontWeight="SemiBold"
-                                            Foreground="#333333"
-                                            Text="Chọn màu" />
-
-                                        <!--  Color Picker chính  -->
-                                        <xctk:ColorPicker
-                                            x:Name="MainColorPicker"
-                                            Width="200"
-                                            Height="30"
-                                            DisplayColorAndName="True"
-                                            Focusable="False"
-                                            IsTabStop="False"
-                                            SelectedColor="{Binding SelectedFontColor, Mode=TwoWay}"
-                                            ShowRecentColors="True"
-                                            ShowStandardColors="True"
-                                            UsingAlphaChannel="False" />
-
-                                        <!--  Màu nhanh  -->
-                                        <TextBlock
-                                            Margin="0,10,0,5"
-                                            Focusable="False"
-                                            FontSize="11"
-                                            Foreground="#666666"
-                                            Text="Màu thường dùng" />
-
-                                        <UniformGrid
-                                            Margin="0,0,0,5"
-                                            Columns="5"
-                                            Rows="2">
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Black"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#000000"
-                                                ToolTip="Đen" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Red"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#FF0000"
-                                                ToolTip="Đỏ" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Blue"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#0000FF"
-                                                ToolTip="Xanh dương" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Green"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#008000"
-                                                ToolTip="Xanh lá" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Orange"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#FFA500"
-                                                ToolTip="Cam" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Purple"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#800080"
-                                                ToolTip="Tím" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Brown"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#A52A2A"
-                                                ToolTip="Nâu" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Pink"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#FFC0CB"
-                                                ToolTip="Hồng" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Gray"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#808080"
-                                                ToolTip="Xám" />
-                                            <Button
-                                                Width="30"
-                                                Height="30"
-                                                Margin="2"
-                                                Background="Gold"
-                                                BorderBrush="#CCCCCC"
-                                                BorderThickness="1"
-                                                Click="QuickColor_Click"
-                                                Focusable="False"
-                                                IsTabStop="False"
-                                                Style="{StaticResource ColorButtonStyle}"
-                                                Tag="#FFD700"
-                                                ToolTip="Vàng" />
-                                        </UniformGrid>
-                                    </StackPanel>
-                                </Border>
-                            </Popup>
-                        </Grid>
-
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding AlignLeftCommand}"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}"
-                            ToolTip="Align Left">
-                            <Path
-                                Width="18"
-                                Height="18"
-                                Data="M0,0 L16,0 L16,2 L0,2 Z M0,5 L10,5 L10,7 L0,7 Z M0,10 L16,10 L16,12 L0,12 Z M0,15 L10,15 L10,17 L0,17 Z"
-                                Fill="#333"
-                                RenderTransformOrigin="0.529,0.5"
-                                Stretch="Uniform" />
-                        </Button>
-
-                        <!--  Align Center  -->
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding AlignCenterCommand}"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}"
-                            ToolTip="Align Center">
-                            <Path
-                                Width="18"
-                                Height="18"
-                                Data="M3,0 L13,0 L13,2 L3,2 Z M0,5 L16,5 L16,7 L0,7 Z M3,10 L13,10 L13,12 L3,12 Z M0,15 L16,15 L16,17 L0,17 Z"
-                                Fill="#333"
-                                Stretch="Uniform" />
-                        </Button>
-
-                        <!--  Align Right  -->
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding AlignRightCommand}"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}"
-                            ToolTip="Align Right">
-                            <Path
-                                Width="18"
-                                Height="18"
-                                Data="M0,0 L16,0 L16,2 L0,2 Z M6,5 L16,5 L16,7 L6,7 Z M0,10 L16,10 L16,12 L0,12 Z M6,15 L16,15 L16,17 L6,17 Z"
-                                Fill="#333"
-                                Stretch="Uniform" />
-                        </Button>
-
-                        <!--  Align Justify  -->
-                        <Button
-                            Margin="5,0"
-                            Command="{Binding AlignJustifyCommand}"
-                            Focusable="False"
-                            IsTabStop="False"
-                            Style="{StaticResource ToolbarButtonStyle}"
-                            ToolTip="Justify">
-                            <Path
-                                Width="18"
-                                Height="18"
-                                Data="M0,0 L16,0 L16,2 L0,2 Z M0,5 L16,5 L16,7 L0,7 Z M0,10 L16,10 L16,12 L0,12 Z M0,15 L16,15 L16,17 L0,17 Z"
-                                Fill="#333"
-                                Stretch="Uniform" />
-                        </Button>
-                    </StackPanel>
-                </Border>
 
                 <!--  Editor Area  -->
+
                 <Border Grid.Row="1" Background="#F5F7FB">
                     <Grid>
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
