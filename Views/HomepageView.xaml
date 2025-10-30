@@ -8,7 +8,7 @@
     Title="Homepage"
     Width="1024"
     Height="800"
-    Icon="H:/C#Code/JoyLeeWrite/Resources/img/header_logo.png"
+    Icon="pack://application:,,,/Resources/img/header_logo.png"
     mc:Ignorable="d">
     <Window.Resources>
         <!--  Styles  -->
@@ -385,7 +385,7 @@
                         Height="80"
                         Margin="0,0,10,0"
                         VerticalAlignment="Center"
-                        Source="H:/C#Code/JoyLeeWrite/Resources/img/logo.png" />
+                        Source="pack://application:,,,/Resources/img/logo.png" />
                 </StackPanel>
 
                 <!--  Toggle Sidebar Button  -->
@@ -401,7 +401,7 @@
                         x:Name="SidebarIcon"
                         Width="20"
                         Height="20"
-                        Source="H:/C#Code/JoyLeeWrite/Resources/img/sidebar.png"
+                        Source="pack://application:,,,/Resources/img/sidebar.png"
                         Stretch="Uniform" />
                 </Button>
 
@@ -472,20 +472,19 @@
                 <!--  ✅ Dùng Grid thay vì DockPanel để cố định footer  -->
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <!--  Nội dung chính  -->
                         <RowDefinition Height="Auto" />
-                        <!--  Footer  -->
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
                     <!--  PHẦN CHÍNH  -->
                     <ScrollViewer
                         x:Name="SidebarContent"
-                        Grid.Row="0"
+                        Grid.Row="1"
                         HorizontalScrollBarVisibility="Disabled"
                         VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,20,0,0">
-                            <!--  GIỮ NGUYÊN TOÀN BỘ NỘI DUNG  -->
                             <Button Style="{StaticResource Custombutton}">
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock
@@ -530,34 +529,33 @@
                                         Text="Settings" />
                                 </StackPanel>
                             </Button>
-
-                            <Button
-                                Height="40"
-                                Margin="0,15,0,0"
-                                Background="#3B82F6"
-                                BorderThickness="0"
-                                Cursor="Hand"
-                                Foreground="White"
-                                Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,4,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="14"
-                                        Text="&#xE710;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        FontWeight="SemiBold"
-                                        Text="New Series" />
-                                </StackPanel>
-                            </Button>
                         </StackPanel>
                     </ScrollViewer>
-
+                    <Button
+                        Grid.Row="2"
+                        Height="40"
+                        Margin="0,15,0,0"
+                        Background="#3B82F6"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Foreground="White"
+                        Style="{StaticResource Custombutton}" Click="Create_Series">
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0,4,10,0"
+                                FontFamily="Segoe Fluent Icons"
+                                FontSize="14"
+                                Text="&#xE710;" />
+                            <TextBlock
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Text="New Series" />
+                        </StackPanel>
+                    </Button>
                     <!--  FOOTER AUTHOR  -->
                     <Border
                         x:Name="AuthorInfoBorder"
-                        Grid.Row="1"
+                        Grid.Row="3"
                         Margin="0,0,0,10"
                         Padding="15"
                         BorderBrush="#E5E7EB"

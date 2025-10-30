@@ -9,6 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\img\header_logo.png" />
+    <None Remove="Resources\img\logo.png" />
+    <None Remove="Resources\img\sidebar.png" />
+    <None Remove="Resources\img\sidebar_active.png" />
+    <None Remove="Resources\img\Son_Tinh_Thuy_Tinh.avif" />
+    <None Remove="Resources\img\sorce_stone.avif" />
+    <None Remove="Resources\img\so_dua.avif" />
+    <None Remove="Resources\img\supreme-magus-webnovel.avif" />
+    <None Remove="Resources\img\the-legendary-mechanic-novel.avif" />
+    <None Remove="Resources\img\the-world-of-otome-games-is-toug.avif" />
+    <None Remove="Resources\img\thenewkidinschool.png" />
+    <None Remove="Resources\img\The_Mech_Touch.avif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -23,6 +38,21 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\img\header_logo.png" />
+    <Resource Include="Resources\img\logo.png" />
+    <Resource Include="Resources\img\sidebar.png" />
+    <Resource Include="Resources\img\sidebar_active.png" />
+    <Resource Include="Resources\img\Son_Tinh_Thuy_Tinh.avif" />
+    <Resource Include="Resources\img\sorce_stone.avif" />
+    <Resource Include="Resources\img\so_dua.avif" />
+    <Resource Include="Resources\img\supreme-magus-webnovel.avif" />
+    <Resource Include="Resources\img\the-legendary-mechanic-novel.avif" />
+    <Resource Include="Resources\img\the-world-of-otome-games-is-toug.avif" />
+    <Resource Include="Resources\img\thenewkidinschool.png" />
+    <Resource Include="Resources\img\The_Mech_Touch.avif" />
   </ItemGroup>
 
 </Project>

@@ -14,6 +14,7 @@ namespace JoyLeeWrite.ViewModels
         public HeaderButtonViewModel HeaderButtonVM { get; set; }
         public RecentlyEditedViewModel RecentlyEditedVM { get; set; }
         public AllSeriesViewModel AllSeriesVM { get; set; }
+        public AddInformationViewModel AddInformationVM { get; set; }
         public MainViewModel(RichTextBox richTextBox)
         {
             TextFormattingService _textService = new TextFormattingService(richTextBox);
@@ -21,12 +22,14 @@ namespace JoyLeeWrite.ViewModels
             EditorToolbarVM = new EditorToolbarViewModel(_textService);
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
+            AddInformationVM = new AddInformationViewModel();
         }
 
         public MainViewModel()
         {
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
+            AddInformationVM = new AddInformationViewModel();
         }
     }
 }

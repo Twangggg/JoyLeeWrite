@@ -85,8 +85,6 @@ namespace JoyLeeWrite.Views
             }
         }
 
-        private bool isSidebarOpen = true;
-
         private void EditorRichTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             var richText = sender as RichTextBox;
@@ -130,8 +128,8 @@ namespace JoyLeeWrite.Views
                 SaveTime.Visibility = Visibility.Visible;
                 BackSeries.Visibility = Visibility.Visible;
                 Logo.Visibility = Visibility.Visible;
-                Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/logo.png"));
-                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar.png"));
+                Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/logo.png"));
+                SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
             }
             else
@@ -140,8 +138,8 @@ namespace JoyLeeWrite.Views
                 SaveTime.Visibility = Visibility.Collapsed;
                 BackSeries.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
-                Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/header_logo.png"));
-                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar_active.png"));
+                Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/header_logo.png"));
+                SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar_active.png"));
                 isSidebarCollapsed = true;
             }
         }
