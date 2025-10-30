@@ -2,6 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
+    <Compile Update="Views\AllSeriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\HomepageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -9,6 +12,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HeaderButtonView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\RecentlyEditedView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

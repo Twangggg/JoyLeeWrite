@@ -362,6 +362,7 @@
                     Click="ToggleSidebar_Click"
                     Style="{StaticResource ToggleSidebarButtonStyle}">
                     <Image
+                        x:Name="SidebarIcon"
                         Width="20"
                         Height="20"
                         Source="H:/C#Code/JoyLeeWrite/Resources/img/sidebar.png"

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyLeeWrite.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,17 @@ namespace JoyLeeWrite.Views
     /// </summary>
     public partial class HomepageView : Window
     {
+        private MainViewModel _mainVM;
         public HomepageView()
         {
             InitializeComponent();
+            this.Loaded += (s, e) =>
+            {
+                this._mainVM = new MainViewModel();
+                this.DataContext = _mainVM;
+            };
         }
+
         private bool isSidebarCollapsed = false;
         private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
         {
@@ -40,24 +48,23 @@ namespace JoyLeeWrite.Views
 
             SidebarBorder.BeginAnimation(FrameworkElement.WidthProperty, animation);
             Logo.BeginAnimation(FrameworkElement.WidthProperty, animation);
-            // Cập nhật hiển thị các phần tử con
+           
             if (isSidebarCollapsed)
             {
                 SidebarContent.Visibility = Visibility.Visible;
-                SaveTime.Visibility = Visibility.Visible;
-                BackSeries.Visibility = Visibility.Visible;
+                AuthorInfoBorder.Visibility = Visibility.Visible;
                 Logo.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/logo.png"));
-
+                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
             }
             else
             {
                 SidebarContent.Visibility = Visibility.Collapsed;
-                SaveTime.Visibility = Visibility.Collapsed;
-                BackSeries.Visibility = Visibility.Collapsed;
+                AuthorInfoBorder.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/header_logo.png"));
+                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar_active.png"));
 
                 isSidebarCollapsed = true;
             }

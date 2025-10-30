@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JoyLeeWrite.Models;
 
@@ -32,4 +33,6 @@ public partial class Series
     public virtual ICollection<Chapter> Chapters { get; set; } = new List<Chapter>();
 
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
+    [NotMapped]
+    public int ChapterCount { get; set; }
 }

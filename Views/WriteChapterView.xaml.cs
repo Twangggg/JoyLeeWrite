@@ -131,7 +131,7 @@ namespace JoyLeeWrite.Views
                 BackSeries.Visibility = Visibility.Visible;
                 Logo.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/logo.png"));
-                
+                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
             }
             else
@@ -141,7 +141,7 @@ namespace JoyLeeWrite.Views
                 BackSeries.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/header_logo.png"));
-               
+                SidebarIcon.Source = new BitmapImage(new Uri("H:/C#Code/JoyLeeWrite/Resources/img/sidebar_active.png"));
                 isSidebarCollapsed = true;
             }
         }
