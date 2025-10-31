@@ -13,6 +13,9 @@ namespace JoyLeeWrite.Commands
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
+        public RelayCommand(Action<object> execute) : this(execute, null)
+        {
+        }
 
         public event EventHandler CanExecuteChanged
         {

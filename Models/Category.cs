@@ -13,4 +13,8 @@ public partial class Category
     public virtual ICollection<Series> Series { get; set; } = new List<Series>();
     [NotMapped]
     public bool IsSelected { get; set; }
+    public override string ToString()
+    {
+        return CategoryName;
+    }
 }
