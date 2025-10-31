@@ -18,7 +18,7 @@ namespace JoyLeeWrite.Views
     /// <summary>
     /// Interaction logic for CreateSeriesView.xaml
     /// </summary>
-    public partial class CreateSeriesView : Window
+    public partial class CreateSeriesView : Page
     {
         public CreateSeriesView()
         {
@@ -66,7 +66,7 @@ namespace JoyLeeWrite.Views
 
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
         {
-
+         MainWindow.navigate.goBack();
         }
     }
 }

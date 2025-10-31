@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace JoyLeeWrite.ViewModels
 {
    
-    class AllSeriesViewModel
+    public class AllSeriesViewModel
     {
         private SeriesService seriesService;
         public ObservableCollection<Series> AllSeries { get; set; }

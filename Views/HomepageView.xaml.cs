@@ -19,18 +19,11 @@ namespace JoyLeeWrite.Views
     /// <summary>
     /// Interaction logic for CreateChapterView.xaml
     /// </summary>
-    public partial class HomepageView : Window
+    public partial class HomepageView : Page
     {
-        private MainViewModel _mainVM;
         public HomepageView()
         {
             InitializeComponent();
-            this.WindowState = WindowState.Maximized;
-            this.Loaded += (s, e) =>
-            {
-                this._mainVM = new MainViewModel();
-                this.DataContext = _mainVM;
-            };
         }
 
         private bool isSidebarCollapsed = false;
@@ -54,7 +47,7 @@ namespace JoyLeeWrite.Views
             {
                 SidebarContent.Visibility = Visibility.Visible;
                 AuthorInfoBorder.Visibility = Visibility.Visible;
-                Logo.Visibility = Visibility.Visible;
+                CreateSeriesButton.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
@@ -63,6 +56,7 @@ namespace JoyLeeWrite.Views
             {
                 SidebarContent.Visibility = Visibility.Collapsed;
                 AuthorInfoBorder.Visibility = Visibility.Collapsed;
+                CreateSeriesButton.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/header_logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar_active.png"));
@@ -73,10 +67,8 @@ namespace JoyLeeWrite.Views
 
         private void Create_Series(object sender, RoutedEventArgs e)
         {
-            CreateSeriesView createWindow = new CreateSeriesView();
-            createWindow.WindowState = this.WindowState;
-            createWindow.Show();
-            this.Close();
+            MainWindow.navigate.navigatePage(new CreateSeriesView());
+            MainWindow.MainVM.addInformationViewModel();
         }
     }
 }

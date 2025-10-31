@@ -24,6 +24,7 @@ namespace JoyLeeWrite.Views
         public AddInformationView()
         {
             InitializeComponent();
+            CategoryComboBox.Text = "Select options...";
         }
 
         public void DescriptionTextBox_TextChanged (object sender, EventArgs e)
@@ -45,6 +46,28 @@ namespace JoyLeeWrite.Views
 
         private void UploadArea_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Categories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            e.Handled = true;
+        }
+        
+        private void CheckBox_Click (object sender, RoutedEventArgs e)
+        {
+            UpdateSelectedCategoriesText();
+        }
+
+        private void UpdateSelectedCategoriesText()
+        {
+            var viewModel = DataContext as ViewModels.AddInformationViewModel;
+            if (viewModel != null)
+            {
+                var selectedCategories = viewModel.Categories.Where(c => c.IsSelected)
+                    .Select(c => c.CategoryName);
+                CategoryComboBox.Text = selectedCategories.Any() ? string.Join(", ", selectedCategories)
+                    : "Select options...";
+            }
         }
     }
 }

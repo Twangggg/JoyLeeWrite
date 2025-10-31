@@ -110,7 +110,8 @@
                 Margin="13,65,0,245"
                 Background="#F8F9FA"
                 BorderBrush="#DDDDDD"
-                BorderThickness="1,1,1,1" CornerRadius="4,4,4,4">
+                BorderThickness="1,1,1,1"
+                CornerRadius="4,4,4,4">
                 <StackPanel
                     Margin="20"
                     HorizontalAlignment="Center"
@@ -216,20 +217,23 @@
                                 FontWeight="Medium"
                                 Foreground="#333333" />
                             <ComboBox
-                                x:Name="GenreComboBox"
+                                x:Name="CategoryComboBox"
                                 Height="40"
                                 VerticalContentAlignment="Center"
+                                IsEditable="True"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding Categories}"
+                                SelectionChanged="Categories_SelectionChanged"
+                                StaysOpenOnEdit="True"
                                 Style="{StaticResource ModernComboBox}">
-                                <ComboBoxItem Content="Select genre" IsSelected="True" />
-                                <ComboBoxItem Content="Action" />
-                                <ComboBoxItem Content="Adventure" />
-                                <ComboBoxItem Content="Comedy" />
-                                <ComboBoxItem Content="Drama" />
-                                <ComboBoxItem Content="Fantasy" />
-                                <ComboBoxItem Content="Horror" />
-                                <ComboBoxItem Content="Romance" />
-                                <ComboBoxItem Content="Sci-Fi" />
-                                <ComboBoxItem Content="Thriller" />
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            Click="CheckBox_Click"
+                                            Content="{Binding CategoryName}"
+                                            IsChecked="{Binding IsSelect, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
                             </ComboBox>
                         </StackPanel>
 

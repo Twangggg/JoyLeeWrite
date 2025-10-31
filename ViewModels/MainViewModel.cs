@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace JoyLeeWrite.ViewModels
 {
-    class MainViewModel
+    public class MainViewModel
     {
         public EditorToolbarViewModel EditorToolbarVM { get; set; }
         public HeaderButtonViewModel HeaderButtonVM { get; set; }
@@ -29,6 +29,10 @@ namespace JoyLeeWrite.ViewModels
         {
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
+        }
+
+        public void addInformationViewModel()
+        {
             AddInformationVM = new AddInformationViewModel();
         }
     }
