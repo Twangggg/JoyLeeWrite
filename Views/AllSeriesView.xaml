@@ -74,10 +74,9 @@
                                 RadiusX="12"
                                 RadiusY="12">
                                 <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding CoverImgUrl}" Stretch="UniformToFill" />
+                                    <ImageBrush ImageSource="{Binding CoverImage}" Stretch="UniformToFill" />
                                 </Rectangle.Fill>
                             </Rectangle>
-
 
 
                             <!--  Nội dung  -->

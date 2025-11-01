@@ -133,13 +133,6 @@
 
                     <Grid>
                         <Image Source="{Binding BitmapImage}" Stretch="UniformToFill" />
-                        <Path
-                            Width="60"
-                            Height="60"
-                            Data="M12,2 L12,14 M12,2 L8,6 M12,2 L16,6 M2,14 L22,14"
-                            Stretch="Uniform"
-                            Stroke="#999999"
-                            StrokeThickness="2" />
                     </Grid>
                 </Border>
 
@@ -244,15 +237,11 @@
                                 FontWeight="Medium"
                                 Foreground="#333333" />
                             <ComboBox
-                                x:Name="StatusComboBox"
                                 Height="40"
                                 VerticalContentAlignment="Center"
-                                Style="{StaticResource ModernComboBox}">
-                                <ComboBoxItem Content="Ongoing" IsSelected="True" />
-                                <ComboBoxItem Content="Completed" />
-                                <ComboBoxItem Content="Hiatus" />
-                                <ComboBoxItem Content="Cancelled" />
-                            </ComboBox>
+                                ItemsSource="{Binding StatusList}"
+                                SelectedItem="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource ModernComboBox}" />
                         </StackPanel>
                     </Grid>
 
@@ -264,12 +253,11 @@
                         FontWeight="Medium"
                         Foreground="#333333" />
                     <TextBox
-                        x:Name="DescriptionTextBox"
                         Height="195"
                         VerticalContentAlignment="Top"
                         AcceptsReturn="True"
                         Style="{StaticResource ModernTextBox}"
-                        Text="Enter a description of the series"
+                        Text="{Binding Description}"
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
 

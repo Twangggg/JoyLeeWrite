@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Windows.Media.Imaging;
 
 namespace JoyLeeWrite.Models;
 
@@ -35,4 +36,7 @@ public partial class Series
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
     [NotMapped]
     public int ChapterCount { get; set; }
+    [NotMapped]
+    public BitmapSource? CoverImage { get; set; }
+
 }

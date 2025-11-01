@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JoyLeeWrite.Models;
 
-public partial class Category
+public partial class Category : INotifyPropertyChanged
 {
     public int CategoryId { get; set; }
 
@@ -12,7 +13,26 @@ public partial class Category
 
     public virtual ICollection<Series> Series { get; set; } = new List<Series>();
     [NotMapped]
-    public bool IsSelected { get; set; }
+    private bool _isSelected;
+    [NotMapped]
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            if (_isSelected != value)
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+
+        }
+    }
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
     public override string ToString()
     {
         return CategoryName;

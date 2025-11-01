@@ -78,10 +78,8 @@ namespace JoyLeeWrite.Services
             // Dùng Magick.NET để resize & lưu AVIF
             using (var image = new MagickImage(ms))
             {
-                image.Resize(new MagickGeometry((Percentage)width.Value, (Percentage)height.Value)
-                {
-                    FillArea = true, // co giãn vừa đủ rồi crop phần thừa
-                });
+                image.Resize(new MagickGeometry((Percentage)width.Value, (Percentage)height.Value));
+              
                 image.Page = new MagickGeometry(0, 0, image.Width, image.Height);
 
                 image.Format = MagickFormat.Avif;
@@ -89,7 +87,44 @@ namespace JoyLeeWrite.Services
                 image.Write(fullPath);
             }
         }
+        public string GetImagePath (string relativePath)
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
+            // đi ngược lên tới thư mục chứa .csproj
+            var dirInfo = new DirectoryInfo(baseDir);
+            while (dirInfo != null && dirInfo.Name != "JoyLeeWrite")
+            {
+                dirInfo = dirInfo.Parent;
+            }
+
+            string projectDir = dirInfo?.FullName
+                ?? throw new DirectoryNotFoundException("Không tìm thấy thư mục gốc project JoyLeeWrite.");
+
+            string fullPath = Path.Combine(projectDir, relativePath);
+            return fullPath;
+        }
+        public BitmapSource LoadAvifAsBitmap(string relativePath)
+        {
+            string fullPath = GetImagePath(relativePath);
+
+            using var image = new MagickImage(fullPath);
+            using var ms = new MemoryStream();
+
+            // Convert sang PNG để WPF hiểu
+            image.Format = MagickFormat.Png;
+            image.Write(ms);
+            ms.Position = 0;
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = ms;
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            bitmap.Freeze();
+
+            return bitmap;
+        }
         public string extractPath (string title)
         {
             if (string.IsNullOrWhiteSpace(title))

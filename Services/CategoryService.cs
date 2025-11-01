@@ -22,5 +22,12 @@ namespace JoyLeeWrite.Services
         {
             return dbContext.Set<Category>().ToList();
         }
+
+        public List<Category> GetCategories(List<int> categoryIds)
+        {
+            return dbContext.Set<Category>()
+                .Where(c => categoryIds.Contains(c.CategoryId))
+                .ToList();
+        }
     }
 }

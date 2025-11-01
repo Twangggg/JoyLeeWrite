@@ -69,5 +69,25 @@ namespace JoyLeeWrite.Services
             }
             return seriesList;
         }
+
+        public bool AddSeries(Series newSeries, List<Category> categories)
+        {
+            try
+            {
+                dbContext.Set<Series>().Add(newSeries);
+                dbContext.SaveChanges();
+                foreach (var category in categories)
+                {
+                    dbContext.Attach(category);
+                    newSeries.Categories.Add(category);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error adding new series: {ex.Message}");
+                return false;
+            }
+        }
     }
 }
