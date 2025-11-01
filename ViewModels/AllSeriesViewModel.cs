@@ -22,7 +22,6 @@ namespace JoyLeeWrite.ViewModels
             var seriesList = seriesService.GetAllSeries();
             foreach (Series series in seriesList)
             {
-                // Decode AVIF thành BitmapSource
                 if (!string.IsNullOrEmpty(series.CoverImgUrl))
                 {
                     series.CoverImage = imageService.LoadAvifAsBitmap(series.CoverImgUrl);

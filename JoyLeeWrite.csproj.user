@@ -26,5 +26,11 @@
     <Compile Update="Views\RecentlyEditedView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\SeriesDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SeriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

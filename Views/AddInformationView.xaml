@@ -10,59 +10,143 @@
     d:DesignHeight="1040"
     d:DesignWidth="1960"
     mc:Ignorable="d">
+
     <UserControl.Resources>
+        <!--  Drop Shadow  -->
         <DropShadowEffect
             x:Key="DropShadowEffect"
-            BlurRadius="10"
+            BlurRadius="6"
             Direction="270"
-            ShadowDepth="2"
-            Color="#22000000" />
-        <!--  Style cho TextBox  -->
+            ShadowDepth="1"
+            Color="#33000000" />
+
+        <!--  Smooth animation for hover  -->
+        <Storyboard x:Key="HoverAnimation">
+            <DoubleAnimation
+                Storyboard.TargetProperty="(UIElement.Opacity)"
+                To="0.85"
+                Duration="0:0:0.2" />
+        </Storyboard>
+
+        <!--  TextBox  -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
             <Setter Property="Padding" Value="10" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="BorderBrush" Value="#CCCCCC" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Background" Value="White" />
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#1E3A5F" />
+                                <Setter TargetName="border" Property="Background" Value="#FAFAFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <!--  Style cho ComboBox  -->
+        <!--  ComboBox  -->
         <Style x:Key="ModernComboBox" TargetType="ComboBox">
             <Setter Property="Padding" Value="10" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="BorderBrush" Value="#CCCCCC" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Background" Value="White" />
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border
+                                x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6" />
+                            <ContentPresenter
+                                Margin="8,0,30,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+                            <Path
+                                x:Name="arrow"
+                                Margin="0,0,12,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Data="M 0 0 L 4 4 L 8 0 Z"
+                                Fill="#666" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F8FAFF" />
+                            </Trigger>
+                            <Trigger Property="IsDropDownOpen" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#1E3A5F" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
-        <!--  Style cho Button  -->
+        <!--  Primary Button  -->
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="#1E3A5F" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#1E3A5F" />
+                        <GradientStop Offset="1" Color="#305A8F" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Padding" Value="30,10" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border
+                            x:Name="border"
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="4">
+                            CornerRadius="6">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Opacity" Value="0.9" />
+                                <Setter TargetName="border" Property="Background">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#2A4A6F" />
+                                            <GradientStop Offset="1" Color="#3B6390" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#2A4A6F" />
-                </Trigger>
-            </Style.Triggers>
         </Style>
 
+        <!--  Secondary Button  -->
         <Style x:Key="SecondaryButton" TargetType="Button">
             <Setter Property="Background" Value="White" />
             <Setter Property="Foreground" Value="#333333" />
@@ -71,62 +155,68 @@
             <Setter Property="BorderBrush" Value="#CCCCCC" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Effect" Value="{StaticResource DropShadowEffect}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border
+                            x:Name="border"
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4">
+                            CornerRadius="6">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F7F9FC" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#999" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F5F5F5" />
-                </Trigger>
-            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
+    <!--  Outer Container  -->
     <Border
         Height="620"
         Padding="0"
-        BorderBrush="#E0E0E0"
-        BorderThickness="3"
-        CornerRadius="6">
+        Background="#FAFAFA"
+        BorderBrush="#D5D5D5"
+        BorderThickness="2"
+        CornerRadius="10"
+        Effect="{StaticResource DropShadowEffect}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="270" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!--  Left Panel - Upload Area  -->
+            <!--  Left Upload Panel  -->
             <StackPanel
                 Grid.Column="0"
                 Height="440"
                 Margin="22,65,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top">
+                VerticalAlignment="Top"
+                Effect="{StaticResource DropShadowEffect}">
 
-                <!--  Border chứa phần preview ảnh  -->
                 <Border
                     x:Name="ImageBorder"
                     Width="240"
                     Height="360"
                     Background="#FFFFFF"
-                    BorderBrush="#CCCCCC"
                     BorderThickness="2"
-                    CornerRadius="6"
-                    Cursor="Hand">
+                    CornerRadius="8"
+                    Cursor="Hand"
+                    Effect="{StaticResource DropShadowEffect}"
+                    SnapsToDevicePixels="True">
 
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <!--  Truyền chính Border này vào Command  -->
                             <i:InvokeCommandAction Command="{Binding SelectImageCommand}" CommandParameter="{Binding ElementName=ImageBorder}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -136,16 +226,12 @@
                     </Grid>
                 </Border>
 
-
-                <!--  Phần text + button nằm ngoài border, phía dưới  -->
                 <StackPanel
                     Margin="0,15,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
-
                     <TextBlock
                         FontSize="11"
-                        Foreground="#666666"
                         Text="Click to upload or drag and drop"
                         TextAlignment="Center"
                         TextWrapping="Wrap" />
@@ -153,37 +239,38 @@
                     <Button
                         Margin="0,10,0,0"
                         Padding="20,8"
-                        Background="#E8E8E8"
+                        Background="#F0F0F0"
                         BorderThickness="0"
                         Command="{Binding SelectImageCommand}"
                         Content="Choose File"
                         Cursor="Hand"
                         FontSize="12"
-                        Foreground="#333333">
+                        Foreground="#333">
                         <Button.Template>
                             <ControlTemplate TargetType="Button">
                                 <Border
                                     Padding="{TemplateBinding Padding}"
                                     Background="{TemplateBinding Background}"
-                                    CornerRadius="3">
+                                    CornerRadius="4">
                                     <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E0E0E0" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
                 </StackPanel>
             </StackPanel>
 
-
-
-            <!--  Right Panel - Form  -->
+            <!--  Right Form  -->
             <ScrollViewer
                 Grid.Column="1"
                 HorizontalScrollBarVisibility="Disabled"
                 VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="40,30,40,30">
-
-                    <!--  Series Title  -->
                     <Label
                         Margin="0,0,0,8"
                         Content="Series Title * (Maximum 50 characters)"
@@ -198,7 +285,6 @@
                         Style="{StaticResource ModernTextBox}"
                         Text="{Binding Title}" />
 
-                    <!--  Genre and Status Row  -->
                     <Grid Margin="0,20,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -206,7 +292,6 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!--  Genre  -->
                         <StackPanel Grid.Column="0">
                             <Label
                                 Content="Genres *"
@@ -218,6 +303,7 @@
                                 Margin="0,8,0,0"
                                 BorderBrush="#CCC"
                                 BorderThickness="1"
+                                Effect="{StaticResource DropShadowEffect}"
                                 ItemsSource="{Binding Categories}"
                                 SelectionMode="Multiple">
                                 <ListBox.ItemTemplate>
@@ -228,7 +314,6 @@
                             </ListBox>
                         </StackPanel>
 
-                        <!--  Status  -->
                         <StackPanel Grid.Column="2">
                             <Label
                                 Margin="0,0,0,8"
@@ -245,7 +330,6 @@
                         </StackPanel>
                     </Grid>
 
-                    <!--  Description  -->
                     <Label
                         Margin="0,20,0,8"
                         Content="Description"
@@ -261,7 +345,6 @@
                         TextWrapping="Wrap"
                         VerticalScrollBarVisibility="Auto" />
 
-                    <!--  Buttons  -->
                     <StackPanel
                         Margin="0,30,0,0"
                         HorizontalAlignment="Right"
@@ -277,10 +360,8 @@
                             Content="Create Series"
                             Style="{StaticResource PrimaryButton}" />
                     </StackPanel>
-
                 </StackPanel>
             </ScrollViewer>
-
         </Grid>
     </Border>
 </UserControl>

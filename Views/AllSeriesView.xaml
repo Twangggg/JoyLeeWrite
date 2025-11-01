@@ -106,11 +106,13 @@
                                         Margin="0,0,5,0"
                                         Background="#3B82F6"
                                         BorderThickness="0"
+                                        Click="ViewSeriesDetail"
                                         Content="View"
                                         Cursor="Hand"
                                         FontWeight="SemiBold"
                                         Foreground="White"
-                                        Style="{StaticResource Custombutton}" />
+                                        Style="{StaticResource Custombutton}"
+                                        Tag="{Binding SeriesId}" />
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

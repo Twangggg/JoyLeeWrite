@@ -1,5 +1,4 @@
-﻿using JoyLeeWrite.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace JoyLeeWrite.Views
 {
     /// <summary>
-    /// Interaction logic for CreateChapterView.xaml
+    /// Interaction logic for SeriesView.xaml
     /// </summary>
-    public partial class HomepageView : Page
+    public partial class SeriesView : Page
     {
-        public HomepageView()
+        public SeriesView()
         {
             InitializeComponent();
         }
@@ -42,12 +42,13 @@ namespace JoyLeeWrite.Views
 
             SidebarBorder.BeginAnimation(FrameworkElement.WidthProperty, animation);
             Logo.BeginAnimation(FrameworkElement.WidthProperty, animation);
-           
+
             if (isSidebarCollapsed)
             {
                 SidebarContent.Visibility = Visibility.Visible;
                 AuthorInfoBorder.Visibility = Visibility.Visible;
-                CreateSeriesButton.Visibility = Visibility.Visible;
+                BackSeries.Visibility = Visibility.Visible;
+                Logo.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
@@ -56,7 +57,7 @@ namespace JoyLeeWrite.Views
             {
                 SidebarContent.Visibility = Visibility.Collapsed;
                 AuthorInfoBorder.Visibility = Visibility.Collapsed;
-                CreateSeriesButton.Visibility = Visibility.Collapsed;
+                BackSeries.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/header_logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar_active.png"));
@@ -65,11 +66,9 @@ namespace JoyLeeWrite.Views
             }
         }
 
-        private void Create_Series(object sender, RoutedEventArgs e)
+        private void BackToDashboard_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigate.navigatePage(new CreateSeriesView());
-            MainWindow.MainVM.addInformationViewModel();
-            MainWindow.MainVM.addCreateSeriesViewModel();
+            MainWindow.navigate.goBack();
         }
     }
 }

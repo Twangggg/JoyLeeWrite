@@ -89,5 +89,26 @@ namespace JoyLeeWrite.Services
                 return false;
             }
         }
+
+        public Series GetSeriesById(int seriesId)
+        {
+            Series series = new Series();
+            try
+            {
+                series = dbContext.Set<Series>()
+                    .Include(s => s.Categories)
+                    .FirstOrDefault(s => s.SeriesId == seriesId);
+                if (series != null)
+                {
+                    series.ChapterCount = dbContext.Set<Chapter>()
+                        .Count(c => c.SeriesId == series.SeriesId);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving series by ID: {ex.Message}");
+            }
+            return series;
+        }
     }
 }

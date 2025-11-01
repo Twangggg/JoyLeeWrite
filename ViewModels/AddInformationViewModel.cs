@@ -36,7 +36,7 @@ namespace JoyLeeWrite.ViewModels
             //Khoi tao danh sach trang thai
             List<Category> categoryList = categoryService.GetCategories();
             Categories = new ObservableCollection<Category>(categoryList);
-            StatusList = new List<string> { "Ongoing", "Completed" };
+            StatusList = new List<string> { "Ongoing", "Completed","Draft" };
 
             //Bind command
             SelectImageCommand = new RelayCommand(_ => BitmapImage = imageService.SelectImage());
@@ -105,8 +105,8 @@ namespace JoyLeeWrite.ViewModels
                     LastModified = DateTime.Now
                 };
                 newSeries.Categories.Clear();
-                imageService.SaveAsAvif(BitmapImage, newSeries.CoverImgUrl, 240, 360);
                 seriesService.AddSeries(newSeries, categoryService.GetCategories(GetSelectedCategories()));
+                imageService.SaveAsAvif(BitmapImage, newSeries.CoverImgUrl, 240, 360);
                 MessageBox.Show("Series saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)

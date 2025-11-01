@@ -24,5 +24,15 @@ namespace JoyLeeWrite.Views
         {
             InitializeComponent();
         }
+
+        private void ViewSeriesDetail(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button?.Tag is int seriesId)
+            {
+                MainWindow.navigate.navigatePage(new SeriesView());
+                MainWindow.MainVM.addSeriesDetailViewModel(seriesId);
+            }
+        }
     }
 }
