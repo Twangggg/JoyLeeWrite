@@ -29,5 +29,11 @@ namespace JoyLeeWrite.Services
                 .Where(c => categoryIds.Contains(c.CategoryId))
                 .ToList();
         }
+        public List<Category> GetCategoriesBySeriesId(int seriesId)
+        {
+            return dbContext.Set<Category>()
+                .Where(c => c.Series.Any(s => s.SeriesId == seriesId))
+                .ToList();
+        }
     }
 }

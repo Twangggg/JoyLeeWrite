@@ -45,5 +45,18 @@ namespace JoyLeeWrite.Services
                 MessageBox.Show($"Lỗi khi lưu chương: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        public List<Chapter> GetChaptersBySeriesId(int seriesId)
+        {
+            return dbContext.Set<Chapter>()
+                .Where(c => c.SeriesId == seriesId)
+                .OrderBy(c => c.ChapterNumber)
+                .ToList();
+        }
+        public int CountChaptersBySeriesId(int seriesId)
+        {
+            return dbContext.Set<Chapter>()
+                .Count(c => c.SeriesId == seriesId);
+        }
     }
 }

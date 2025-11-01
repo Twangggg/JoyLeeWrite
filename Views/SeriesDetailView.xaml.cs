@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyLeeWrite.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,16 @@ namespace JoyLeeWrite.Views
             if (sender is Border border)
             {
                 MessageBox.Show("Mở chapter để chỉnh sửa", "Edit Chapter", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void EditSeries(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button?.Tag is int seriesId)
+            {
+                MainWindow.navigate.navigatePage(new CreateSeriesView());
+                MainWindow.MainVM.addInformationViewModel(FormMode.Edit, seriesId);
             }
         }
     }

@@ -133,12 +133,13 @@
                                         VerticalAlignment="Center"
                                         Background="#FF9800"
                                         BorderThickness="0"
-                                        Command="{Binding EditSeriesCommand}"
-                                        Content="✏️ Chỉnh sửa Series"
+                                        Click="EditSeries"
+                                        Content="✏️ Edit Series"
                                         Cursor="Hand"
                                         FontWeight="SemiBold"
                                         Foreground="White"
-                                        Style="{StaticResource ModernButton}">
+                                        Style="{StaticResource ModernButton}"
+                                        Tag="{Binding SeriesId}">
                                         <Button.Effect>
                                             <DropShadowEffect
                                                 BlurRadius="8"
@@ -154,7 +155,7 @@
                                     <Border
                                         Margin="0,0,12,0"
                                         Padding="12,6"
-                                        Background="#4CAF50"
+                                        Background="{Binding ColorStatus}"
                                         CornerRadius="12">
                                         <TextBlock
                                             FontSize="13"
@@ -189,27 +190,31 @@
                                 </StackPanel>
 
                                 <!--  Genres  -->
-                                <WrapPanel Margin="0,0,0,16">
-                                    <Border Style="{StaticResource GenreTag}">
-                                        <TextBlock
-                                            FontSize="13"
-                                            Foreground="#3F51B5"
-                                            Text="Adventure" />
-                                    </Border>
-                                    <Border Style="{StaticResource GenreTag}">
-                                        <TextBlock
-                                            FontSize="13"
-                                            Foreground="#3F51B5"
-                                            Text="Fantasy" />
-                                    </Border>
-                                    <Border Style="{StaticResource GenreTag}">
-                                        <TextBlock
-                                            FontSize="13"
-                                            Foreground="#3F51B5"
-                                            Text="Mystery" />
-                                    </Border>
-                                </WrapPanel>
 
+                                <ItemsControl ItemsSource="{Binding Categories}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Margin="0,0,0,16" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Style="{StaticResource GenreTag}">
+                                                <TextBlock
+                                                    FontSize="13"
+                                                    Foreground="#3F51B5"
+                                                    Text="{Binding CategoryName}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <TextBlock
+                                    Margin="0,0,0,12"
+                                    FontSize="18"
+                                    FontWeight="SemiBold"
+                                    Foreground="#212121"
+                                    Text="Descripton" />
                                 <!--  Mô tả  -->
                                 <TextBlock
                                     MaxWidth="600"
@@ -219,29 +224,6 @@
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </Grid>
-                    </Border>
-
-
-                    <!--  Series Description  -->
-                    <Border
-                        Padding="32"
-                        BorderBrush="#E0E0E0"
-                        BorderThickness="0,0,0,1">
-                        <StackPanel>
-                            <TextBlock
-                                Margin="0,0,0,12"
-                                FontSize="18"
-                                FontWeight="SemiBold"
-                                Foreground="#212121"
-                                Text="Mô tả" />
-                            <TextBlock
-                                FontSize="14"
-                                Foreground="#616161"
-                                LineHeight="24"
-                                TextWrapping="Wrap">
-                                <Run Text="{Binding Description}" />
-                            </TextBlock>
-                        </StackPanel>
                     </Border>
 
                     <!--  Chapters Section  -->
@@ -254,7 +236,7 @@
                                     FontSize="20"
                                     FontWeight="SemiBold"
                                     Foreground="#212121"
-                                    Text="Danh sách Chapter" />
+                                    Text="Chapter List" />
 
                                 <Button
                                     HorizontalAlignment="Right"
@@ -265,190 +247,82 @@
                             </Grid>
 
                             <!--  Chapters List  -->
-                            <ItemsControl x:Name="ChaptersList">
-                                <!--  Chapter 1  -->
-                                <Border MouseLeftButtonDown="Chapter_Click" Style="{StaticResource ChapterItem}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
+                            <ItemsControl ItemsSource="{Binding Chapters}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border MouseLeftButtonDown="Chapter_Click" Style="{StaticResource ChapterItem}">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
 
-                                        <!--  Chapter Number  -->
-                                        <Border
-                                            Grid.Column="0"
-                                            Width="50"
-                                            Height="50"
-                                            Margin="0,0,16,0"
-                                            Background="#E3F2FD"
-                                            CornerRadius="8">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                FontWeight="Bold"
-                                                Foreground="#1976D2"
-                                                Text="1" />
-                                        </Border>
-
-                                        <!--  Chapter Info  -->
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock
-                                                Margin="0,0,0,6"
-                                                FontSize="16"
-                                                FontWeight="SemiBold"
-                                                Foreground="#212121"
-                                                Text="Chapter 1: The Beginning" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
+                                                <!--  Chapter Number  -->
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Width="50"
+                                                    Height="50"
                                                     Margin="0,0,16,0"
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="📝 2,500 từ" />
-                                                <TextBlock
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="🕒 Cập nhật: 01/11/2025" />
-                                            </StackPanel>
-                                        </StackPanel>
+                                                    Background="#E3F2FD"
+                                                    CornerRadius="8">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        Foreground="#1976D2"
+                                                        Text="{Binding ChapterNumber}" />
+                                                </Border>
 
-                                        <!--  Status  -->
-                                        <Border
-                                            Grid.Column="2"
-                                            Padding="12,6"
-                                            VerticalAlignment="Center"
-                                            Background="#E8F5E9"
-                                            CornerRadius="12">
-                                            <TextBlock
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                Foreground="#4CAF50"
-                                                Text="✓ Hoàn thành" />
+                                                <!--  Chapter Info  -->
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock
+                                                        Margin="0,0,0,6"
+                                                        FontSize="16"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="#212121"
+                                                        Text="{Binding Title}" />
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock
+                                                            FontSize="13"
+                                                            Foreground="#757575"
+                                                            Text="📝 Word Count: " />
+                                                        <TextBlock
+                                                            Margin="0,0,16,0"
+                                                            FontSize="13"
+                                                            Foreground="#757575"
+                                                            Text="{Binding WordCount}" />
+                                                        <TextBlock
+                                                            FontSize="13"
+                                                            Foreground="#757575"
+                                                            Text="🕒 Last Modified: " />
+                                                        <TextBlock
+                                                            FontSize="13"
+                                                            Foreground="#757575"
+                                                            Text="{Binding LastModified}" />
+                                                    </StackPanel>
+                                                </StackPanel>
+
+                                                <!--  Status  -->
+                                                <Border
+                                                    Grid.Column="2"
+                                                    Padding="12,6"
+                                                    VerticalAlignment="Center"
+                                                    Background="#E8F5E9"
+                                                    CornerRadius="12">
+                                                    <TextBlock
+                                                        FontSize="13"
+                                                        FontWeight="Medium"
+                                                        Foreground="#4CAF50"
+                                                        Text="{Binding Status}" />
+                                                </Border>
+                                            </Grid>
                                         </Border>
-                                    </Grid>
-                                </Border>
-
-                                <!--  Chapter 2  -->
-                                <Border MouseLeftButtonDown="Chapter_Click" Style="{StaticResource ChapterItem}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border
-                                            Grid.Column="0"
-                                            Width="50"
-                                            Height="50"
-                                            Margin="0,0,16,0"
-                                            Background="#E3F2FD"
-                                            CornerRadius="8">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                FontWeight="Bold"
-                                                Foreground="#1976D2"
-                                                Text="2" />
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock
-                                                Margin="0,0,0,6"
-                                                FontSize="16"
-                                                FontWeight="SemiBold"
-                                                Foreground="#212121"
-                                                Text="Chapter 2: The Journey Begins" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    Margin="0,0,16,0"
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="📝 3,200 từ" />
-                                                <TextBlock
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="🕒 Cập nhật: 31/10/2025" />
-                                            </StackPanel>
-                                        </StackPanel>
-
-                                        <Border
-                                            Grid.Column="2"
-                                            Padding="12,6"
-                                            VerticalAlignment="Center"
-                                            Background="#FFF3E0"
-                                            CornerRadius="12">
-                                            <TextBlock
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                Foreground="#FF9800"
-                                                Text="✍️ Đang viết" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
-
-                                <!--  Chapter 3  -->
-                                <Border MouseLeftButtonDown="Chapter_Click" Style="{StaticResource ChapterItem}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <Border
-                                            Grid.Column="0"
-                                            Width="50"
-                                            Height="50"
-                                            Margin="0,0,16,0"
-                                            Background="#E3F2FD"
-                                            CornerRadius="8">
-                                            <TextBlock
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                FontSize="20"
-                                                FontWeight="Bold"
-                                                Foreground="#1976D2"
-                                                Text="3" />
-                                        </Border>
-
-                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock
-                                                Margin="0,0,0,6"
-                                                FontSize="16"
-                                                FontWeight="SemiBold"
-                                                Foreground="#212121"
-                                                Text="Chapter 3: Mysterious Encounter" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    Margin="0,0,16,0"
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="📝 1,800 từ" />
-                                                <TextBlock
-                                                    FontSize="13"
-                                                    Foreground="#757575"
-                                                    Text="🕒 Cập nhật: 30/10/2025" />
-                                            </StackPanel>
-                                        </StackPanel>
-
-                                        <Border
-                                            Grid.Column="2"
-                                            Padding="12,6"
-                                            VerticalAlignment="Center"
-                                            Background="#FFEBEE"
-                                            CornerRadius="12">
-                                            <TextBlock
-                                                FontSize="13"
-                                                FontWeight="Medium"
-                                                Foreground="#F44336"
-                                                Text="📋 Nháp" />
-                                        </Border>
-                                    </Grid>
-                                </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
                             </ItemsControl>
+
                         </StackPanel>
                     </Border>
                 </StackPanel>

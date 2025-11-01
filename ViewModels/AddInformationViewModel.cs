@@ -16,31 +16,44 @@ using System.Windows.Media.Imaging;
 
 namespace JoyLeeWrite.ViewModels
 {
+    public enum FormMode
+    {
+        Create,
+        Edit
+    }
     public class AddInformationViewModel : INotifyPropertyChanged
     {
-        private CategoryService categoryService;
-        private SeriesService seriesService;
-        private ImageService imageService;
+        private CategoryService _categoryService;
+        private SeriesService _seriesService;
+        private ImageService _imageService;
+        public FormMode Mode { get; }
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Category> Categories { get; set; }
         public List<String> StatusList { get; set; }
         public ICommand SelectImageCommand { get; }
         public ICommand SaveSeriesCommand { get; }
-        public AddInformationViewModel()
+        public AddInformationViewModel(FormMode mode, int seriesId = 0)
         {
+            Mode = mode;    
             //Khoi tao service
-            seriesService = new SeriesService();
-            categoryService = new CategoryService();
-            imageService = new ImageService();
+            _seriesService = new SeriesService();
+            _categoryService = new CategoryService();
+            _imageService = new ImageService();
 
-            //Khoi tao danh sach trang thai
-            List<Category> categoryList = categoryService.GetCategories();
-            Categories = new ObservableCollection<Category>(categoryList);
-            StatusList = new List<string> { "Ongoing", "Completed","Draft" };
+            if (mode == FormMode.Create)
+            {
+                //Khoi tao danh sach trang thai
+                List<Category> categoryList = _categoryService.GetCategories();
+                Categories = new ObservableCollection<Category>(categoryList);
+                StatusList = new List<string> { "Ongoing", "Completed", "Draft" };
 
-            //Bind command
-            SelectImageCommand = new RelayCommand(_ => BitmapImage = imageService.SelectImage());
-            SaveSeriesCommand = new RelayCommand(_ => SaveSeries());
+                //Bind command
+                SelectImageCommand = new RelayCommand(_ => BitmapImage = _imageService.SelectImage());
+                SaveSeriesCommand = new RelayCommand(_ => SaveSeries());
+            } else if(mode == FormMode.Edit) {
+                Series series = _seriesService.GetSeriesById(seriesId);
+                LoadSeries(series);
+            }
         }
 
         private string _title = "Enter title for series";
@@ -99,14 +112,14 @@ namespace JoyLeeWrite.ViewModels
                     Status = Status,
                     Description = Description,
                     AuthorId = authorId,
-                    CoverImgUrl = imageService.extractPath(Title),
+                    CoverImgUrl = _imageService.extractPath(Title),
                     CreatedDate = DateTime.Now,
                     UpdatedDate = DateTime.Now,
                     LastModified = DateTime.Now
                 };
                 newSeries.Categories.Clear();
-                seriesService.AddSeries(newSeries, categoryService.GetCategories(GetSelectedCategories()));
-                imageService.SaveAsAvif(BitmapImage, newSeries.CoverImgUrl, 240, 360);
+                _seriesService.AddSeries(newSeries, _categoryService.GetCategories(GetSelectedCategories()));
+                _imageService.SaveAsAvif(BitmapImage, newSeries.CoverImgUrl, 240, 360);
                 MessageBox.Show("Series saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -142,6 +155,13 @@ namespace JoyLeeWrite.ViewModels
         public List<int> GetSelectedCategories()
         {
             return Categories.Where(c => c.IsSelected).Select(c => c.CategoryId).ToList();
+        }
+        private void LoadSeries(Series series)
+        {
+            Title = series.Title;
+            Description = series.Description;
+            BitmapImage = (BitmapImage?)_imageService.LoadAvifAsBitmap(series.CoverImgUrl);
+            Status = series.Status;
         }
         protected void OnPropertyChanged(string propertyName)
         {

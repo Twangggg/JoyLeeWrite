@@ -201,8 +201,7 @@
                 Height="440"
                 Margin="22,65,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Effect="{StaticResource DropShadowEffect}">
+                VerticalAlignment="Top">
 
                 <Border
                     x:Name="ImageBorder"
@@ -244,6 +243,7 @@
                         Command="{Binding SelectImageCommand}"
                         Content="Choose File"
                         Cursor="Hand"
+                        Effect="{StaticResource DropShadowEffect}"
                         FontSize="12"
                         Foreground="#333">
                         <Button.Template>

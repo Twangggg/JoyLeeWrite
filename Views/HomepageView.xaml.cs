@@ -68,7 +68,7 @@ namespace JoyLeeWrite.Views
         private void Create_Series(object sender, RoutedEventArgs e)
         {
             MainWindow.navigate.navigatePage(new CreateSeriesView());
-            MainWindow.MainVM.addInformationViewModel();
+            MainWindow.MainVM.addInformationViewModel(FormMode.Create);
             MainWindow.MainVM.addCreateSeriesViewModel();
         }
     }

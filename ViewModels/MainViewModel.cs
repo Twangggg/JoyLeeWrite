@@ -24,7 +24,6 @@ namespace JoyLeeWrite.ViewModels
             EditorToolbarVM = new EditorToolbarViewModel(_textService);
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
-            AddInformationVM = new AddInformationViewModel();
             CreateSeriesVM = new CreateSeriesViewModel();
         }
 
@@ -35,9 +34,9 @@ namespace JoyLeeWrite.ViewModels
             
         }
 
-        public void addInformationViewModel()
+        public void addInformationViewModel(FormMode mode, int seriesId = 0)
         {
-            AddInformationVM = new AddInformationViewModel();
+            AddInformationVM = new AddInformationViewModel(mode, seriesId);
         }
         public void addCreateSeriesViewModel()
         {
