@@ -108,12 +108,14 @@
             <!--  Left Panel - Upload Area  -->
             <StackPanel
                 Grid.Column="0"
+                Height="440"
                 Margin="22,65,0,0"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top" Height="440">
+                VerticalAlignment="Top">
 
                 <!--  Border chứa phần preview ảnh  -->
                 <Border
+                    x:Name="ImageBorder"
                     Width="240"
                     Height="360"
                     Background="#FFFFFF"
@@ -122,24 +124,13 @@
                     CornerRadius="6"
                     Cursor="Hand">
 
-                    <!--  Gọi Command khi click  -->
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding SelectImageCommand}" />
+                            <!--  Truyền chính Border này vào Command  -->
+                            <i:InvokeCommandAction Command="{Binding SelectImageCommand}" CommandParameter="{Binding ElementName=ImageBorder}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
 
-                    <Border.Style>
-                        <Style TargetType="Border">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#F8F8F8" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Border.Style>
-
-                    <!--  Nếu có ảnh thì hiển thị preview  -->
                     <Grid>
                         <Image Source="{Binding BitmapImage}" Stretch="UniformToFill" />
                         <Path
@@ -148,10 +139,10 @@
                             Data="M12,2 L12,14 M12,2 L8,6 M12,2 L16,6 M2,14 L22,14"
                             Stretch="Uniform"
                             Stroke="#999999"
-                            StrokeLineJoin="Round"
                             StrokeThickness="2" />
                     </Grid>
                 </Border>
+
 
                 <!--  Phần text + button nằm ngoài border, phía dưới  -->
                 <StackPanel
@@ -212,7 +203,7 @@
                         VerticalContentAlignment="Center"
                         MaxLength="50"
                         Style="{StaticResource ModernTextBox}"
-                        Text="Enter Title" />
+                        Text="{Binding Title}" />
 
                     <!--  Genre and Status Row  -->
                     <Grid Margin="0,20,0,0">
@@ -293,7 +284,8 @@
                             Content="Cancel"
                             Style="{StaticResource SecondaryButton}" />
                         <Button
-                            Click="CreateSeries_Click"
+                            Command="{Binding SaveSeriesCommand}"
+                            CommandParameter="{Binding ElementName=ImageBorder}"
                             Content="Create Series"
                             Style="{StaticResource PrimaryButton}" />
                     </StackPanel>
