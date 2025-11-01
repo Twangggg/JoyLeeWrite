@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JoyLeeWrite.Services
 {
-    class HandleFileService
+    public class HandleFileService
     {
     }
 }

@@ -1,0 +1,111 @@
+﻿<UserControl
+    x:Class="JoyLeeWrite.Views.RecentlyEditedView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:JoyLeeWrite.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <DropShadowEffect
+            x:Key="DropShadowEffect"
+            BlurRadius="10"
+            Direction="270"
+            ShadowDepth="2"
+            Color="#22000000" />
+    </UserControl.Resources>
+    <StackPanel Margin="0,0,0,30">
+        <TextBlock
+            Margin="0,0,0,15"
+            FontSize="20"
+            FontWeight="SemiBold"
+            Foreground="#111827"
+            Text="Recently Edited" />
+        <ItemsControl ItemsSource="{Binding RecentlyEdited}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border
+                        Margin="8"
+                        Padding="12"
+                        Background="White"
+                        BorderBrush="#E5E7EB"
+                        BorderThickness="1"
+                        CornerRadius="10"
+                        Effect="{DynamicResource DropShadowEffect}">
+                        <DockPanel LastChildFill="True">
+                            <Border
+                                Width="55"
+                                Height="80"
+                                Margin="0,0,10,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Background="#F3F4F6"
+                                CornerRadius="6"
+                                DockPanel.Dock="Left">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="Segoe Fluent Icons"
+                                    FontSize="28"
+                                    Foreground="#3B82F6"
+                                    Text="&#xE82D;" />
+                            </Border>
+                            <!--  Nội dung bên phải  -->
+                            <StackPanel VerticalAlignment="Top">
+                                <!--  Tiêu đề  -->
+                                <TextBlock
+                                    MaxHeight="44"
+                                    Margin="0,0,0,4"
+                                    FontSize="18"
+                                    FontWeight="SemiBold"
+                                    Foreground="#111827"
+                                    LineHeight="22"
+                                    Text="{Binding Title}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="Wrap" />
+
+                                <!--  Mô tả (hiện tối đa 2 dòng)  -->
+                                <TextBlock
+                                    MaxHeight="40"
+                                    Margin="0,0,0,6"
+                                    FontSize="14"
+                                    Foreground="#6B7280"
+                                    LineHeight="20"
+                                    Text="{Binding Description}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="Wrap" />
+
+                                <!--  Thông tin cuối (icon + thời gian)  -->
+                                <StackPanel
+                                    Margin="0,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0,0,4,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="Segoe Fluent Icons"
+                                        FontSize="13"
+                                        Foreground="#9CA3AF"
+                                        Text="&#xE823;" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="13"
+                                        Foreground="#9CA3AF"
+                                        Text="{Binding LastModified, StringFormat='{}{0} trước'}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                        </DockPanel>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>
