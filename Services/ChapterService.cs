@@ -58,5 +58,11 @@ namespace JoyLeeWrite.Services
             return dbContext.Set<Chapter>()
                 .Count(c => c.SeriesId == seriesId);
         }
+
+        public Chapter getChapterById (int chapterId)
+        {
+            return dbContext.Set<Chapter>()
+                .FirstOrDefault(c => c.ChapterId == chapterId);
+        }
     }
 }

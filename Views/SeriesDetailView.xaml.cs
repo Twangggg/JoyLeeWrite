@@ -46,11 +46,12 @@ namespace JoyLeeWrite.Views
             var vm = this.DataContext as SeriesDetailViewModel;
             if (vm == null) return;
 
-            int seriesId = vm.SeriesId;      
-            int chapterId = chapter.ChapterId; 
+            MainWindow.MainVM.CurrentSeriesId = vm.SeriesId;
+            MainWindow.MainVM.CurrentChapterId = chapter.ChapterId; 
+            string title = vm.Title;
+            int chapterNumber = chapter.ChapterNumber;
 
-            MainWindow.navigate.navigatePage(new WriteChapterView(seriesId));
-            MessageBox.Show($"Series {seriesId} - Chapter {chapterId}: {chapter.Title}");
+            MainWindow.navigate.navigatePage(new WriteChapterView( title, chapterNumber));
         }
 
         private void EditSeries(object sender, RoutedEventArgs e)

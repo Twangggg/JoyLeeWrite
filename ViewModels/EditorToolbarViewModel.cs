@@ -5,12 +5,14 @@ using System.Windows.Media;
 using System.Windows;
 using JoyLeeWrite.Commands;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Models;
 
 namespace JoyLeeWrite.ViewModels
 {
     public class EditorToolbarViewModel : INotifyPropertyChanged
     {
         private readonly TextFormattingService _textService;
+        
 
         private double _selectedFontSize = 16;
         public double SelectedFontSize
@@ -40,7 +42,7 @@ namespace JoyLeeWrite.ViewModels
                 }
             }
         }
-
+       
         public ICommand ToggleBoldCommand { get; }
         public ICommand ToggleItalicCommand { get; }
         public ICommand ToggleUnderlineCommand { get; }
@@ -51,7 +53,7 @@ namespace JoyLeeWrite.ViewModels
         public ICommand AlignRightCommand { get; }
         public ICommand AlignJustifyCommand { get; }
 
-        public EditorToolbarViewModel(TextFormattingService textService)
+        public EditorToolbarViewModel(TextFormattingService textService, int seriesId, int chapterId)
         {
             _textService = textService;
 

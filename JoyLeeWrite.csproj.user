@@ -35,5 +35,8 @@
     <Compile Update="Views\SeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\WriteView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

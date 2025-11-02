@@ -19,11 +19,11 @@ namespace JoyLeeWrite.Views
     {
 
         private bool isPlaceholder = true;
-        public WriteChapterView(int seriesId)
+        public WriteChapterView( string title, int chapterNumber)
         {
+            MainWindow.MainVM.CurrentPageTitle = "Write Chapter";
+            MainWindow.MainVM.SupPageTitle = $"Chapter {chapterNumber}: {title}";
             InitializeComponent();
-            MainWindow.MainVM.addWriteChapterViewModel(EditorRichTextBox);
-            //previewKeyDown += MainWindow.MainVM.EditorToolbarVM.OnPreviewKeyDown;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -53,31 +53,12 @@ namespace JoyLeeWrite.Views
 
         private void EditorTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (isPlaceholder)
-            {
-                EditorRichTextBox.Foreground = new SolidColorBrush(Color.FromRgb(31, 41, 55));
-                isPlaceholder = false;
-            }
+           
         }
 
         private void EditorRichTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (EditorRichTextBox != null)
-            {
-                TextRange textRange = new TextRange(
-                    EditorRichTextBox.Document.ContentStart,
-                    EditorRichTextBox.Document.ContentEnd
-                );
-
-                string text = textRange.Text.Trim();
-
-                if (string.IsNullOrEmpty(text) || text == "\r\n")
-                {
-                    EditorRichTextBox.Document.Blocks.Clear();
-                    EditorRichTextBox.AppendText("Start writing your story...");
-                    isPlaceholder = true;
-                }
-            }
+           
         }
 
         private void EditorRichTextBox_GotFocus(object sender, RoutedEventArgs e)

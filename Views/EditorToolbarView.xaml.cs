@@ -27,11 +27,6 @@ namespace JoyLeeWrite.Views
         {
             InitializeComponent();
         }
-        public EditorToolbarView(TextFormattingService textService) : this()
-        {
-            EditorToolbarVM = new EditorToolbarViewModel(textService);
-            this.DataContext = EditorToolbarVM;
-        }
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {

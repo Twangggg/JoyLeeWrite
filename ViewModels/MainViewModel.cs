@@ -19,11 +19,14 @@ namespace JoyLeeWrite.ViewModels
         public SeriesDetailViewModel SeriesDetailVM { get; set; }
         public CreateSeriesViewModel CreateSeriesVM { get; set; }
         public AddChapterViewModel AddChapterVM { get; set; }
+        public WriteViewModel WriteVM { get; set; }
+        public int CurrentSeriesId { get; set; }
+        public int CurrentChapterId { get; set; }
+        public int CurrentUserId { get; set; }
         public MainViewModel(RichTextBox richTextBox)
         {
             TextFormattingService _textService = new TextFormattingService(richTextBox);
             HeaderButtonVM = new HeaderButtonViewModel(richTextBox);
-            EditorToolbarVM = new EditorToolbarViewModel(_textService);
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
             CreateSeriesVM = new CreateSeriesViewModel();
@@ -64,12 +67,12 @@ namespace JoyLeeWrite.ViewModels
             SeriesDetailVM = new SeriesDetailViewModel(seriesId);
             AddChapterVM = new AddChapterViewModel(seriesId);
         }
-        public void addWriteChapterViewModel(RichTextBox richTextBox)
+        public void addWriteChapterViewModel(RichTextBox richTextBox, int seriesId, int chapterId)
         {
-            CurrentPageTitle = "Write New Chapter";
-            SupPageTitle = "Craft your next chapter for the series.";
             TextFormattingService _textService = new TextFormattingService(richTextBox);
-            EditorToolbarVM = new EditorToolbarViewModel(_textService);
+            EditorToolbarVM = new EditorToolbarViewModel(_textService, seriesId, chapterId);
+            WriteVM = new WriteViewModel(_textService, seriesId, chapterId);
+            HeaderButtonVM = new HeaderButtonViewModel(richTextBox);
         }
         private string _currentPageTitle;
 
