@@ -414,7 +414,7 @@
                     FontSize="36"
                     FontWeight="Bold"
                     Foreground="#333"
-                    Text="Dashboard"
+                    Text="{Binding CurrentPageTitle}"
                     TextAlignment="Left" />
 
                 <!--  Settings Button  -->

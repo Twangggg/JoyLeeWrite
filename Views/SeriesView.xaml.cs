@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyLeeWrite.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,33 @@ namespace JoyLeeWrite.Views
 
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigate.goBack();
+            MainWindow.navigate.navigatePage(new HomepageView());
+            MainWindow.MainVM.CurrentPageTitle = "Dashboard";
+            MainWindow.MainVM.SupPageTitle = "";
         }
+        
+
+        private void AddChapterView_ChapterAdded(string title, int number)
+        {
+            //// Giả sử DataContext là ViewModel chứa ObservableCollection<Chapter>
+            //var vm = DataContext as WriteChapterView;
+            //vm?.Chapters.Add(new Chapter
+            //{
+            //    Title = title,
+            //    ChapterNumber = number
+            //});
+
+            AddChapterView.Visibility = Visibility.Collapsed;
+        }
+
+        private void AddChapterView_Cancelled()
+        {
+            AddChapterView.Visibility = Visibility.Collapsed;
+        }
+        private void SeriesDetailView_AddChapterRequested(object sender, EventArgs e)
+        {
+            AddChapterView.Visibility = Visibility.Visible;
+        }
+
     }
 }

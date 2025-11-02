@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JoyLeeWrite.Models;
 
-public partial class Chapter
+public partial class Chapter : INotifyPropertyChanged
 {
     public int ChapterId { get; set; }
 
@@ -28,4 +30,27 @@ public partial class Chapter
     public virtual ICollection<AutoSafe> AutoSaves { get; set; } = new List<AutoSafe>();
 
     public virtual Series Series { get; set; } = null!;
+    [NotMapped]
+    private string _colorStatus = string.Empty;
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    [NotMapped]
+    public string ColorStatus
+    {
+        get
+        {
+            return Status == "Published" ? "#4CAF50" : "Gray";
+        }
+        set
+        {
+            _colorStatus = Status == "Published" ? "#4CAF50" : "Gray";
+            OnPropertyChanged(nameof(ColorStatus));
+            OnPropertyChanged(nameof(Status));
+        }
+    }
+    private void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }

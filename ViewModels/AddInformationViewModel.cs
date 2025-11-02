@@ -29,7 +29,6 @@ namespace JoyLeeWrite.ViewModels
         public FormMode Mode { get; }
         public event PropertyChangedEventHandler? PropertyChanged;
         public ObservableCollection<Category> Categories { get; set; }
-        public List<String> StatusList { get; set; }
         public ICommand SelectImageCommand { get; }
         public ICommand SaveSeriesCommand { get; }
         public AddInformationViewModel(FormMode mode, int seriesId = 0)
@@ -39,23 +38,35 @@ namespace JoyLeeWrite.ViewModels
             _seriesService = new SeriesService();
             _categoryService = new CategoryService();
             _imageService = new ImageService();
+            StatusList = new List<string> { "Ongoing", "Completed", "Draft" };
 
             if (mode == FormMode.Create)
             {
                 //Khoi tao danh sach trang thai
                 List<Category> categoryList = _categoryService.GetCategories();
                 Categories = new ObservableCollection<Category>(categoryList);
-                StatusList = new List<string> { "Ongoing", "Completed", "Draft" };
-
+                
                 //Bind command
                 SelectImageCommand = new RelayCommand(_ => BitmapImage = _imageService.SelectImage());
                 SaveSeriesCommand = new RelayCommand(_ => SaveSeries());
             } else if(mode == FormMode.Edit) {
                 Series series = _seriesService.GetSeriesById(seriesId);
+                List<Category> categoryList = _categoryService.GetCategoriesBySeriesId(seriesId);
+                categoryList.AddRange(_categoryService.GetCategoriesNotInSeries(seriesId));
+                Categories = new ObservableCollection<Category>(categoryList);
                 LoadSeries(series);
             }
         }
-
+        private List<string> _statusList;
+        public List<string> StatusList
+        {
+            get => _statusList;
+            set
+            {
+                _statusList = value;
+                OnPropertyChanged(nameof(StatusList));
+            }
+        }
         private string _title = "Enter title for series";
         public string Title
         {

@@ -325,8 +325,7 @@
                                 Height="40"
                                 VerticalContentAlignment="Center"
                                 ItemsSource="{Binding StatusList}"
-                                SelectedItem="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Style="{StaticResource ModernComboBox}" />
+                                SelectedItem="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </Grid>
 
@@ -357,7 +356,7 @@
                         <Button
                             Command="{Binding SaveSeriesCommand}"
                             CommandParameter="{Binding ElementName=ImageBorder}"
-                            Content="Create Series"
+                            Content="Save Series"
                             Style="{StaticResource PrimaryButton}" />
                     </StackPanel>
                 </StackPanel>

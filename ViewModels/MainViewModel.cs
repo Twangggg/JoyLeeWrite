@@ -1,6 +1,7 @@
 ﻿using JoyLeeWrite.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Windows.Controls;
 
 namespace JoyLeeWrite.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : INotifyPropertyChanged
     {
         public EditorToolbarViewModel EditorToolbarVM { get; set; }
         public HeaderButtonViewModel HeaderButtonVM { get; set; }
@@ -17,6 +18,7 @@ namespace JoyLeeWrite.ViewModels
         public AddInformationViewModel AddInformationVM { get; set; }
         public SeriesDetailViewModel SeriesDetailVM { get; set; }
         public CreateSeriesViewModel CreateSeriesVM { get; set; }
+        public AddChapterViewModel AddChapterVM { get; set; }
         public MainViewModel(RichTextBox richTextBox)
         {
             TextFormattingService _textService = new TextFormattingService(richTextBox);
@@ -29,13 +31,25 @@ namespace JoyLeeWrite.ViewModels
 
         public MainViewModel()
         {
+            CurrentPageTitle = "Homepage";
+            SupPageTitle = "";
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
-            
+
         }
 
         public void addInformationViewModel(FormMode mode, int seriesId = 0)
         {
+            if (mode == FormMode.Create)
+            {
+                CurrentPageTitle = "Create New Series";
+                SupPageTitle = "Start your next story series. Fill in the details below to get started.";
+            }
+            else if (mode == FormMode.Edit)
+            {
+                CurrentPageTitle = "Edit Series Information";
+                SupPageTitle = "Update your series details below.";
+            }
             AddInformationVM = new AddInformationViewModel(mode, seriesId);
         }
         public void addCreateSeriesViewModel()
@@ -45,7 +59,38 @@ namespace JoyLeeWrite.ViewModels
 
         public void addSeriesDetailViewModel(int seriesId)
         {
+            CurrentPageTitle = "Series Details";
+            SupPageTitle = "Take a look at your created series.";
             SeriesDetailVM = new SeriesDetailViewModel(seriesId);
+            AddChapterVM = new AddChapterViewModel(seriesId);
+        }
+        public void addWriteChapterViewModel(RichTextBox richTextBox)
+        {
+            CurrentPageTitle = "Write New Chapter";
+            SupPageTitle = "Craft your next chapter for the series.";
+            TextFormattingService _textService = new TextFormattingService(richTextBox);
+            EditorToolbarVM = new EditorToolbarViewModel(_textService);
+        }
+        private string _currentPageTitle;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public string CurrentPageTitle
+        {
+            get => _currentPageTitle;
+            set
+            {
+                _currentPageTitle = value;
+            }
+        }
+        private string _supPageTitle;
+        public string SupPageTitle
+        {
+            get => _supPageTitle;
+            set
+            {
+                _supPageTitle = value;
+            }
         }
     }
 }

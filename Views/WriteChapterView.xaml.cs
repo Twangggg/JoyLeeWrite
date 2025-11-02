@@ -15,20 +15,15 @@ using System.Windows.Media.Imaging;
 
 namespace JoyLeeWrite.Views
 {
-    public partial class WriteChapterView : Window
+    public partial class WriteChapterView : Page
     {
 
         private bool isPlaceholder = true;
-        private MainViewModel _mainVM;
-        public WriteChapterView()
+        public WriteChapterView(int seriesId)
         {
             InitializeComponent();
-            this.Loaded += (s, e) =>
-            {
-                this._mainVM = new MainViewModel(EditorRichTextBox);
-                this.DataContext = _mainVM;
-                this.PreviewKeyDown += _mainVM.EditorToolbarVM.OnPreviewKeyDown;
-            };
+            MainWindow.MainVM.addWriteChapterViewModel(EditorRichTextBox);
+            //previewKeyDown += MainWindow.MainVM.EditorToolbarVM.OnPreviewKeyDown;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
@@ -125,7 +120,7 @@ namespace JoyLeeWrite.Views
             if (isSidebarCollapsed)
             {
                 SidebarContent.Visibility = Visibility.Visible;
-                SaveTime.Visibility = Visibility.Visible;
+                
                 BackSeries.Visibility = Visibility.Visible;
                 Logo.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/logo.png"));
@@ -135,7 +130,7 @@ namespace JoyLeeWrite.Views
             else
             {
                 SidebarContent.Visibility = Visibility.Collapsed;
-                SaveTime.Visibility = Visibility.Collapsed;
+                
                 BackSeries.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/header_logo.png"));
@@ -152,18 +147,7 @@ namespace JoyLeeWrite.Views
             box.Cursor = Cursors.IBeam;
         }
 
-        private void TitleTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            var box = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(box.Text))
-                TitleTextBox.Text = "Untitled Story";
-            box.BorderThickness = new Thickness(0);
-            box.Background = Brushes.Transparent;
-            box.Cursor = Cursors.Arrow;
-
-            if (!string.IsNullOrWhiteSpace(box.Text))
-                this.Title = $"JoyLeeWrite - {box.Text}";
-        }
+        
 
         private void TitleTextBox_KeyDown(object sender, KeyEventArgs e)
         {
@@ -188,7 +172,7 @@ namespace JoyLeeWrite.Views
 
         private void BackToSeries_Click(object sender, RoutedEventArgs e)
         {
-
+            MainWindow.navigate.navigatePage(new SeriesView());
         }
     }
 }

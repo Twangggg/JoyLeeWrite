@@ -35,5 +35,12 @@ namespace JoyLeeWrite.Services
                 .Where(c => c.Series.Any(s => s.SeriesId == seriesId))
                 .ToList();
         }
+
+        public List<Category> GetCategoriesNotInSeries(int seriesId)
+        {
+            return dbContext.Set<Category>()
+                .Where(c => c.Series.All(s => s.SeriesId != seriesId))
+                .ToList();
+        }
     }
 }

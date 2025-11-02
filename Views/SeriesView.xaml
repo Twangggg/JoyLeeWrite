@@ -414,7 +414,7 @@
                     FontSize="28"
                     FontWeight="Bold"
                     Foreground="#333"
-                    Text="Your Series"
+                    Text="{Binding CurrentPageTitle}"
                     TextAlignment="Left" />
                 <TextBlock
                     Grid.Column="2"
@@ -422,7 +422,7 @@
                     VerticalAlignment="Top"
                     FontSize="14"
                     Foreground="#888"
-                    Text="Take a look at your created series." />
+                    Text="{Binding SupPageTitle}" />
 
 
                 <!--  Settings Button  -->
@@ -495,7 +495,7 @@
                         FontWeight="SemiBold"
                         Foreground="#333"
                         Style="{StaticResource ToggleSidebarButtonStyle}">
-                        <TextBlock FontSize="16" Text="🡠 Back to Dashboard" />
+                        <TextBlock FontSize="16" Text="🡠 Back" />
                     </Button>
                     <!--  PHẦN CHÍNH  -->
                     <ScrollViewer
@@ -610,9 +610,20 @@
                 Background="#F9FAFB"
                 VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="0,0,0,20" Orientation="Vertical">
-                    <local:SeriesDetailView DataContext="{Binding SeriesDetailVM}" DockPanel.Dock="Top" />
+                    <local:SeriesDetailView
+                        AddChapterRequested="SeriesDetailView_AddChapterRequested"
+                        DataContext="{Binding SeriesDetailVM}"
+                        DockPanel.Dock="Top" />
                 </StackPanel>
             </ScrollViewer>
         </Grid>
+
+        <local:AddChapterView
+            x:Name="AddChapterView"
+            Grid.RowSpan="2"
+            Cancelled="AddChapterView_Cancelled"
+            ChapterAdded="AddChapterView_ChapterAdded"
+            Effect="{StaticResource DropShadowEffect}"
+            Visibility="Collapsed" />
     </Grid>
 </Page>

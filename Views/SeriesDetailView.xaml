@@ -133,7 +133,6 @@
                                         VerticalAlignment="Center"
                                         Background="#FF9800"
                                         BorderThickness="0"
-                                        Click="EditSeries"
                                         Content="✏️ Edit Series"
                                         Cursor="Hand"
                                         FontWeight="SemiBold"
@@ -242,7 +241,7 @@
                                     HorizontalAlignment="Right"
                                     Background="#4CAF50"
                                     Click="AddChapter_Click"
-                                    Content="+ Thêm Chapter"
+                                    Content="+ Add Chapter"
                                     Style="{StaticResource ModernButton}" />
                             </Grid>
 
@@ -257,7 +256,6 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-
                                                 <!--  Chapter Number  -->
                                                 <Border
                                                     Grid.Column="0"
@@ -309,12 +307,12 @@
                                                     Grid.Column="2"
                                                     Padding="12,6"
                                                     VerticalAlignment="Center"
-                                                    Background="#E8F5E9"
+                                                    Background="{Binding ColorStatus}"
                                                     CornerRadius="12">
                                                     <TextBlock
                                                         FontSize="13"
                                                         FontWeight="Medium"
-                                                        Foreground="#4CAF50"
+                                                        Foreground="White"
                                                         Text="{Binding Status}" />
                                                 </Border>
                                             </Grid>

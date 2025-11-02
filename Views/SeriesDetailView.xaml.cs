@@ -1,4 +1,5 @@
-﻿using JoyLeeWrite.ViewModels;
+﻿using JoyLeeWrite.Models;
+using JoyLeeWrite.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,35 +22,35 @@ namespace JoyLeeWrite.Views
     /// </summary>
     public partial class SeriesDetailView : UserControl
     {
+        public event EventHandler? AddChapterRequested;
         public SeriesDetailView()
         {
             InitializeComponent();
         }
-        private void LoadSeriesData()
-        {
-            // Load series data from database or model
-            // Populate ChaptersList with actual data
-        }
-
-        private void EditSeries_Click(object sender, RoutedEventArgs e)
-        {
-            // Navigate back to edit series page
-            MessageBox.Show("Chuyển đến trang chỉnh sửa series", "Edit", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
 
         private void AddChapter_Click(object sender, RoutedEventArgs e)
         {
-            // Navigate to create new chapter page
-            MessageBox.Show("Tạo chapter mới", "Add Chapter", MessageBoxButton.OK, MessageBoxImage.Information);
+            AddChapterRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void Chapter_Click(object sender, MouseButtonEventArgs e)
         {
-            // Navigate to chapter detail/edit page
-            if (sender is Border border)
-            {
-                MessageBox.Show("Mở chapter để chỉnh sửa", "Edit Chapter", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+            var border = sender as Border;
+            if (border == null) return;
+
+            // Lấy dữ liệu Chapter hiện tại
+            var chapter = border.DataContext as Chapter;
+            if (chapter == null) return;
+
+            // Lấy ViewModel cha của trang
+            var vm = this.DataContext as SeriesDetailViewModel;
+            if (vm == null) return;
+
+            int seriesId = vm.SeriesId;      
+            int chapterId = chapter.ChapterId; 
+
+            MainWindow.navigate.navigatePage(new WriteChapterView(seriesId));
+            MessageBox.Show($"Series {seriesId} - Chapter {chapterId}: {chapter.Title}");
         }
 
         private void EditSeries(object sender, RoutedEventArgs e)

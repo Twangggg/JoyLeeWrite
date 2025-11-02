@@ -65,8 +65,10 @@ namespace JoyLeeWrite.Views
         }
 
         private void BackToDashboard_Click(object sender, RoutedEventArgs e)
-        {
-         MainWindow.navigate.goBack();
+        { 
+            MainWindow.navigate.navigatePage(new HomepageView());
+            MainWindow.MainVM.CurrentPageTitle = "Dashboard";
+            MainWindow.MainVM.SupPageTitle = "";
         }
     }
 }

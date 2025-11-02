@@ -414,7 +414,7 @@
                     FontSize="28"
                     FontWeight="Bold"
                     Foreground="#333"
-                    Text="Create New Series"
+                    Text="{Binding CurrentPageTitle}"
                     TextAlignment="Left" />
                 <TextBlock
                     Grid.Column="2"
@@ -422,7 +422,7 @@
                     VerticalAlignment="Top"
                     FontSize="14"
                     Foreground="#888"
-                    Text="Start your next story series. Fill in the details below to get started." />
+                    Text="{Binding SupPageTitle}" />
 
 
                 <!--  Settings Button  -->
@@ -495,7 +495,7 @@
                         FontWeight="SemiBold"
                         Foreground="#333"
                         Style="{StaticResource ToggleSidebarButtonStyle}">
-                        <TextBlock FontSize="16" Text="🡠 Back to Dashboard" />
+                        <TextBlock FontSize="16" Text="🡠 Back" />
                     </Button>
                     <!--  PHẦN CHÍNH  -->
                     <ScrollViewer
