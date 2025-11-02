@@ -237,13 +237,13 @@ GO
 INSERT INTO dbo.Series (AuthorId, Title, Description, CoverImgUrl, Tags, Status)
 VALUES
 (1, N'Vùng Đất Bóng Đêm', N'Một thế giới nơi ánh sáng bị nuốt chửng bởi bóng tối, con người phải tìm cách sinh tồn.', 
- N'https://example.com/covers/darkland.jpg', N'fantasy,dark,magic', 'draft'),
+ N'Resources/img/tesst.avif', N'fantasy,dark,magic', 'draft'),
 
 (1, N'Nhật Ký Không Gian', N'Hành trình của một phi hành gia lạc vào chiều không gian song song.', 
- N'https://example.com/covers/space_diary.jpg', N'sci-fi,adventure,time', 'published'),
+ N'Resources/img/tesst.avif', N'sci-fi,adventure,time', 'published'),
 
 (2, N'Thành Phố Không Ngủ', N'Câu chuyện trinh thám về những vụ án bí ẩn trong thành phố.', 
- N'https://example.com/covers/city.jpg', N'mystery,detective', 'draft');
+ N'Resources/img/tesst.avif', N'mystery,detective', 'draft');
 GO
 
 

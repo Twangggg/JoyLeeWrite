@@ -8,6 +8,9 @@
     <Compile Update="Views\AllSeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AuthorProfileView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\CreateSeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
