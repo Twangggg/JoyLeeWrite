@@ -19,5 +19,11 @@ namespace JoyLeeWrite.ViewModels
             var seriesList = seriesService.GetRecentlyEdited(6);
             RecentlyEdited = new ObservableCollection<Series>(seriesList);
         }
+
+        public void UpdateRecentlyEditedVM()
+        {
+            var seriesList = seriesService.GetRecentlyEdited(6);
+            RecentlyEdited = new ObservableCollection<Series>(seriesList);
+        }
     }
 }

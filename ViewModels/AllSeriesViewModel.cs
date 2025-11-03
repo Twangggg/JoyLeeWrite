@@ -32,5 +32,19 @@ namespace JoyLeeWrite.ViewModels
             }
             AllSeries = new ObservableCollection<Series>(seriesList);
         }
+
+        public void UpdateAllSeriesVM()
+        {
+            var seriesList = seriesService.GetAllSeries();
+            foreach (Series series in seriesList)
+            {
+                if (!string.IsNullOrEmpty(series.CoverImgUrl))
+                {
+                    series.ChapterCount = chapterService.CountChaptersBySeriesId(series.SeriesId);
+                    series.CoverImage = imageService.LoadAvifAsBitmap(series.CoverImgUrl);
+                }
+            }
+            AllSeries = new ObservableCollection<Series>(seriesList);
+        }
     }
 }

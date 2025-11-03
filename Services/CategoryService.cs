@@ -31,9 +31,14 @@ namespace JoyLeeWrite.Services
         }
         public List<Category> GetCategoriesBySeriesId(int seriesId)
         {
-            return dbContext.Set<Category>()
+            List<Category> categories = dbContext.Set<Category>()
                 .Where(c => c.Series.Any(s => s.SeriesId == seriesId))
                 .ToList();
+            foreach (var category in categories)
+            {
+                category.IsSelected = true;
+            }
+            return categories;
         }
 
         public List<Category> GetCategoriesNotInSeries(int seriesId)

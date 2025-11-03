@@ -127,26 +127,51 @@
                                         Foreground="White"
                                         Text="{Binding Title}" />
 
-                                    <Button
-                                        Padding="20,10"
+                                    <StackPanel
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Center"
-                                        Background="#FF9800"
-                                        BorderThickness="0"
-                                        Content="✏️ Edit Series"
-                                        Cursor="Hand"
-                                        FontWeight="SemiBold"
-                                        Foreground="White"
-                                        Style="{StaticResource ModernButton}"
-                                        Tag="{Binding SeriesId}">
-                                        <Button.Effect>
-                                            <DropShadowEffect
-                                                BlurRadius="8"
-                                                Opacity="0.3"
-                                                ShadowDepth="2"
-                                                Color="#000000" />
-                                        </Button.Effect>
-                                    </Button>
+                                        Orientation="Horizontal">
+
+                                        <Button
+                                            Margin="0,0,10,0"
+                                            Padding="20,10"
+                                            Background="#FF9800"
+                                            BorderThickness="0"
+                                            Click="EditSeries"
+                                            Content="✏️ Edit Series"
+                                            Cursor="Hand"
+                                            FontWeight="SemiBold"
+                                            Foreground="White"
+                                            Style="{StaticResource ModernButton}"
+                                            Tag="{Binding SeriesId}">
+                                            <Button.Effect>
+                                                <DropShadowEffect
+                                                    BlurRadius="8"
+                                                    Opacity="0.3"
+                                                    ShadowDepth="2"
+                                                    Color="#000000" />
+                                            </Button.Effect>
+                                        </Button>
+
+                                        <Button
+                                            Padding="20,10"
+                                            Background="#F44336"
+                                            BorderThickness="0"
+                                            Command="{Binding DeleteSeriesCommand}"
+                                            Content="🗑️ Delete"
+                                            Cursor="Hand"
+                                            FontWeight="SemiBold"
+                                            Foreground="White"
+                                            Style="{StaticResource ModernButton}">
+                                            <Button.Effect>
+                                                <DropShadowEffect
+                                                    BlurRadius="8"
+                                                    Opacity="0.3"
+                                                    ShadowDepth="2"
+                                                    Color="#000000" />
+                                            </Button.Effect>
+                                        </Button>
+                                    </StackPanel>
                                 </Grid>
 
                                 <!--  Meta info  -->
@@ -255,6 +280,7 @@
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
                                                 <!--  Chapter Number  -->
                                                 <Border
@@ -303,6 +329,7 @@
                                                 </StackPanel>
 
                                                 <!--  Status  -->
+                                                <!--  Status  -->
                                                 <Border
                                                     Grid.Column="2"
                                                     Padding="12,6"
@@ -315,6 +342,30 @@
                                                         Foreground="White"
                                                         Text="{Binding Status}" />
                                                 </Border>
+
+                                                <!--  Delete Button  -->
+                                                <Button
+                                                    Margin="5,0,0,0"
+                                                    Grid.Column="3"
+                                                    Padding="8,6"
+                                                    VerticalAlignment="Center"
+                                                    Background="#F44336"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.DeleteChapterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding ChapterId}"
+                                                    Content="🗑️"
+                                                    Cursor="Hand"
+                                                    FontSize="14"
+                                                    Foreground="White"
+                                                    Style="{StaticResource ModernButton}">
+                                                    <Button.Effect>
+                                                        <DropShadowEffect
+                                                            BlurRadius="8"
+                                                            Opacity="0.3"
+                                                            ShadowDepth="2"
+                                                            Color="#000000" />
+                                                    </Button.Effect>
+                                                </Button>
                                             </Grid>
                                         </Border>
                                     </DataTemplate>

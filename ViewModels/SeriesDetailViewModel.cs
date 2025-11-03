@@ -1,5 +1,7 @@
-﻿using JoyLeeWrite.Models;
+﻿using JoyLeeWrite.Commands;
+using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +10,8 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace JoyLeeWrite.ViewModels
@@ -67,6 +71,8 @@ namespace JoyLeeWrite.ViewModels
             get; set;
         }
         public string ColorStatus { get; set; }
+        public ICommand DeleteSeriesCommand { get; set; }
+        public ICommand DeleteChapterCommand { get; set; }
         public SeriesDetailViewModel(int seriesId)
         {
             _seriesService = new SeriesService();
@@ -79,6 +85,49 @@ namespace JoyLeeWrite.ViewModels
             List<Category> categories = _categoryService.GetCategoriesBySeriesId(seriesId);
             Categories = new ObservableCollection<Category>(categories);
             LoadSeries();
+
+            DeleteSeriesCommand = new RelayCommand(_ => DeleteSeries(seriesId));
+            DeleteChapterCommand = new RelayCommand(param => DeleteChapter((int)param));
+        }
+
+        private void DeleteSeries(int seriesId)
+        {
+            var result = MessageBox.Show(
+                    "Are you sure delete this series?",
+                    "Delete Series",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+
+                _seriesService.DeleteSeriesById(seriesId);
+                MainWindow.navigate.navigatePage(new HomepageView());
+                MainWindow.MainVM.UpdateHomepage();
+            }
+        }
+        private void DeleteChapter(int chapterId)
+        {
+            var result = MessageBox.Show(
+                    "Are you sure delete this chapter?",
+                    "Delete Chapter",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                _chapterService.DeleteChapterById(chapterId);
+
+                var chapterToRemove = Chapters.FirstOrDefault(c => c.ChapterId == chapterId);
+                if (chapterToRemove != null)
+                {
+                    Chapters.Remove(chapterToRemove);
+                }
+
+                // Cập nhật ChapterCount
+                ChapterCount = Chapters.Count;
+                OnPropertyChanged(nameof(ChapterCount));
+            }
         }
         private void LoadSeries()
         {

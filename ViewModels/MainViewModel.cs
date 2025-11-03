@@ -41,7 +41,11 @@ namespace JoyLeeWrite.ViewModels
             AllSeriesVM = new AllSeriesViewModel();
 
         }
-
+        public void UpdateHomepage()
+        {
+            RecentlyEditedVM.UpdateRecentlyEditedVM();
+            AllSeriesVM.UpdateAllSeriesVM();
+        }
         public void addInformationViewModel(FormMode mode, int seriesId = 0)
         {
             if (mode == FormMode.Create)

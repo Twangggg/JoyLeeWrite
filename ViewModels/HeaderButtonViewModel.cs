@@ -21,8 +21,12 @@ namespace JoyLeeWrite.ViewModels
         {
             this.richTextBox = richTextBox;
             this.chapterService = new ChapterService();
-
-            SaveChapter = new RelayCommand(_ => chapterService.saveChapter(RichTextHelper.GetRichText(richTextBox, true), MainWindow.MainVM.CurrentChapterId), _ => chapterService.canSaveChapter(RichTextHelper.GetRichText(richTextBox, false)));
+            
+            SaveChapter = new RelayCommand(_ => chapterService.saveChapter(RichTextHelper.GetRichText(richTextBox, true), MainWindow.MainVM.CurrentChapterId, getWordCount()), _ => chapterService.canSaveChapter(RichTextHelper.GetRichText(richTextBox, false)));
+        }
+        private int getWordCount()
+        {
+            return RichTextHelper.GetRichText(richTextBox, false).Trim().Replace(" ", "").Length;
         }
 
     }

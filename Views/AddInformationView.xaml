@@ -351,6 +351,7 @@
                         <Button
                             Margin="0,0,10,0"
                             Click="Cancel_Click"
+                            Command="{Binding CancelCommand}"
                             Content="Cancel"
                             Style="{StaticResource SecondaryButton}" />
                         <Button

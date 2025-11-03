@@ -86,29 +86,25 @@ namespace JoyLeeWrite.Utils
                 richTextBox.TextChanged -= RichTextBox_TextChanged;
 
                 // ✅ FIX 3: Sử dụng Dispatcher.Invoke để đảm bảo UI thread an toàn
-                richTextBox.Dispatcher.Invoke(() =>
+                richTextBox.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     try
                     {
-                        // Clear nội dung cũ
                         richTextBox.Document.Blocks.Clear();
 
                         if (e.NewValue is string xaml && !string.IsNullOrWhiteSpace(xaml))
                         {
                             try
                             {
-                                // ✅ FIX 4: Load XAML an toàn
                                 var range = new TextRange(
                                     richTextBox.Document.ContentStart,
                                     richTextBox.Document.ContentEnd
                                 );
-
                                 using var stream = new MemoryStream(Encoding.UTF8.GetBytes(xaml));
                                 range.Load(stream, DataFormats.Xaml);
                             }
                             catch (Exception ex)
                             {
-                                // ✅ FIX 5: Fallback an toàn khi XAML invalid
                                 System.Diagnostics.Debug.WriteLine($"Load XAML error: {ex.Message}");
                                 richTextBox.Document.Blocks.Add(
                                     new Paragraph(new Run($"[Lỗi định dạng nội dung: {ex.Message}]"))
@@ -120,15 +116,22 @@ namespace JoyLeeWrite.Utils
                     {
                         System.Diagnostics.Debug.WriteLine($"Document update error: {ex.Message}");
                     }
-                }, System.Windows.Threading.DispatcherPriority.Background);
+                }), System.Windows.Threading.DispatcherPriority.Background);
 
                 // ✅ FIX 6: Re-subscribe event SAU KHI đã load xong
                 richTextBox.TextChanged += RichTextBox_TextChanged;
             }
             finally
-            {
-                // ✅ FIX 7: Reset flag trong finally để đảm bảo luôn được reset
+            { 
                 _isUpdating = false;
+            }
+        }
+        private static void RichTextBox_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is RichTextBox richTextBox)
+            {
+                richTextBox.TextChanged -= RichTextBox_TextChanged;
+                richTextBox.Unloaded -= RichTextBox_Unloaded;
             }
         }
 

@@ -110,5 +110,67 @@ namespace JoyLeeWrite.Services
             }
             return series;
         }
+
+        public bool UpdateSeries(Series updatedSeries, List<Category> categories)
+        {
+            try
+            {
+                var existingSeries = dbContext.Set<Series>()
+                    .Include(s => s.Categories)
+                    .FirstOrDefault(s => s.SeriesId == updatedSeries.SeriesId);
+                if (existingSeries == null)
+                {
+                    return false;
+                }
+                existingSeries.Title = updatedSeries.Title;
+                existingSeries.Status = updatedSeries.Status;
+                existingSeries.Description = updatedSeries.Description;
+                existingSeries.UpdatedDate = DateTime.Now;
+                existingSeries.LastModified = DateTime.Now;
+                existingSeries.CoverImgUrl = updatedSeries.CoverImgUrl;
+                existingSeries.Categories.Clear();
+                foreach (var category in categories)
+                {
+                    dbContext.Attach(category);
+                    existingSeries.Categories.Add(category);
+                }
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error updating series: {ex.Message}");
+                return false;
+            }
+        }
+
+        public int GetNewSeriesId(int authorId)
+        {
+            return dbContext.Set<Series>()
+     .Where(c => c.AuthorId == authorId)
+     .OrderByDescending(c => c.CreatedDate)
+     .First()
+     .SeriesId;
+
+        }
+
+        public bool DeleteSeriesById(int seriesId)
+        {
+            try
+            {
+                Series series = dbContext.Set<Series>().FirstOrDefault(c => c.SeriesId == seriesId);
+                if (series != null)
+                {
+                    dbContext.Set<Series>().Remove(series);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

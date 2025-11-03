@@ -86,10 +86,11 @@ namespace JoyLeeWrite.ViewModels
             chapter.ChapterNumber = ChapterNumber;
             chapter.Status = Status;
             chapter.SeriesId = seriesId;
+            chapter.WordCount = 0;
             chapter.CreatedDate = DateTime.Now;
             chapter.LastModified = DateTime.Now;
             chapterService.createChapter(chapter);
-            MainWindow.MainVM.CurrentChapterId = chapterService.getNewChapterId();
+            MainWindow.MainVM.CurrentChapterId = chapterService.getNewChapterId(seriesId);
             int chapterNumber = chapter.ChapterNumber;
             MainWindow.navigate.navigatePage(new WriteChapterView(chapter?.Title, chapterNumber));
         }
@@ -102,7 +103,7 @@ namespace JoyLeeWrite.ViewModels
 
         private bool ValidateInput()
         {
-            if (ChapterNumber <= 0 || !chapterService.checkExistChapterNumber(ChapterNumber))
+            if (ChapterNumber <= 0 || !chapterService.checkExistChapterNumber(ChapterNumber, MainWindow.MainVM.CurrentSeriesId))
             {
                 MessageBox.Show("Invalid Chapter Number", "Message");
                 return false;

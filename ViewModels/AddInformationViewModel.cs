@@ -1,6 +1,7 @@
 ﻿using JoyLeeWrite.Commands;
 using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Views;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace JoyLeeWrite.ViewModels
         public ObservableCollection<Category> Categories { get; set; }
         public ICommand SelectImageCommand { get; }
         public ICommand SaveSeriesCommand { get; }
+        public ICommand CancelCommand { get; }
         public AddInformationViewModel(FormMode mode, int seriesId = 0)
         {
             Mode = mode;    
@@ -49,12 +51,14 @@ namespace JoyLeeWrite.ViewModels
                 //Bind command
                 SelectImageCommand = new RelayCommand(_ => BitmapImage = _imageService.SelectImage());
                 SaveSeriesCommand = new RelayCommand(_ => SaveSeries());
+                CancelCommand = new RelayCommand(_ => ClearInputs());
             } else if(mode == FormMode.Edit) {
                 Series series = _seriesService.GetSeriesById(seriesId);
-                List<Category> categoryList = _categoryService.GetCategoriesBySeriesId(seriesId);
-                categoryList.AddRange(_categoryService.GetCategoriesNotInSeries(seriesId));
-                Categories = new ObservableCollection<Category>(categoryList);
+                
                 LoadSeries(series);
+                SelectImageCommand = new RelayCommand(_ => BitmapImage = _imageService.SelectImage());
+                SaveSeriesCommand = new RelayCommand(_ => UpdateSeries(series));
+                CancelCommand = new RelayCommand(_ => LoadSeries(series));
             }
         }
         private List<string> _statusList;
@@ -107,7 +111,47 @@ namespace JoyLeeWrite.ViewModels
                 OnPropertyChanged(nameof(BitmapImage));
             }
         }
+        private void ClearInputs()
+        {
+            Title = "Enter title for series";
+            Description = "Enter a description of the series";
+            BitmapImage = null;
+            foreach (var category in Categories)
+            {
+                category.IsSelected = false;
+            }
+            Status = "Ongoing";
+        }
+        public void UpdateSeries(Series series)
+        {
+            if (!ValidateInputs())
+            {
+                return;
+            }
+            try
+            {
 
+                series.Title = Title;
+                series.Status = Status;
+                series.Description = Description;
+                series.CoverImgUrl = _imageService.extractPath(Title);
+                series.UpdatedDate = DateTime.Now;
+                series.LastModified = DateTime.Now;
+                series.Categories.Clear();
+                if (_seriesService.UpdateSeries(series, _categoryService.GetCategories(GetSelectedCategories())))
+                {
+                    _imageService.SaveAsAvif(BitmapImage, series.CoverImgUrl, 240, 360);
+                }
+                MainWindow.navigate.navigatePage(new SeriesView());
+                MainWindow.MainVM.addSeriesDetailViewModel(series.SeriesId);
+                MainWindow.MainVM.CurrentSeriesId = series.SeriesId;
+                MessageBox.Show("Series updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating series: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         public void SaveSeries()
         {
             if (!ValidateInputs())
@@ -116,7 +160,7 @@ namespace JoyLeeWrite.ViewModels
             }
             try
             {
-                int authorId = 1; // Replace with actual author ID retrieval logic
+                int authorId = MainWindow.MainVM.CurrentUserId; 
                 Series newSeries = new Series
                 {
                     Title = Title,
@@ -131,7 +175,11 @@ namespace JoyLeeWrite.ViewModels
                 newSeries.Categories.Clear();
                 _seriesService.AddSeries(newSeries, _categoryService.GetCategories(GetSelectedCategories()));
                 _imageService.SaveAsAvif(BitmapImage, newSeries.CoverImgUrl, 240, 360);
-                MessageBox.Show("Series saved successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.navigate.navigatePage(new SeriesView());
+                int seriesId = _seriesService.GetNewSeriesId(authorId);
+                MainWindow.MainVM.addSeriesDetailViewModel(seriesId);
+                MainWindow.MainVM.CurrentSeriesId = seriesId;
+                MessageBox.Show("Series created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
@@ -173,6 +221,9 @@ namespace JoyLeeWrite.ViewModels
             Description = series.Description;
             BitmapImage = (BitmapImage?)_imageService.LoadAvifAsBitmap(series.CoverImgUrl);
             Status = series.Status;
+            List<Category> categoryList = _categoryService.GetCategoriesBySeriesId(series.SeriesId);
+            categoryList.AddRange(_categoryService.GetCategoriesNotInSeries(series.SeriesId));
+            Categories = new ObservableCollection<Category>(categoryList);
         }
         protected void OnPropertyChanged(string propertyName)
         {
