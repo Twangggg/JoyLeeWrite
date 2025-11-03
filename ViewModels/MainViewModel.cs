@@ -34,6 +34,7 @@ namespace JoyLeeWrite.ViewModels
 
         public MainViewModel()
         {
+            CurrentUserId = 1;
             CurrentPageTitle = "Homepage";
             SupPageTitle = "";
             RecentlyEditedVM = new RecentlyEditedViewModel();

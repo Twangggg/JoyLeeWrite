@@ -1,6 +1,7 @@
 ﻿using JoyLeeWrite.Commands;
 using JoyLeeWrite.Services;
 using JoyLeeWrite.Utils;
+using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,8 @@ namespace JoyLeeWrite.ViewModels
         {
             this.richTextBox = richTextBox;
             this.chapterService = new ChapterService();
-            SaveChapter = new RelayCommand(_ => chapterService.saveChapter(RichTextHelper.GetRichText(richTextBox, true)), _ => chapterService.canSaveChapter(RichTextHelper.GetRichText(richTextBox, false)));
+
+            SaveChapter = new RelayCommand(_ => chapterService.saveChapter(RichTextHelper.GetRichText(richTextBox, true), MainWindow.MainVM.CurrentChapterId), _ => chapterService.canSaveChapter(RichTextHelper.GetRichText(richTextBox, false)));
         }
 
     }

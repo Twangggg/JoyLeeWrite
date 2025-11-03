@@ -30,6 +30,7 @@ namespace JoyLeeWrite.Views
             var button = sender as Button;
             if (button?.Tag is int seriesId)
             {
+                MainWindow.MainVM.CurrentSeriesId = seriesId;
                 MainWindow.navigate.navigatePage(new SeriesView());
                 MainWindow.MainVM.addSeriesDetailViewModel(seriesId);
             }

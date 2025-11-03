@@ -23,11 +23,10 @@ namespace JoyLeeWrite.Services
             return !string.IsNullOrWhiteSpace(content);
         }
 
-        public void saveChapter(string content)
+        public void saveChapter(string content, int chapterId)
         {
             try
             {
-                int chapterId = 1; // Giả sử chúng ta đang lưu chương có ID = 1
                 Chapter chapter = dbContext.Set<Chapter>().Find(chapterId);
 
                 if (chapter == null)
@@ -63,6 +62,31 @@ namespace JoyLeeWrite.Services
         {
             return dbContext.Set<Chapter>()
                 .FirstOrDefault(c => c.ChapterId == chapterId);
+        }
+
+        public bool createChapter(Chapter chapter)
+        {
+
+            try
+            {
+                dbContext.Set<Chapter>().Add(chapter);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public int getNewChapterId()
+        {
+            return dbContext.Set<Chapter>().OrderByDescending(c => c.CreatedDate).First().ChapterId;
+        }
+
+        public bool checkExistChapterNumber(int chapterNumber)
+        {
+            return dbContext.Set<Chapter>().Any(c => c.ChapterNumber == chapterNumber) == false; ;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using JoyLeeWrite;
+using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
 using JoyLeeWrite.ViewModels;
 using System;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+
 
 
 namespace JoyLeeWrite.Views
@@ -28,27 +30,27 @@ namespace JoyLeeWrite.Views
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Back button clicked", "Navigation", MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
 
         private void NewStoryButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Create new story", "New Story", MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
 
         private void NewChapterButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Create new chapter", "New Chapter", MessageBoxButton.OK, MessageBoxImage.Information);
+           
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Story saved successfully!", "Save", MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Settings", "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
 
         private void EditorTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -154,6 +156,7 @@ namespace JoyLeeWrite.Views
         private void BackToSeries_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.navigate.navigatePage(new SeriesView());
+            MainWindow.MainVM.addSeriesDetailViewModel(MainWindow.MainVM.CurrentSeriesId);
         }
     }
 }

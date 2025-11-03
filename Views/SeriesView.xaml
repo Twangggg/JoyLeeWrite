@@ -623,6 +623,7 @@
             Grid.RowSpan="2"
             Cancelled="AddChapterView_Cancelled"
             ChapterAdded="AddChapterView_ChapterAdded"
+            DataContext="{Binding AddChapterVM}"
             Effect="{StaticResource DropShadowEffect}"
             Visibility="Collapsed" />
     </Grid>

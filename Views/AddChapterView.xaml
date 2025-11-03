@@ -64,25 +64,32 @@
 
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Chapter Number:" />
-                        <TextBox x:Name="txtNumber" FontSize="16" Margin="0,5,0,0" />
+                        <TextBox
+                            x:Name="txtNumber"
+                            Margin="0,5,0,0"
+                            FontSize="16"
+                            Text="{Binding ChapterNumber}" />
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
                         <TextBlock Text="Status:" />
                         <ComboBox
-                            x:Name="cmbStatus"
+                            Height="23"
                             Margin="0,5,0,0"
-                            SelectedIndex="0">
-                            <ComboBoxItem Content="Draft" />
-                            <ComboBoxItem Content="Published" />
-                        </ComboBox>
+                            VerticalContentAlignment="Center"
+                            ItemsSource="{Binding StatusList}"
+                            SelectedItem="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </StackPanel>
                 </Grid>
 
                 <!--  Second Row: Chapter Title  -->
                 <StackPanel>
                     <TextBlock Text="Chapter Title:" />
-                    <TextBox x:Name="txtTitle" FontSize="16" Margin="0,5,0,20" />
+                    <TextBox
+                        x:Name="txtTitle"
+                        Margin="0,5,0,20"
+                        FontSize="16"
+                        Text="{Binding Title}" />
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -94,6 +101,7 @@
                     <Button
                         Background="#4CAF50"
                         Click="Save_Click"
+                        Command="{Binding SaveChapter}"
                         Content="Save"
                         Foreground="White"
                         Style="{StaticResource ModernButton}" />

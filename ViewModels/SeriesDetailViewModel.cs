@@ -88,7 +88,7 @@ namespace JoyLeeWrite.ViewModels
             CoverImage = _imageService.LoadAvifAsBitmap(series.CoverImgUrl);
             Status = series.Status;
             CreatedDate = series.CreatedDate;
-            ChapterCount = Chapters.Count;
+            ChapterCount = _chapterService.CountChaptersBySeriesId(series.SeriesId);
             ColorStatus = Status == "Ongoing" ? "#DAA520" : Status == "Completed" ? "#4CAF50" : "Gray";
         }
         private void OnPropertyChanged(string propertyName)

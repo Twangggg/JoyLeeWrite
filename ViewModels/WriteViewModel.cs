@@ -33,8 +33,8 @@ namespace JoyLeeWrite.ViewModels
             _chapterService = new ChapterService();
             Chapter chapter = _chapterService.getChapterById(chapterId);
             Content = chapter?.Content ?? "<FlowDocument xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>" +
-            "<Paragraph FontSize='16'>Bắt đầu <Bold>viết truyện</Bold> của bạn ở đây...</Paragraph>" +
-            "</FlowDocument>";
+           "<Paragraph FontSize='16'>Bắt đầu <Bold>viết truyện</Bold> của bạn ở đây...</Paragraph>" +
+           "</FlowDocument>";
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
