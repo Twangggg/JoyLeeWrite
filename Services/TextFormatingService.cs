@@ -1,4 +1,4 @@
-﻿using JoyLeeBookWriter;
+﻿using JoyLeeWrite;
 using System;
 using System.Linq;
 using System.Windows;
@@ -28,7 +28,7 @@ namespace JoyLeeWrite.Services
 
         public void ToggleUnderline()
         {
-            if (!HasSelection) return;
+            //if (!HasSelection) return;
 
             var current = Selection.GetPropertyValue(Inline.TextDecorationsProperty);
             bool isUnderlined = current != DependencyProperty.UnsetValue && current == TextDecorations.Underline;
