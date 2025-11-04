@@ -15,7 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.CreateSeriesVM
 {
     public enum FormMode
     {
@@ -160,7 +160,7 @@ namespace JoyLeeWrite.ViewModels
             }
             try
             {
-                int authorId = MainWindow.MainVM.CurrentUserId; 
+                int authorId = MainWindow.MainVM.CurrentUser.UserId; 
                 Series newSeries = new Series
                 {
                     Title = Title,

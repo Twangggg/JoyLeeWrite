@@ -23,7 +23,16 @@
     <Compile Update="Views\HeaderButtonView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProfileDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ProfilePage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\RecentlyEditedView.xaml.cs">
@@ -33,6 +42,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SeriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StatisticsDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StatisticsPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\WriteView.xaml.cs">

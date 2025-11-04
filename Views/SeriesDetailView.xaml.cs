@@ -1,5 +1,6 @@
 ﻿using JoyLeeWrite.Models;
-using JoyLeeWrite.ViewModels;
+using JoyLeeWrite.ViewModels.CreateSeriesVM;
+using JoyLeeWrite.ViewModels.SeriesDetailVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

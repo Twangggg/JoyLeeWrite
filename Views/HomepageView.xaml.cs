@@ -1,4 +1,4 @@
-﻿using JoyLeeWrite.ViewModels;
+﻿using JoyLeeWrite.ViewModels.CreateSeriesVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

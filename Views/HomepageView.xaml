@@ -482,7 +482,7 @@
                         HorizontalScrollBarVisibility="Disabled"
                         VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,20,0,0">
-                            <Button Style="{StaticResource Custombutton}">
+                            <Button Style="{StaticResource Custombutton}" Command="{Binding NavigateToHomepageCommand}">
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="0,0,10,0"
@@ -497,7 +497,7 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource Custombutton}">
+                            <Button Style="{StaticResource Custombutton}" Command="{Binding NavigateToStaticspageCommand}">
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="0,0,10,0"
@@ -512,7 +512,7 @@
                                 </StackPanel>
                             </Button>
 
-                            <Button Style="{StaticResource Custombutton}">
+                            <Button Style="{StaticResource Custombutton}" Command="{Binding NavigateToProfilepageCommand}">
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="0,0,10,0"
@@ -582,11 +582,11 @@
                                     FontSize="13"
                                     FontWeight="SemiBold"
                                     Foreground="#111"
-                                    Text="Author Name" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="#6B7280"
-                                    Text="author@email.com" />
+                                    Text="{Binding Username}" />
+                                <!--  <TextBlock
+    FontSize="12"
+    Foreground="#6B7280"
+    Text="author@email.com" />-->
                             </StackPanel>
                         </StackPanel>
                     </Border>

@@ -33,7 +33,7 @@ namespace JoyLeeWrite.Views
                 this.DataContext = MainVM;
             };
             navigate = new NavigateService(MainFrame);
-            navigate.navigatePage(new HomepageView());
+            navigate.navigatePage(new LoginView());
         }
     }
 }

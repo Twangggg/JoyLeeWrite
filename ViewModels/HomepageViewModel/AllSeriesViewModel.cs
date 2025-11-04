@@ -1,5 +1,6 @@
 ﻿using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.HomepageViewModel
 {
    
     public class AllSeriesViewModel
@@ -21,7 +22,7 @@ namespace JoyLeeWrite.ViewModels
             seriesService = new SeriesService();
             imageService = new ImageService();
             chapterService = new ChapterService();
-            var seriesList = seriesService.GetAllSeries();
+            var seriesList = seriesService.GetAllSeries(MainWindow.MainVM.CurrentUser.UserId);
             foreach (Series series in seriesList)
             {
                 if (!string.IsNullOrEmpty(series.CoverImgUrl))
@@ -35,7 +36,7 @@ namespace JoyLeeWrite.ViewModels
 
         public void UpdateAllSeriesVM()
         {
-            var seriesList = seriesService.GetAllSeries();
+            var seriesList = seriesService.GetAllSeries(MainWindow.MainVM.CurrentUser.UserId);
             foreach (Series series in seriesList)
             {
                 if (!string.IsNullOrEmpty(series.CoverImgUrl))

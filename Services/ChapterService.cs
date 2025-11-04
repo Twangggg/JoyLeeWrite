@@ -153,5 +153,24 @@ namespace JoyLeeWrite.Services
                 }
             }
         }
+
+        public int GetTotalChapters(int userId)
+        {
+            using (var dbContext = CreateContext())
+            {
+                return dbContext.Set<Chapter>()
+            .Where(c => c.Series.AuthorId == userId)
+            .Count();
+            }
+        }
+
+        public int GetTotalWords(int userId)
+        {
+            using (var dbContext = CreateContext())
+            {
+                return dbContext.Set<Chapter>().Where(c => c.Series.AuthorId == userId)
+                    .Sum(c => c.WordCount);
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using JoyLeeWrite.Services;
-using JoyLeeWrite.ViewModels;
+using JoyLeeWrite.ViewModels.WriteChapterViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

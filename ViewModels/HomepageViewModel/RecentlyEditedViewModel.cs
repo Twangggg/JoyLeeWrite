@@ -1,5 +1,6 @@
 ﻿using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.HomepageViewModel
 {
     public class RecentlyEditedViewModel
     {
@@ -16,13 +17,13 @@ namespace JoyLeeWrite.ViewModels
         public RecentlyEditedViewModel()
         {
             seriesService = new SeriesService();
-            var seriesList = seriesService.GetRecentlyEdited(6);
+            var seriesList = seriesService.GetRecentlyEdited(6, MainWindow.MainVM.CurrentUser.UserId);
             RecentlyEdited = new ObservableCollection<Series>(seriesList);
         }
 
         public void UpdateRecentlyEditedVM()
         {
-            var seriesList = seriesService.GetRecentlyEdited(6);
+            var seriesList = seriesService.GetRecentlyEdited(6, MainWindow.MainVM.CurrentUser.UserId);
             RecentlyEdited = new ObservableCollection<Series>(seriesList);
         }
     }

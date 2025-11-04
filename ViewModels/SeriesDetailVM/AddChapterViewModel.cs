@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.WriteChapterVM
 {
     public class AddChapterViewModel : INotifyPropertyChanged
     {
