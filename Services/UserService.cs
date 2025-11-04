@@ -63,6 +63,18 @@ namespace JoyLeeWrite.Services
         //        return Convert.ToBase64String(hash);
         //    }
         //}
-
+        public bool UpdateUserProfile(int userId, string newUsername, string newEmail)
+        {
+            using (var dbContext = CreateContext())
+            {
+                var user = dbContext.Users.FirstOrDefault(u => u.UserId == userId);
+                if (user == null)
+                    return false;
+                user.Username = newUsername;
+                user.Email = newEmail;
+                dbContext.SaveChanges();
+                return true;
+            }
+        }
     }
 }

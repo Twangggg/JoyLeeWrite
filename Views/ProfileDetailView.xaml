@@ -82,7 +82,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Margin="40,30">
+    <StackPanel>
         <!--  Header  -->
         <TextBlock
             Margin="0,10,0,5"
@@ -163,6 +163,7 @@
                     Text="{Binding Email}" />
                 <Button
                     HorizontalAlignment="Left"
+                    Command="{Binding SaveProfileCommand}"
                     Content="Save change"
                     Style="{StaticResource PrimaryButtonStyle}" />
             </StackPanel>

@@ -173,5 +173,22 @@ namespace JoyLeeWrite.Services
                 return false;
             }
         }
+
+        public int GetTotalSeries(int userId)
+        {
+            try
+            {
+                using (var context = new JoyLeeWriteDbContext())
+                {
+                    int totalSeries = context.Set<Series>()
+                        .Count(s => s.AuthorId == userId);
+                    return totalSeries;
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
     }
 }

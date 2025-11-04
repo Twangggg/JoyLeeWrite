@@ -44,6 +44,12 @@
     <Compile Update="Views\SeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\StatisticsDetailView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StatisticsPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\WriteView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

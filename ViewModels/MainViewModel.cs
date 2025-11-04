@@ -30,6 +30,8 @@ namespace JoyLeeWrite.ViewModels
         public AddChapterViewModel AddChapterVM { get; set; }
         public WriteViewModel WriteVM { get; set; }
         public AuthViewModel AuthVM { get; set; }
+        public StatictisDetailViewModel StatictisDetailVM { get; set; }
+        public ProfileDetailViewModel ProfileDetailVM { get; set; }
         public int CurrentSeriesId { get; set; }
         public int CurrentChapterId { get; set; }
         public User CurrentUser { get; set; }
@@ -62,13 +64,23 @@ namespace JoyLeeWrite.ViewModels
         {
             CurrentPageTitle = "Statistics";
             SupPageTitle = "View your writing statistics and progress.";
-            //MainWindow.navigate.navigatePage(new StatisticsView());
+            MainWindow.navigate.navigatePage(new StatisticsPage());
+            addStatictisDetailViewModel();
         }
         private void NavigateToProfilepage()
         {
             CurrentPageTitle = "Profile";
             SupPageTitle = "Manage your profile settings and preferences.";
             MainWindow.navigate.navigatePage(new ProfilePage());
+            addProfileDetailViewModel();
+        }
+        public void addStatictisDetailViewModel()
+        {
+            StatictisDetailVM = new StatictisDetailViewModel();
+        }
+        public void addProfileDetailViewModel()
+        {
+            ProfileDetailVM = new ProfileDetailViewModel();
         }
         public void addHomepageViewModel()
         {
