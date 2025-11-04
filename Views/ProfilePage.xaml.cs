@@ -1,4 +1,4 @@
-﻿using JoyLeeWrite.Models;
+﻿using JoyLeeWrite.ViewModels.CreateSeriesVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +18,14 @@ using System.Windows.Shapes;
 namespace JoyLeeWrite.Views
 {
     /// <summary>
-    /// Interaction logic for SeriesView.xaml
+    /// Interaction logic for ProfilePage.xaml
     /// </summary>
-    public partial class SeriesView : Page
+    public partial class ProfilePage : Page
     {
-        public SeriesView()
+        public ProfilePage()
         {
             InitializeComponent();
         }
-
         private bool isSidebarCollapsed = false;
         private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
         {
@@ -48,8 +47,7 @@ namespace JoyLeeWrite.Views
             {
                 SidebarContent.Visibility = Visibility.Visible;
                 AuthorInfoBorder.Visibility = Visibility.Visible;
-                BackSeries.Visibility = Visibility.Visible;
-                Logo.Visibility = Visibility.Visible;
+                CreateSeriesButton.Visibility = Visibility.Visible;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar.png"));
                 isSidebarCollapsed = false;
@@ -58,7 +56,7 @@ namespace JoyLeeWrite.Views
             {
                 SidebarContent.Visibility = Visibility.Collapsed;
                 AuthorInfoBorder.Visibility = Visibility.Collapsed;
-                BackSeries.Visibility = Visibility.Collapsed;
+                CreateSeriesButton.Visibility = Visibility.Collapsed;
                 Logo.Width = 75;
                 Logo.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/header_logo.png"));
                 SidebarIcon.Source = new BitmapImage(new Uri("pack://application:,,,/Resources/img/sidebar_active.png"));
@@ -66,35 +64,12 @@ namespace JoyLeeWrite.Views
                 isSidebarCollapsed = true;
             }
         }
-
-        private void BackToDashboard_Click(object sender, RoutedEventArgs e)
+        private void Create_Series(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigate.navigatePage(new HomepageView());
-            MainWindow.MainVM.addHomepageViewModel();
-            MainWindow.MainVM.CurrentPageTitle = "Dashboard";
-            MainWindow.MainVM.SupPageTitle = "";
-        }
-
-        private void AddChapterView_ChapterAdded(string title, int number)
-        {
-            //// Giả sử DataContext là ViewModel chứa ObservableCollection<Chapter>
-            //var vm = DataContext as WriteChapterView;
-            //vm?.Chapters.Add(new Chapter
-            //{
-            //    Title = title,
-            //    ChapterNumber = number
-            //});
-
-            AddChapterView.Visibility = Visibility.Collapsed;
-        }
-
-        private void AddChapterView_Cancelled()
-        {
-            AddChapterView.Visibility = Visibility.Collapsed;
-        }
-        private void SeriesDetailView_AddChapterRequested(object sender, EventArgs e)
-        {
-            AddChapterView.Visibility = Visibility.Visible;
+            MainWindow.navigate.navigatePage(new CreateSeriesView());
+            MainWindow.MainVM.addInformationViewModel(FormMode.Create);
+            MainWindow.MainVM.addCreateSeriesViewModel();
         }
     }
-}
+     
+    }

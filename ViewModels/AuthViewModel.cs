@@ -1,4 +1,5 @@
 ﻿using JoyLeeWrite.Commands;
+using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
 using JoyLeeWrite.Views;
 using System;
@@ -90,8 +91,9 @@ namespace JoyLeeWrite.ViewModels
         public ICommand RegisterCommand { get; }
         public AuthViewModel()
         {
-           userService = new UserService();
-           LoginCommand = new RelayCommand( _ => Login());
+            userService = new UserService();
+            LoginCommand = new RelayCommand(_ => Login());
+            RegisterCommand = new RelayCommand(_ => LoginRegister());
         }
 
         private void Login()
@@ -100,11 +102,14 @@ namespace JoyLeeWrite.ViewModels
             {
                 return;
             }
-            if (userService.ValidateUserCredentials(Username, Password) is int userId && userId != -1)
+            User user = userService.ValidateUserCredentials(Username, Password);
+            if (user != null)
             {
-                MainWindow.MainVM.CurrentUserId = userId;
+                
                 MessageBox.Show("Login successful!", "Message",
                     MessageBoxButton.OK, MessageBoxImage.Information);
+                MainWindow.MainVM.CurrentUser =  user;
+                MainWindow.MainVM.Username = Username;
                 MainWindow.navigate.navigatePage(new HomepageView());
                 MainWindow.MainVM.addHomepageViewModel();
             }

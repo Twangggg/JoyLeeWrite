@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.WriteChapterVM
 {
     public class WriteViewModel : INotifyPropertyChanged
     {

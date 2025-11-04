@@ -1,6 +1,6 @@
 ﻿using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
-using JoyLeeWrite.ViewModels;
+using JoyLeeWrite.ViewModels.WriteChapterVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

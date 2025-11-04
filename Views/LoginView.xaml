@@ -314,11 +314,12 @@
                         FontSize="14"
                         FontWeight="Medium"
                         Foreground="#333333"
-                        Text="{Binding RegisterUsername}" />
+                        Text="Username" />
                     <TextBox
                         x:Name="RegisterUsername"
                         Margin="0,0,0,20"
-                        Style="{StaticResource ModernTextBox}" />
+                        Style="{StaticResource ModernTextBox}"
+                        Text="{Binding RegisterUsername}" />
 
                     <!--  Password  -->
                     <TextBlock
@@ -350,7 +351,6 @@
                     <Button
                         Height="35"
                         Margin="0,0,0,20"
-                        Click="Register_Click"
                         Command="{Binding RegisterCommand}"
                         Content="Register"
                         Style="{StaticResource PrimaryButton}" />

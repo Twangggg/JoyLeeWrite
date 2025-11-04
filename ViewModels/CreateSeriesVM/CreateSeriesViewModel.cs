@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.CreateSeriesVM
 {
     public class CreateSeriesViewModel 
     {

@@ -7,7 +7,7 @@ using JoyLeeWrite.Commands;
 using JoyLeeWrite.Services;
 using JoyLeeWrite.Models;
 
-namespace JoyLeeWrite.ViewModels
+namespace JoyLeeWrite.ViewModels.WriteChapterViewModel
 {
     public class EditorToolbarViewModel : INotifyPropertyChanged
     {

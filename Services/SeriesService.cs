@@ -34,12 +34,13 @@ namespace JoyLeeWrite.Services
             }
         }
 
-        public List<Series> GetRecentlyEdited(int limit)
+        public List<Series> GetRecentlyEdited(int limit, int userId)
         {
             List<Series> seriesList = new List<Series>();
             try
             {
                 seriesList = dbContext.Set<Series>()
+                    .Where(s => s.AuthorId == userId)
                     .OrderByDescending(s => s.LastModified)
                     .Take(limit)
                     .ToList();
@@ -56,12 +57,12 @@ namespace JoyLeeWrite.Services
             return seriesList;
         }
 
-        public List<Series> GetAllSeries()
+        public List<Series> GetAllSeries(int userId)
         {
             List<Series> seriesList = new List<Series>();
             try
             {
-                seriesList = dbContext.Set<Series>().ToList();
+                seriesList = dbContext.Set<Series>().Where(c => c.AuthorId == userId).ToList();
             }
             catch (Exception ex)
             {
