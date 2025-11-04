@@ -20,6 +20,7 @@ namespace JoyLeeWrite.ViewModels
         public CreateSeriesViewModel CreateSeriesVM { get; set; }
         public AddChapterViewModel AddChapterVM { get; set; }
         public WriteViewModel WriteVM { get; set; }
+        public AuthViewModel AuthVM { get; set; }
         public int CurrentSeriesId { get; set; }
         public int CurrentChapterId { get; set; }
         public int CurrentUserId { get; set; }
@@ -34,12 +35,15 @@ namespace JoyLeeWrite.ViewModels
 
         public MainViewModel()
         {
-            CurrentUserId = 1;
+            AuthVM = new AuthViewModel();
+        }
+
+        public void addHomepageViewModel()
+        {
             CurrentPageTitle = "Homepage";
             SupPageTitle = "";
             RecentlyEditedVM = new RecentlyEditedViewModel();
             AllSeriesVM = new AllSeriesViewModel();
-
         }
         public void UpdateHomepage()
         {
