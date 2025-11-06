@@ -76,12 +76,6 @@ namespace JoyLeeWrite.Views
             }
         }
 
-
-        private void AIButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Hỏi AI gì đây?", "AI Assistant", MessageBoxButton.OK, MessageBoxImage.Question);
-        }
-
         private bool isSidebarCollapsed = false;
 
         private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
@@ -157,6 +151,65 @@ namespace JoyLeeWrite.Views
         {
             MainWindow.navigate.navigatePage(new SeriesView());
             MainWindow.MainVM.addSeriesDetailViewModel(MainWindow.MainVM.CurrentSeriesId);
+        }
+
+        private void AIButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle chat box visibility
+            if (AIChatBox.Visibility == Visibility.Collapsed)
+            {
+                AIChatBox.Visibility = Visibility.Visible;
+                AIFloatingButton.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void CloseAIChat_Click(object sender, RoutedEventArgs e)
+        {
+            AIChatBox.Visibility = Visibility.Collapsed;
+            AIFloatingButton.Visibility = Visibility.Visible;
+        }
+
+        private void SendMessage_Click(object sender, RoutedEventArgs e)
+        {
+            string message = ChatInput.Text;
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                // Add user message to chat
+                AddUserMessage(message);
+                ChatInput.Clear();
+
+                // Call AI API here
+                // AddAIResponse(aiResponse);
+            }
+        }
+
+        private void ChatInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SendMessage_Click(sender, e);
+            }
+        }
+
+        private void AddUserMessage(string message)
+        {
+            var userBorder = new Border
+            {
+                Style = (Style)Resources["ChatMessageUserStyle"],
+                Margin = new Thickness(0, 0, 0, 12)
+            };
+
+            var textBlock = new TextBlock
+            {
+                Text = message,
+                FontSize = 14,
+                Foreground = Brushes.White,
+                TextWrapping = TextWrapping.Wrap
+            };
+
+            userBorder.Child = textBlock;
+            ChatMessagesPanel.Children.Add(userBorder);
+            ChatScrollViewer.ScrollToEnd();
         }
     }
 }

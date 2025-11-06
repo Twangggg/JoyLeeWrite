@@ -8,6 +8,34 @@
     Title="JoyLeeWrite"
     Background="#F5F5F5">
     <Page.Resources>
+        <Style x:Key="ToggleSidebarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderBrush" Value="#DDD" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F8F8F8" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--  Existing Styles (giữ nguyên)  -->
         <Style x:Key="Custombutton" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -42,7 +70,8 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!--  Styles  -->
+
+        <!--  All other existing styles here...  -->
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -73,103 +102,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style x:Key="ToolbarButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Width" Value="40" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="#DDD"
-                            BorderThickness="1"
-                            CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="Tag" Value="Active">
-                                <Setter TargetName="border" Property="Background" Value="#EFF8FF" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F0F0F0" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="NewStoryButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#2563EB" />
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Padding" Value="15,12" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Padding="{TemplateBinding Padding}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="6">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1D4ED8" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style x:Key="SidebarButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#666" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-            <Setter Property="Padding" Value="15,10" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Margin="5,2"
-                            Padding="{TemplateBinding Padding}"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="4">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F0F0F0" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style
-            x:Key="SelectedChapterStyle"
-            BasedOn="{StaticResource SidebarButtonStyle}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#E0E7FF" />
-            <Setter Property="Foreground" Value="#2563EB" />
         </Style>
 
         <Style x:Key="AIButtonStyle" TargetType="Button">
@@ -223,22 +155,88 @@
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="ToggleSidebarButtonStyle" TargetType="Button">
+        <!--  🎨 NEW: AI Chat Box Styles  -->
+        <Style x:Key="AIChatBoxStyle" TargetType="Border">
             <Setter Property="Background" Value="White" />
-            <Setter Property="BorderBrush" Value="#DDD" />
+            <Setter Property="CornerRadius" Value="16" />
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        BlurRadius="30"
+                        Direction="270"
+                        Opacity="0.15"
+                        ShadowDepth="5"
+                        Color="#000000" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ChatMessageUserStyle" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0" Color="#8B5CF6" />
+                        <GradientStop Offset="1" Color="#EC4899" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="CornerRadius" Value="18,18,4,18" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="MaxWidth" Value="320" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+        </Style>
+
+        <Style x:Key="ChatMessageAIStyle" TargetType="Border">
+            <Setter Property="Background" Value="#F3F4F6" />
+            <Setter Property="CornerRadius" Value="18,18,18,4" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="MaxWidth" Value="320" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <Style x:Key="ChatInputStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="#F9FAFB" />
+            <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Width" Value="50" />
-            <Setter Property="Height" Value="50" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Padding" Value="16,12" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="TextBox">
                         <Border
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8">
+                            CornerRadius="24">
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SendButtonStyle" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Offset="0" Color="#8B5CF6" />
+                        <GradientStop Offset="1" Color="#EC4899" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Width" Value="44" />
+            <Setter Property="Height" Value="44" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="22">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
@@ -246,111 +244,40 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F8F8F8" />
+                    <Setter Property="Opacity" Value="0.9" />
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <DropShadowEffect
-            x:Key="DropShadowEffect"
-            BlurRadius="10"
-            Direction="270"
-            ShadowDepth="2"
-            Color="#22000000" />
-        <Style x:Key="ModernContextMenu" TargetType="ContextMenu">
+
+        <Style x:Key="QuickActionButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="White" />
             <Setter Property="BorderBrush" Value="#E5E7EB" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Padding" Value="4" />
-            <Setter Property="HasDropShadow" Value="True" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="#6B7280" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="ContextMenu">
+                    <ControlTemplate TargetType="Button">
                         <Border
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="8">
-                            <Border.Effect>
-                                <DropShadowEffect
-                                    BlurRadius="16"
-                                    Direction="270"
-                                    Opacity="0.1"
-                                    ShadowDepth="4"
-                                    Color="#000000" />
-                            </Border.Effect>
-                            <StackPanel IsItemsHost="True" />
+                            CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F9FAFB" />
+                    <Setter Property="BorderBrush" Value="#D1D5DB" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
-
-        <!--  Modern MenuItem Style  -->
-        <Style x:Key="ModernMenuItem" TargetType="MenuItem">
-            <Setter Property="Height" Value="36" />
-            <Setter Property="Padding" Value="12,0" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Foreground" Value="#1F2937" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="MenuItem">
-                        <Border
-                            x:Name="Border"
-                            Margin="2"
-                            Background="Transparent"
-                            CornerRadius="4">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <!--  Icon  -->
-                                <ContentPresenter
-                                    Grid.Column="0"
-                                    Margin="0,0,8,0"
-                                    VerticalAlignment="Center"
-                                    ContentSource="Icon" />
-
-                                <!--  Header Text  -->
-                                <ContentPresenter
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    ContentSource="Header"
-                                    RecognizesAccessKey="True" />
-
-                                <!--  Shortcut  -->
-                                <TextBlock
-                                    Grid.Column="2"
-                                    Margin="24,0,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="12"
-                                    Foreground="#9CA3AF"
-                                    Text="{TemplateBinding InputGestureText}" />
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsHighlighted" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#F3F4F6" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="#D1D5DB" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!--  Separator Style  -->
-        <Style x:Key="ModernSeparator" TargetType="Separator">
-            <Setter Property="Background" Value="#E5E7EB" />
-            <Setter Property="Height" Value="1" />
-            <Setter Property="Margin" Value="8,4" />
-        </Style>
-
 
     </Page.Resources>
 
@@ -360,7 +287,7 @@
             <RowDefinition Height="9*" />
         </Grid.RowDefinitions>
 
-        <!--  Top Menu Bar  -->
+        <!--  Top Menu Bar (giữ nguyên)  -->
         <Border
             Grid.Row="0"
             Background="White"
@@ -375,7 +302,6 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--  Left Logo  -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Image
                         x:Name="Logo"
@@ -385,6 +311,7 @@
                         VerticalAlignment="Center"
                         Source="pack://application:,,,/Resources/img/logo.png" />
                 </StackPanel>
+
                 <Button
                     Grid.Column="1"
                     Width="25"
@@ -400,7 +327,7 @@
                         Source="pack://application:,,,/Resources/img/sidebar.png"
                         Stretch="Uniform" />
                 </Button>
-                <!--  Editable Title  -->
+
                 <TextBlock
                     x:Name="TitleTextBox"
                     Grid.Column="2"
@@ -414,22 +341,6 @@
                     Foreground="#333"
                     Text="{Binding CurrentPageTitle}"
                     TextAlignment="Left" />
-                <TextBlock
-                    Grid.Column="2"
-                    Margin="15,35,0,0"
-                    VerticalAlignment="Top"
-                    FontSize="14"
-                    Foreground="#888"
-                    Text="{Binding SupPageTitle}" />
-
-
-                <!--  Settings Button  -->
-                <Button
-                    Grid.Column="3"
-                    Margin="0,0,15,0"
-                    Content="⚙️"
-                    FontSize="18"
-                    Style="{StaticResource MenuButtonStyle}" />
 
                 <local:HeaderButtonView
                     Grid.Column="4"
@@ -438,8 +349,6 @@
             </Grid>
         </Border>
 
-
-
         <!--  Main Content Area  -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -447,41 +356,30 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-
+            <!--  Sidebar (giữ nguyên)  -->
             <Border
                 x:Name="SidebarBorder"
                 Width="300"
                 Background="White"
                 BorderBrush="#E5E7EB"
                 BorderThickness="0,0,1,0">
-
-                <!--  ✅ Dùng Grid thay vì DockPanel để cố định footer  -->
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
-                        <!--  Nội dung chính  -->
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
                     <Button
                         x:Name="BackSeries"
                         Grid.Column="0"
                         Width="270"
                         Height="40"
-                        Margin="0,0,0,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        BorderBrush="#CCC"
-                        BorderThickness="0"
                         Click="BackToSeries_Click"
-                        Cursor="Hand"
-                        FontSize="15"
-                        FontWeight="SemiBold"
-                        Foreground="#333"
                         Style="{StaticResource ToggleSidebarButtonStyle}">
                         <TextBlock FontSize="16" Text="🡠 Back" />
                     </Button>
-                    <!--  PHẦN CHÍNH  -->
+
                     <ScrollViewer
                         x:Name="SidebarContent"
                         Grid.Row="1"
@@ -489,66 +387,35 @@
                         VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,20,0,0">
                             <Button Command="{Binding NavigateToHomepageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE160;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="My Stories" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="📚" />
+                                    <TextBlock Text="My Stories" />
                                 </StackPanel>
                             </Button>
-
                             <Button Command="{Binding NavigateToStaticspageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE9D2;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="Statistics" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="📊" />
+                                    <TextBlock Text="Statistics" />
                                 </StackPanel>
                             </Button>
-
                             <Button Command="{Binding NavigateToProfilepageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE713;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="Settings" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="⚙️" />
+                                    <TextBlock Text="Settings" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>
                     </ScrollViewer>
-                    <!--  FOOTER AUTHOR  -->
+
                     <Border
-                        x:Name="AuthorInfoBorder"
                         Grid.Row="2"
-                        Margin="0,0,0,10"
                         Padding="15"
                         BorderBrush="#E5E7EB"
                         BorderThickness="0,1,0,0">
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <!--  Avatar  -->
+                        <StackPanel Orientation="Horizontal">
                             <Border
                                 Width="36"
                                 Height="36"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
                                 Background="#3B82F6"
                                 CornerRadius="18">
                                 <TextBlock
@@ -558,52 +425,25 @@
                                     Foreground="White"
                                     Text="A" />
                             </Border>
-
-                            <!--  Author Info  -->
-                            <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                                <TextBlock
-                                    FontSize="13"
-                                    FontWeight="SemiBold"
-                                    Foreground="#111"
-                                    Text="{Binding Username}" />
-                                <!--  <TextBlock
-                                    FontSize="12"
-                                    Foreground="#6B7280"
-                                    Text="author@email.com" />-->
-                            </StackPanel>
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                FontWeight="SemiBold"
+                                Text="{Binding Username}" />
                         </StackPanel>
                     </Border>
                 </Grid>
             </Border>
 
-
-
-
-            <!--  Toggle Button when Sidebar is Closed  -->
-            <Button
-                x:Name="ToggleButtonClosed"
-                Grid.Column="1"
-                Margin="10,10,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Click="ToggleSidebar_Click"
-                Style="{StaticResource ToggleSidebarButtonStyle}"
-                Visibility="Collapsed">
-                <TextBlock Text="&gt;" />
-            </Button>
-
-            <!--  Right Panel: Toolbar + Editor  -->
+            <!--  Right Panel  -->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--  Toolbar  -->
                 <local:EditorToolbarView DataContext="{Binding EditorToolbarVM}" DockPanel.Dock="Top" />
-
-
-                <!--  Editor Area  -->
 
                 <Border Grid.Row="1" Background="#F5F7FB">
                     <Grid>
@@ -611,8 +451,162 @@
                             <local:WriteView DataContext="{Binding WriteVM}" DockPanel.Dock="Top" />
                         </ScrollViewer>
 
+                        <!--  🎨 AI Chat Box (NEW)  -->
+                        <Border
+                            x:Name="AIChatBox"
+                            Width="500"
+                            Height="450"
+                            Margin="0,0,50,130"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Style="{StaticResource AIChatBoxStyle}"
+                            Visibility="Collapsed">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--  Header  -->
+                                <Border
+                                    Grid.Row="0"
+                                    Padding="20,16"
+                                    Background="#FAFAFA"
+                                    BorderBrush="#F0F0F0"
+                                    BorderThickness="0,0,0,1"
+                                    CornerRadius="16,16,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  AI Icon  -->
+                                        <Border
+                                            Grid.Column="0"
+                                            Width="32"
+                                            Height="32"
+                                            CornerRadius="16">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <GradientStop Offset="0" Color="#8B5CF6" />
+                                                    <GradientStop Offset="1" Color="#EC4899" />
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                Text="✨" />
+                                        </Border>
+
+                                        <!--  Title  -->
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="12,0,0,0"
+                                            VerticalAlignment="Center">
+                                            <TextBlock
+                                                FontSize="15"
+                                                FontWeight="SemiBold"
+                                                Foreground="#111827"
+                                                Text="AI Writing Assistant" />
+                                            <TextBlock
+                                                FontSize="11"
+                                                Foreground="#9CA3AF"
+                                                Text="Ask me anything about your story" />
+                                        </StackPanel>
+
+                                        <!--  Close Button  -->
+                                        <Button
+                                            Grid.Column="2"
+                                            Width="32"
+                                            Height="32"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Click="CloseAIChat_Click"
+                                            Cursor="Hand">
+                                            <TextBlock
+                                                FontSize="18"
+                                                Foreground="#6B7280"
+                                                Text="✕" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+
+                                <!--  Chat Messages Area  -->
+                                <ScrollViewer
+                                    x:Name="ChatScrollViewer"
+                                    Grid.Row="1"
+                                    Padding="20"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <StackPanel x:Name="ChatMessagesPanel">
+
+                                        <!--  AI Welcome Message  -->
+                                        <Border Margin="0,0,0,16" Style="{StaticResource ChatMessageAIStyle}">
+                                            <TextBlock
+                                                FontSize="14"
+                                                Foreground="#374151"
+                                                TextWrapping="Wrap">
+                                                <Run Text="👋 Hello! I'm your AI writing assistant. I can help you with:" />
+                                                <LineBreak />
+                                                <LineBreak />
+                                                <Run Text="• Brainstorming ideas" />
+                                                <LineBreak />
+                                                <Run Text="• Writing suggestions" />
+                                                <LineBreak />
+                                                <Run Text="• Grammar corrections" />
+                                                <LineBreak />
+                                                <Run Text="• Character development" />
+                                                <LineBreak />
+                                                <LineBreak />
+                                                <Run Text="What would you like help with?" />
+                                            </TextBlock>
+                                        </Border>
+
+                                    </StackPanel>
+                                </ScrollViewer>
+
+
+                                <!--  Input Area  -->
+                                <Border
+                                    Grid.Row="2"
+                                    Padding="5,4"
+                                    Background="White"
+                                    CornerRadius="0,0,16,16">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBox
+                                            x:Name="ChatInput"
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            KeyDown="ChatInput_KeyDown"
+                                            Style="{StaticResource ChatInputStyle}"
+                                            Text="Type your message..." />
+
+                                        <Button
+                                            Grid.Column="1"
+                                            Margin="12,0,0,0"
+                                            Click="SendMessage_Click"
+                                            Command="{Binding CallAICommand}"
+                                            Style="{StaticResource SendButtonStyle}">
+                                            <TextBlock FontSize="18" Text="➤" />
+                                        </Button>
+                                    </Grid>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+
                         <!--  AI Assistant Floating Button  -->
                         <Button
+                            x:Name="AIFloatingButton"
                             Margin="0,0,50,50"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"

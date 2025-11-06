@@ -1,4 +1,5 @@
-﻿using JoyLeeWrite.Services;
+﻿using JoyLeeWrite.QdrantConnection;
+using JoyLeeWrite.Services;
 using JoyLeeWrite.ViewModels;
 using System;
 using System.Collections.Generic;

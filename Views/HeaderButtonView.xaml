@@ -40,16 +40,10 @@
             DockPanel.Dock="Right"
             Orientation="Horizontal">
             <Button
-                Width="100"
-                Height="38"
-                Margin="0,0,10,0"
-                Background="#F5F5F5"
-                BorderBrush="#CCC"
-                BorderThickness="1"
-                Content="👁️ Preview"
-                Cursor="Hand"
-                FontWeight="SemiBold"
-                Foreground="#333"
+                Width="40"
+                Margin="0,0,15,0"
+                Content="⚙️"
+                FontSize="18"
                 Style="{StaticResource MenuButtonStyle}" />
             <Button
                 Width="90"
