@@ -34,7 +34,7 @@ namespace JoyLeeWrite.Views
 
             if (string.IsNullOrWhiteSpace(title))
             {
-                MessageBox.Show("Vui lòng nhập tên chapter.");
+                MessageBox.Show("Please enter chapter title!.");
                 return;
             }
             ChapterAdded?.Invoke(title, number);

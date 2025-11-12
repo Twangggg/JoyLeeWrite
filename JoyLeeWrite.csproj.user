@@ -14,6 +14,9 @@
     <Compile Update="Views\CreateSeriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ForgotPasswordDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\HomepageView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

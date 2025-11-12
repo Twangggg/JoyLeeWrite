@@ -8,6 +8,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+
     <UserControl.Resources>
         <DropShadowEffect
             x:Key="DropShadowEffect"
@@ -15,7 +16,20 @@
             Direction="270"
             ShadowDepth="2"
             Color="#22000000" />
+        <Style x:Key="PlainButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
+
     <StackPanel Margin="0,0,0,30">
         <TextBlock
             Margin="0,0,0,15"
@@ -23,87 +37,90 @@
             FontWeight="SemiBold"
             Foreground="#111827"
             Text="Recently Edited" />
+
         <ItemsControl ItemsSource="{Binding RecentlyEdited}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border
-                        Margin="8"
-                        Padding="12"
-                        Background="White"
-                        BorderBrush="#E5E7EB"
-                        BorderThickness="1"
-                        CornerRadius="10"
-                        Effect="{DynamicResource DropShadowEffect}">
-                        <DockPanel LastChildFill="True">
-                            <Border
-                                Width="55"
-                                Height="80"
-                                Margin="0,0,10,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Background="#F3F4F6"
-                                CornerRadius="6"
-                                DockPanel.Dock="Left">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontFamily="Segoe Fluent Icons"
-                                    FontSize="28"
-                                    Foreground="#3B82F6"
-                                    Text="&#xE82D;" />
-                            </Border>
-                            <!--  Nội dung bên phải  -->
-                            <StackPanel VerticalAlignment="Top">
-                                <!--  Tiêu đề  -->
-                                <TextBlock
-                                    MaxHeight="44"
-                                    Margin="0,0,0,4"
-                                    FontSize="18"
-                                    FontWeight="SemiBold"
-                                    Foreground="#111827"
-                                    LineHeight="22"
-                                    Text="{Binding Title}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="Wrap" />
+                    <Button
+                        Padding="0"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        BorderThickness="0"
+                        Command="{Binding DataContext.OpenChapterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                        CommandParameter="{Binding ChapterId}"
+                        Style="{StaticResource PlainButton}">
 
-                                <!--  Mô tả (hiện tối đa 2 dòng)  -->
-                                <TextBlock
-                                    MaxHeight="40"
-                                    Margin="0,0,0,6"
-                                    FontSize="14"
-                                    Foreground="#6B7280"
-                                    LineHeight="20"
-                                    Text="{Binding Description}"
-                                    TextTrimming="CharacterEllipsis"
-                                    TextWrapping="Wrap" />
+                        <Border
+                            Margin="8"
+                            Padding="12"
+                            Background="White"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Effect="{DynamicResource DropShadowEffect}">
 
-                                <!--  Thông tin cuối (icon + thời gian)  -->
-                                <StackPanel
-                                    Margin="0,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
+                            <DockPanel LastChildFill="True">
+                                <Border
+                                    Width="55"
+                                    Height="80"
+                                    Margin="0,0,10,0"
+                                    Background="#F3F4F6"
+                                    CornerRadius="6"
+                                    DockPanel.Dock="Left">
                                     <TextBlock
-                                        Margin="0,0,4,0"
+                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontFamily="Segoe Fluent Icons"
-                                        FontSize="13"
-                                        Foreground="#9CA3AF"
-                                        Text="&#xE823;" />
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        FontSize="13"
-                                        Foreground="#9CA3AF"
-                                        Text="{Binding LastModified, StringFormat='{}{0} trước'}" />
-                                </StackPanel>
-                            </StackPanel>
+                                        FontSize="28"
+                                        Foreground="#3B82F6"
+                                        Text="&#xE82D;" />
+                                </Border>
 
-                        </DockPanel>
-                    </Border>
+                                <StackPanel VerticalAlignment="Top">
+                                    <TextBlock
+                                        MaxHeight="44"
+                                        Margin="0,0,0,4"
+                                        FontSize="18"
+                                        FontWeight="SemiBold"
+                                        Foreground="#111827"
+                                        LineHeight="22"
+                                        Text="{Binding Title}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        MaxHeight="40"
+                                        Margin="0,0,0,6"
+                                        FontSize="14"
+                                        Foreground="#6B7280"
+                                        LineHeight="20"
+                                        Text="{Binding Description}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="Wrap" />
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,4,0"
+                                            FontFamily="Segoe Fluent Icons"
+                                            FontSize="13"
+                                            Foreground="#9CA3AF"
+                                            Text="&#xE823;" />
+                                        <TextBlock
+                                            FontSize="13"
+                                            Foreground="#9CA3AF"
+                                            Text="{Binding LastModified, StringFormat='{}{0} trước'}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DockPanel>
+
+                        </Border>
+                    </Button>
+
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -1,6 +1,7 @@
 ﻿using JoyLeeWrite.Commands;
 using JoyLeeWrite.Models;
 using JoyLeeWrite.Services;
+using JoyLeeWrite.Utils;
 using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
@@ -105,17 +106,23 @@ namespace JoyLeeWrite.ViewModels
             User user = userService.ValidateUserCredentials(Username, Password);
             if (user != null)
             {
-                
-                MessageBox.Show("Login successful!", "Message",
-                    MessageBoxButton.OK, MessageBoxImage.Information);
-                MainWindow.MainVM.CurrentUser =  user;
-                MainWindow.MainVM.Username = Username;
-                MainWindow.navigate.navigatePage(new HomepageView());
-                MainWindow.MainVM.addHomepageViewModel();
+                if (SecurityHelper.VerifyPassword( Password, user.PasswordHash))
+                {
+                    MessageBox.Show("Login successful!", "Message",
+                   MessageBoxButton.OK, MessageBoxImage.Information);
+                    MainWindow.MainVM.CurrentUser = user;
+                    MainWindow.MainVM.Username = Username;
+                    MainWindow.navigate.navigatePage(new HomepageView());
+                    MainWindow.MainVM.addHomepageViewModel();
+                } else
+                {
+                    MessageBox.Show("Incorrect password!", "Message");
+                }
+               
             }
             else
             {
-                MessageBox.Show("Invalid username or password!", "Message",
+                MessageBox.Show("Your username is not exist", "Message",
                     MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }

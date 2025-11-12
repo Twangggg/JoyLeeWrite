@@ -43,82 +43,153 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <StackPanel>
-        <TextBlock
-            Margin="0,0,0,15"
-            FontSize="20"
-            FontWeight="SemiBold"
-            Foreground="#111827"
-            Text="All Series" />
 
-        <ItemsControl ItemsSource="{Binding AllSeries}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+            <!--  Header với Search  -->
+            <Grid Margin="0,0,0,20">
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Foreground="#111827"
+                    Text="All Series" />
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
                     <Border
-                        Width="280"
-                        Margin="10"
+                        Width="300"
+                        Height="36"
                         Background="White"
                         BorderBrush="#E5E7EB"
                         BorderThickness="1"
-                        CornerRadius="12"
-                        SnapsToDevicePixels="True">
-                        <StackPanel>
-                            <Rectangle
-                                Height="380"
-                                RadiusX="12"
-                                RadiusY="12">
-                                <Rectangle.Fill>
-                                    <ImageBrush ImageSource="{Binding CoverImage}" Stretch="UniformToFill" />
-                                </Rectangle.Fill>
-                            </Rectangle>
+                        CornerRadius="8">
+                        <Grid>
+                            <TextBox
+                                x:Name="SearchTextBox"
+                                Padding="10,0,35,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                FontSize="14"
+                                Foreground="#111827"
+                                Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Padding="10,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#9CA3AF"
+                                IsHitTestVisible="False"
+                                Text="Search series...">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=SearchTextBox, Path=Text}" Value="">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <Button
+                                Width="30"
+                                Height="30"
+                                Margin="0,0,3,0"
+                                HorizontalAlignment="Right"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="🔍"
+                                Cursor="Hand"
+                                FontSize="14" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
 
 
-                            <!--  Nội dung  -->
-                            <StackPanel Margin="15,10,15,0">
-                                <TextBlock
-                                    Margin="0,0,0,5"
-                                    FontSize="14"
-                                    FontWeight="SemiBold"
-                                    Foreground="#111827"
-                                    Text="{Binding Title}" />
-                                <TextBlock
-                                    FontSize="12"
-                                    Foreground="#6B7280"
-                                    Text="{Binding ChapterCount, StringFormat={}{0} Chapters}" />
-                                <TextBlock
-                                    Margin="0,0,0,10"
-                                    FontSize="12"
-                                    Foreground="#9CA3AF"
-                                    Text="{Binding UpdatedDate, StringFormat=Last: {0}}" />
-                                <StackPanel
-                                    Margin="0,0,0,5"
-                                    HorizontalAlignment="Left"
-                                    Orientation="Horizontal">
-                                    <Button
-                                        Width="60"
-                                        Height="28"
-                                        Margin="0,0,5,0"
-                                        Background="#3B82F6"
-                                        BorderThickness="0"
-                                        Click="ViewSeriesDetail"
-                                        Content="View"
-                                        Cursor="Hand"
+
+            <ItemsControl x:Name="SeriesItemsControl" ItemsSource="{Binding FilteredSeries}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Width="280"
+                            Margin="10"
+                            Background="White"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            CornerRadius="12"
+                            SnapsToDevicePixels="True">
+                            <StackPanel>
+                                <Rectangle
+                                    Height="380"
+                                    RadiusX="12"
+                                    RadiusY="12">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="{Binding CoverImage}" Stretch="UniformToFill" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                                <!--  Nội dung  -->
+                                <StackPanel Margin="15,10,15,0">
+                                    <TextBlock
+                                        Margin="0,0,0,5"
+                                        FontSize="14"
                                         FontWeight="SemiBold"
-                                        Foreground="White"
-                                        Style="{StaticResource Custombutton}"
-                                        Tag="{Binding SeriesId}" />
+                                        Foreground="#111827"
+                                        Text="{Binding Title}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="#6B7280"
+                                        Text="{Binding ChapterCount, StringFormat={}{0} Chapters}" />
+                                    <TextBlock
+                                        Margin="0,0,0,10"
+                                        FontSize="12"
+                                        Foreground="#9CA3AF"
+                                        Text="{Binding UpdatedDate, StringFormat=Last: {0}}" />
+                                    <StackPanel
+                                        Margin="0,0,0,5"
+                                        HorizontalAlignment="Left"
+                                        Orientation="Horizontal">
+                                        <Button
+                                            Width="60"
+                                            Height="28"
+                                            Margin="0,0,5,0"
+                                            Background="#3B82F6"
+                                            BorderThickness="0"
+                                            Click="ViewSeriesDetail"
+                                            Content="View"
+                                            Cursor="Hand"
+                                            FontWeight="SemiBold"
+                                            Foreground="White"
+                                            Style="{StaticResource Custombutton}"
+                                            Tag="{Binding SeriesId}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <!--  Hiển thị số kết quả  -->
+            <TextBlock
+                Margin="0,0,0,15"
+                FontSize="14"
+                Foreground="#6B7280">
+                <Run Text="Showing" />
+                <Run FontWeight="SemiBold" Text="{Binding FilteredSeries.Count, Mode=OneWay}" />
+                <Run Text="series" />
+            </TextBlock>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

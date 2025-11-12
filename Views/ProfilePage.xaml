@@ -461,47 +461,21 @@
                         VerticalScrollBarVisibility="Auto">
                         <StackPanel Margin="0,20,0,0">
                             <Button Command="{Binding NavigateToHomepageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE160;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="My Stories" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="📚" />
+                                    <TextBlock Text="My Stories" />
                                 </StackPanel>
                             </Button>
-
                             <Button Command="{Binding NavigateToStaticspageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE9D2;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="Statistics" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="📊" />
+                                    <TextBlock Text="Statistics" />
                                 </StackPanel>
                             </Button>
-
                             <Button Command="{Binding NavigateToProfilepageCommand}" Style="{StaticResource Custombutton}">
-                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0,0,10,0"
-                                        FontFamily="Segoe Fluent Icons"
-                                        FontSize="16"
-                                        Foreground="#333"
-                                        Text="&#xE713;" />
-                                    <TextBlock
-                                        FontSize="14"
-                                        Foreground="#333"
-                                        Text="Settings" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Margin="0,0,10,0" Text="⚙️" />
+                                    <TextBlock Text="Settings" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>

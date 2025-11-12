@@ -18,7 +18,12 @@
             Color="#22000000" />
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Border
+            Grid.Row="0"
             Margin="30,20,30,40"
             Padding="25"
             Background="#F8FBFF"
@@ -35,5 +40,11 @@
                 FontSize="16"
                 Foreground="Black" />
         </Border>
+        <TextBlock
+            Grid.Row="1"
+            Margin="30,0,0,25"
+            FontSize="13"
+            Foreground="#666"
+            Text="{Binding WordCount, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
     </Grid>
 </UserControl>

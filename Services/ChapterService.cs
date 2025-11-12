@@ -32,7 +32,7 @@ namespace JoyLeeWrite.Services
 
                     if (chapter == null)
                     {
-                        MessageBox.Show("Không tìm thấy chương cần lưu!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Error when saving!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -46,16 +46,16 @@ namespace JoyLeeWrite.Services
 
                     if (result > 0)
                     {
-                        MessageBox.Show("Lưu chương thành công!", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Save Successful!", "Successfully", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                     {
-                        MessageBox.Show("Không có thay đổi nào được lưu!", "Cảnh báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show("No change in text!", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi lưu chương: {ex.Message}\nInner: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error: {ex.Message}\nInner: {ex.InnerException?.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -170,6 +170,14 @@ namespace JoyLeeWrite.Services
             {
                 return dbContext.Set<Chapter>().Where(c => c.Series.AuthorId == userId)
                     .Sum(c => c.WordCount);
+            }
+        }
+
+        public List<Chapter> getRecentlyEditedChapters(int limit, int userId)
+        {
+            using (var dbContext = CreateContext())
+            {
+                return dbContext.Set<Chapter>().Where(c => c.Series.AuthorId == userId).OrderByDescending(c => c.LastModified).Take(limit).ToList();
             }
         }
     }

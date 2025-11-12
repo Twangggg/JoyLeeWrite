@@ -42,8 +42,9 @@
             <Button
                 Width="40"
                 Margin="0,0,15,0"
-                Content="⚙️"
-                FontSize="18"
+                Command="{Binding ImportCommand}"
+                Content="⭳"
+                FontSize="20"
                 Style="{StaticResource MenuButtonStyle}" />
             <Button
                 Width="90"

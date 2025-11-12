@@ -28,53 +28,6 @@ namespace JoyLeeWrite.Views
             InitializeComponent();
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void NewStoryButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void NewChapterButton_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void EditorTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void EditorRichTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-           
-        }
-
-        private void EditorRichTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var richText = sender as RichTextBox;
-            if (richText != null)
-            {
-                TextRange textRange = new TextRange(richText.Document.ContentStart, richText.Document.ContentEnd);
-                if (textRange.Text.Trim() == "Start writing your story...")
-                {
-                    textRange.Text = "";
-                }
-            }
-        }
 
         private bool isSidebarCollapsed = false;
 
@@ -116,41 +69,17 @@ namespace JoyLeeWrite.Views
             }
         }
 
-        private void TitleTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var box = sender as TextBox;
-            TitleTextBox.Text = "";
-            box.Background = Brushes.White;
-            box.Cursor = Cursors.IBeam;
-        }
-
-        
-
-        private void TitleTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                e.Handled = true;
-                Keyboard.ClearFocus();
-            }
-        }
-
-        private void FileButton_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            if (button?.ContextMenu != null)
-            {
-                button.Tag = "Active";
-                button.ContextMenu.PlacementTarget = button;
-                button.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-                button.ContextMenu.IsOpen = true;
-            }
-        }
 
         private void BackToSeries_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.navigate.navigatePage(new SeriesView());
-            MainWindow.MainVM.addSeriesDetailViewModel(MainWindow.MainVM.CurrentSeriesId);
+            if (MainWindow.MainVM.CurrentSeriesId == 0)
+            {
+                MainWindow.navigate.goBack();
+            } else
+            {
+                MainWindow.navigate.navigatePage(new SeriesView());
+                MainWindow.MainVM.addSeriesDetailViewModel(MainWindow.MainVM.CurrentSeriesId);
+            }
         }
 
         private void AIButton_Click(object sender, RoutedEventArgs e)

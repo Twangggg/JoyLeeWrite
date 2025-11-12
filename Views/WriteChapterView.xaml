@@ -588,7 +588,7 @@
                                             VerticalAlignment="Center"
                                             KeyDown="ChatInput_KeyDown"
                                             Style="{StaticResource ChatInputStyle}"
-                                            Text="Type your message..." />
+                                            Text="{Binding RequestContent}" />
 
                                         <Button
                                             Grid.Column="1"
