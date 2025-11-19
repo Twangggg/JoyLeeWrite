@@ -9,7 +9,6 @@ namespace JoyLeeWrite.Utils
 {
     public class RichTextHelper
     {
-        // ✅ Flag để ngăn vòng lặp vô hạn
         private static bool _isUpdating = false;
 
         /// <summary>
@@ -73,8 +72,7 @@ namespace JoyLeeWrite.Utils
         {
             if (d is not RichTextBox richTextBox)
                 return;
-
-            // ✅ FIX 1: Ngăn vòng lặp vô hạn
+          
             if (_isUpdating)
                 return;
 
@@ -82,10 +80,8 @@ namespace JoyLeeWrite.Utils
             {
                 _isUpdating = true;
 
-                // ✅ FIX 2: Unsubscribe event trước khi modify
-                richTextBox.TextChanged -= RichTextBox_TextChanged;
-
-                // ✅ FIX 3: Sử dụng Dispatcher.Invoke để đảm bảo UI thread an toàn
+                
+                richTextBox.TextChanged -= RichTextBox_TextChanged;               
                 richTextBox.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     try
@@ -118,7 +114,6 @@ namespace JoyLeeWrite.Utils
                     }
                 }), System.Windows.Threading.DispatcherPriority.Background);
 
-                // ✅ FIX 6: Re-subscribe event SAU KHI đã load xong
                 richTextBox.TextChanged += RichTextBox_TextChanged;
             }
             finally
@@ -140,7 +135,6 @@ namespace JoyLeeWrite.Utils
             if (sender is not RichTextBox richTextBox)
                 return;
 
-            // ✅ FIX 8: Ngăn vòng lặp khi đang update
             if (_isUpdating)
                 return;
 
@@ -148,7 +142,6 @@ namespace JoyLeeWrite.Utils
             {
                 _isUpdating = true;
 
-                // ✅ FIX 9: Lưu XAML an toàn
                 var range = new TextRange(
                     richTextBox.Document.ContentStart,
                     richTextBox.Document.ContentEnd
@@ -161,7 +154,6 @@ namespace JoyLeeWrite.Utils
                 using var reader = new StreamReader(stream, Encoding.UTF8);
                 var newXaml = reader.ReadToEnd();
 
-                // ✅ FIX 10: Chỉ update nếu thực sự có thay đổi
                 var currentXaml = GetBoundDocument(richTextBox);
                 if (currentXaml != newXaml)
                 {
@@ -176,6 +168,11 @@ namespace JoyLeeWrite.Utils
             {
                 _isUpdating = false;
             }
+        }
+        public static void SetPlainText(RichTextBox richTextBox, string text)
+        {
+            if (richTextBox == null) return;
+            richTextBox.Document.Blocks.Add(new Paragraph(new Run(text ?? string.Empty)));
         }
     }
 }

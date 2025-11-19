@@ -29,7 +29,7 @@ public partial class JoyLeeWriteDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserSetting> UserSettings { get; set; }
-
+    public virtual DbSet<WritingStatistic> WritingStatistics { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Server=.;Database=JoyLeeWrite;Trusted_Connection=True;TrustServerCertificate=True");
 
@@ -161,6 +161,26 @@ public partial class JoyLeeWriteDbContext : DbContext
                 .HasConstraintName("FK_UserSettings_User");
         });
 
+        modelBuilder.Entity<WritingStatistic>(entity =>
+        {
+            entity.HasKey(e => e.StatId);
+
+            entity.Property(e => e.RecordDate)
+                .HasColumnType("date");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(sysutcdatetime())");
+
+            entity.HasIndex(e => new { e.UserId, e.RecordDate })
+                .IsUnique()
+                .HasDatabaseName("UX_WritingStats_UserDate");
+
+            entity.HasOne(d => d.Author)
+                .WithMany()
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_WritingStats_User");
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

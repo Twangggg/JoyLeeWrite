@@ -50,9 +50,22 @@ namespace JoyLeeWrite.Views
 
         private void ForgotPassword_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Implement forgot password functionality
-            MessageBox.Show("Tính năng này đang được phát triển!", "Thông báo",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+
+            var forgotPasswordDialog = new ForgotPasswordDialog
+            {
+                Owner = Window.GetWindow(this)
+            };
+
+            bool? result = forgotPasswordDialog.ShowDialog();
+
+            if (result == true)
+            {
+                MessageBox.Show("Password has been reset successfully! Please login with your new password.",
+                    "Success",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+            }
         }
+
     }
 }

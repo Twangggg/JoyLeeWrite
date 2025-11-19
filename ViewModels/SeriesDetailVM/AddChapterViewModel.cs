@@ -103,9 +103,14 @@ namespace JoyLeeWrite.ViewModels.WriteChapterVM
 
         private bool ValidateInput()
         {
-            if (ChapterNumber <= 0 || !chapterService.checkExistChapterNumber(ChapterNumber, MainWindow.MainVM.CurrentSeriesId))
+            if (ChapterNumber <= 0)
             {
-                MessageBox.Show("Invalid Chapter Number", "Message");
+                MessageBox.Show("This chapter number is invalid", "Message");
+                return false;
+            }
+            if (!chapterService.checkExistChapterNumber(ChapterNumber, MainWindow.MainVM.CurrentSeriesId))
+            {
+                MessageBox.Show("This chapter number is exist", "Message");
                 return false;
             }
             if (string.IsNullOrEmpty(Title))

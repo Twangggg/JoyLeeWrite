@@ -113,8 +113,64 @@ CREATE TABLE dbo.UserSettings (
     CONSTRAINT FK_UserSettings_User FOREIGN KEY (UserId) REFERENCES dbo.Users(UserId) ON DELETE CASCADE
 );
 GO
+CREATE TABLE dbo.WritingStatistics (
+    StatId BIGINT IDENTITY(1,1) PRIMARY KEY,
+    UserId INT NOT NULL,
+    RecordDate DATE NOT NULL,
+    WordsWritten INT NOT NULL DEFAULT 0,
+    ChaptersCreated INT NOT NULL DEFAULT 0,
+    ChaptersModified INT NOT NULL DEFAULT 0,
+    WritingTimeMinutes INT NOT NULL DEFAULT 0,
+    CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
+    
+    CONSTRAINT FK_WritingStats_User FOREIGN KEY (UserId)
+        REFERENCES dbo.Users(UserId) ON DELETE CASCADE,
+    
+    -- Đảm bảo mỗi user chỉ có 1 record cho mỗi ngày
+    CONSTRAINT UX_WritingStats_UserDate UNIQUE (UserId, RecordDate)
+);
+GO
 
+-- Index để truy vấn nhanh theo user và khoảng thời gian
+CREATE INDEX IX_WritingStats_UserDate 
+ON dbo.WritingStatistics(UserId, RecordDate DESC);
+GO
 
+CREATE TRIGGER trg_UpdateWritingStats_AfterChapterUpdate
+ON dbo.Chapters
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    DECLARE @UserId INT, @WordsAdded INT, @IsNew BIT;
+    DECLARE @Today DATE = CAST(GETDATE() AS DATE);
+    
+    -- Lấy thông tin từ inserted và deleted
+    SELECT 
+        @UserId = s.AuthorId,
+        @WordsAdded = i.WordCount - ISNULL(d.WordCount, 0),
+        @IsNew = CASE WHEN d.ChapterId IS NULL THEN 1 ELSE 0 END
+    FROM inserted i
+    INNER JOIN dbo.Series s ON i.SeriesId = s.SeriesId
+    LEFT JOIN deleted d ON i.ChapterId = d.ChapterId;
+    
+    -- Cập nhật thống kê
+    MERGE dbo.WritingStatistics AS target
+    USING (SELECT @UserId AS UserId, @Today AS RecordDate) AS source
+    ON target.UserId = source.UserId AND target.RecordDate = source.RecordDate
+    WHEN MATCHED THEN
+        UPDATE SET 
+            WordsWritten = WordsWritten + @WordsAdded,
+            ChaptersCreated = ChaptersCreated + @IsNew,
+            ChaptersModified = ChaptersModified + (1 - @IsNew)
+    WHEN NOT MATCHED THEN
+        INSERT (UserId, RecordDate, WordsWritten, ChaptersCreated, ChaptersModified)
+        VALUES (@UserId, @Today, 
+                CASE WHEN @WordsAdded > 0 THEN @WordsAdded ELSE 0 END,
+                @IsNew, 1 - @IsNew);
+END;
+GO
 IF OBJECT_ID('dbo.trg_Chapters_UpdateWordCount', 'TR') IS NOT NULL
     DROP TRIGGER dbo.trg_Chapters_UpdateWordCount;
 GO
@@ -294,3 +350,10 @@ VALUES
 (2, 'theme', 'light'),
 (3, 'language', 'vi');
 GO
+INSERT INTO dbo.WritingStatistics (UserId, RecordDate, WordsWritten, ChaptersCreated, ChaptersModified, WritingTimeMinutes)
+VALUES
+(4, DATEADD(DAY, -4, CAST(GETDATE() AS DATE)), 10, 1, 0, 30),
+(4, DATEADD(DAY, -3, CAST(GETDATE() AS DATE)), 20, 1, 1, 40),
+(4, DATEADD(DAY, -2, CAST(GETDATE() AS DATE)), 50, 0, 2, 25),
+(4, DATEADD(DAY, -1, CAST(GETDATE() AS DATE)), 25, 1, 1, 55),
+(4, CAST(GETDATE() AS DATE), 30, 1, 0, 60);

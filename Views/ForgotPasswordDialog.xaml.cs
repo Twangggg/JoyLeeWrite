@@ -1,7 +1,4 @@
-﻿using JoyLeeWrite.Models;
-using JoyLeeWrite.Services;
-using JoyLeeWrite.ViewModels.WriteChapterVM;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,20 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace JoyLeeWrite.Views
 {
     /// <summary>
-    /// Interaction logic for WriteView.xaml
+    /// Interaction logic for ForgotPasswordDialog.xaml
     /// </summary>
-    public partial class WriteView : UserControl
+    public partial class ForgotPasswordDialog : Window
     {
-        public WriteView()
+        public ForgotPasswordDialog()
         {
             InitializeComponent();
-            MainWindow.MainVM.addWriteChapterViewModel(EditorRichTextBox, MainWindow.MainVM.CurrentSeriesId, MainWindow.MainVM.CurrentChapterId);
+        }
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
         }
     }
 }

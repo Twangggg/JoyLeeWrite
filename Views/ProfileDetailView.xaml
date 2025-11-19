@@ -109,6 +109,8 @@
                     Color="Black" />
             </Border.Effect>
             <StackPanel>
+
+                <!--  Header  -->
                 <TextBlock
                     Margin="0,0,0,5"
                     FontSize="18"
@@ -120,6 +122,7 @@
                     Foreground="#666"
                     Text="Your personal information" />
 
+                <!--  Avatar  -->
                 <StackPanel Margin="0,0,0,25" Orientation="Horizontal">
                     <Border
                         Width="64"
@@ -130,7 +133,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="28"
+                            FontSize="24"
                             FontWeight="Bold"
                             Foreground="White"
                             Text="A" />
@@ -142,25 +145,83 @@
                         Style="{StaticResource MenuButtonStyle}" />
                 </StackPanel>
 
+                <!--  Username  -->
                 <TextBlock
-                    Margin="0,0,0,8"
+                    Margin="0,0,0,0"
                     FontSize="13"
                     FontWeight="SemiBold"
                     Text="User name" />
                 <TextBox
-                    Margin="0,0,0,20"
-                    Style="{StaticResource ModernTextBox}"
+                    Height="42"
+                    Margin="10,0,10,0"
+                    VerticalContentAlignment="Center"
                     Text="{Binding Username}" />
 
-                <TextBlock
-                    Margin="0,0,0,8"
-                    FontSize="13"
-                    FontWeight="SemiBold"
-                    Text="Email" />
-                <TextBox
-                    Margin="0,0,0,20"
-                    Style="{StaticResource ModernTextBox}"
-                    Text="{Binding Email}" />
+                <Grid Margin="0,0,0,20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="120" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="140" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,0,5"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Text="Email" />
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="0,0,0,5"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Text="OTP" />
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Height="42"
+                        Margin="10,0,10,0"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Height="42"
+                        Margin="0,0,10,0"
+                        Command="{Binding SendOtpCommand}"
+                        Content="Send OTP"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+
+
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Height="42"
+                        Margin="20,0,10,0"
+                        VerticalContentAlignment="Center"
+                        Text="{Binding OtpInput}" />
+
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="3"
+                        Height="42"
+                        Command="{Binding VerifyOtpCommand}"
+                        Content="Verify Email"
+                        Style="{StaticResource PrimaryButtonStyle}" />
+                </Grid>
+
+                <!--  Save button  -->
                 <Button
                     HorizontalAlignment="Left"
                     Command="{Binding SaveProfileCommand}"

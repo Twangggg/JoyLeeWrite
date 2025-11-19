@@ -1,5 +1,6 @@
 ﻿using JoyLeeWrite.Data;
 using JoyLeeWrite.Models;
+using JoyLeeWrite.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace JoyLeeWrite.Services
             using (var dbContext = CreateContext())
             {
                 var user = dbContext.Users
-                    .FirstOrDefault(u => u.Username == username && u.PasswordHash == password);
+                    .FirstOrDefault(u => u.Username == username);
                 return user == null ? null : user;
             }
         }
@@ -37,8 +38,7 @@ namespace JoyLeeWrite.Services
                     var newUser = new Models.User
                     {
                         Username = username,
-                        //PasswordHash = HashPassword(password),
-                        PasswordHash = password,
+                        PasswordHash = SecurityHelper.HashPassword(password),
                         CreatedAt = DateTime.UtcNow
                     };
 
@@ -49,20 +49,10 @@ namespace JoyLeeWrite.Services
             }
             catch (Exception ex)
             {
-                // Log lỗi nếu cần
-                return -2; // Lỗi DB
+                return -2;
             }
         }
 
-        //private string HashPassword(string password)
-        //{
-        //    using (var sha256 = SHA256.Create())
-        //    {
-        //        var bytes = Encoding.UTF8.GetBytes(password);
-        //        var hash = sha256.ComputeHash(bytes);
-        //        return Convert.ToBase64String(hash);
-        //    }
-        //}
         public bool UpdateUserProfile(int userId, string newUsername, string newEmail)
         {
             using (var dbContext = CreateContext())
@@ -74,6 +64,35 @@ namespace JoyLeeWrite.Services
                 user.Email = newEmail;
                 dbContext.SaveChanges();
                 return true;
+            }
+        }
+
+        public bool UpdatePasswordByEmail(string email, string password)
+        {
+            using (var dbContext = CreateContext())
+            {
+                var user = dbContext.Users.FirstOrDefault(
+                    u => u.Email == email);
+                if (user == null) return false;
+                user.PasswordHash = SecurityHelper.HashPassword(password);
+                dbContext.SaveChanges();
+                return true;
+            }        
+        }
+        public bool CheckExistEmail(string email)
+        {
+            using (var dbContext = CreateContext())
+            {
+                return dbContext.Set<User>().Any(u => u.Email != null &&
+                                              u.Email.ToLower().Equals(email.ToLower()));
+            }
+        }
+
+        public bool CheckExistUsername(string username)
+        {
+            using (var dbContext = CreateContext())
+            {
+                return dbContext.Set<User>().Any(u => u.Username.ToLower().Equals(username.ToLower()));
             }
         }
     }

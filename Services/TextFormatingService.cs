@@ -28,8 +28,6 @@ namespace JoyLeeWrite.Services
 
         public void ToggleUnderline()
         {
-            //if (!HasSelection) return;
-
             var current = Selection.GetPropertyValue(Inline.TextDecorationsProperty);
             bool isUnderlined = current != DependencyProperty.UnsetValue && current == TextDecorations.Underline;
             Selection.ApplyPropertyValue(Inline.TextDecorationsProperty, isUnderlined ? null : TextDecorations.Underline);
@@ -38,7 +36,6 @@ namespace JoyLeeWrite.Services
         private void ApplyStyle(DependencyProperty property, object activeValue, object normalValue)
         {
             if (Selection == null) return;
-
             var current = Selection.GetPropertyValue(property);
             if (current != DependencyProperty.UnsetValue && current.Equals(activeValue))
                 Selection.ApplyPropertyValue(property, normalValue);

@@ -1,5 +1,6 @@
 ﻿using JoyLeeWrite.Commands;
 using JoyLeeWrite.Models;
+using JoyLeeWrite.QdrantConnection;
 using JoyLeeWrite.Services;
 using JoyLeeWrite.ViewModels.CreateSeriesVM;
 using JoyLeeWrite.ViewModels.HomepageViewModel;
@@ -10,9 +11,11 @@ using JoyLeeWrite.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -39,6 +42,7 @@ namespace JoyLeeWrite.ViewModels
         public ICommand NavigateToHomepageCommand { get; set; }
         public ICommand NavigateToStaticspageCommand { get; set; }
         public ICommand NavigateToProfilepageCommand { get; set; }
+        public ICommand CallAICommand { get; set; }
         public MainViewModel(RichTextBox richTextBox)
         {
             TextFormattingService _textService = new TextFormattingService(richTextBox);
@@ -123,10 +127,20 @@ namespace JoyLeeWrite.ViewModels
         public void addWriteChapterViewModel(RichTextBox richTextBox, int seriesId, int chapterId)
         {
             TextFormattingService _textService = new TextFormattingService(richTextBox);
+            CallAICommand = new RelayCommand(_ => CallAIAsync());
             EditorToolbarVM = new EditorToolbarViewModel(_textService, seriesId, chapterId);
-            WriteVM = new WriteViewModel(_textService, seriesId, chapterId);
+            WriteVM = new WriteViewModel(_textService, richTextBox, seriesId, chapterId);
             HeaderButtonVM = new HeaderButtonViewModel(richTextBox);
         }
+
+        private async Task CallAIAsync()
+        {
+            var rag = new RAGQueryService();
+            string answer = await rag.AskAsync(RequestContent);
+            Debug.WriteLine("AI Response: " + answer);
+
+        }
+
         private string _currentPageTitle;
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -155,6 +169,15 @@ namespace JoyLeeWrite.ViewModels
             set
             {
                 _username = value;
+            }
+        }
+        private string _requestContent;
+        public string RequestContent
+        {
+            get => _requestContent;
+            set
+            {
+                _requestContent = value;
             }
         }
     }

@@ -271,7 +271,7 @@
                         utils:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource ModernPasswordBox}" />
 
-                    <!--  Forgot Password  -->
+                    
                     <Button
                         Margin="0,0,0,30"
                         HorizontalAlignment="Right"
@@ -362,8 +362,8 @@
                         LineHeight="18"
                         TextAlignment="Center"
                         TextWrapping="Wrap">
-                        By registering, you agree to<Hyperlink Foreground="#2B7DE9">Terms of Service</Hyperlink>
-                        and<Hyperlink Foreground="#2B7DE9">Privacy Policy</Hyperlink>
+                        By registering, you agree to<Hyperlink Foreground="#2B7DE9"> Terms of Service</Hyperlink>
+                        and<Hyperlink Foreground="#2B7DE9"> Privacy Policy</Hyperlink>
                     </TextBlock>
                 </StackPanel>
             </Grid>

@@ -216,7 +216,6 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!--  Title  -->
                 <TextBlock
                     Grid.Row="0"
                     Margin="0,0,0,30"
@@ -225,236 +224,187 @@
                     Foreground="#0F172A"
                     Text="This Week's Writing Activity" />
 
-                <!--  Chart Area  -->
-                <Grid x:Name="ChartGrid" Grid.Row="1">
+                <Grid Grid.Row="1">
                     <Canvas
-                        x:Name="ChartCanvas"
-                        Margin="40,20,20,40"
-                        ClipToBounds="True">
+                        Width="1200"
+                        Height="400"
+                        Margin="60,20,20,40"
+                        ClipToBounds="False">
 
-                        <!--  Grid Lines (Horizontal)  -->
-                        <Line
-                            Canvas.Top="0"
-                            Stroke="#E2E8F0"
-                            StrokeThickness="1"
-                            X1="0"
-                            X2="660"
-                            Y1="0"
-                            Y2="0" />
-                        <Line
-                            Canvas.Top="90"
-                            Stroke="#E2E8F0"
-                            StrokeThickness="1"
-                            X1="0"
-                            X2="660"
-                            Y1="0"
-                            Y2="0" />
-                        <Line
-                            Canvas.Top="180"
-                            Stroke="#E2E8F0"
-                            StrokeThickness="1"
-                            X1="0"
-                            X2="660"
-                            Y1="0"
-                            Y2="0" />
-                        <Line
-                            Canvas.Top="270"
-                            Stroke="#E2E8F0"
-                            StrokeThickness="1"
-                            X1="0"
-                            X2="660"
-                            Y1="0"
-                            Y2="0" />
-                        <Line
-                            Canvas.Top="360"
-                            Stroke="#E2E8F0"
-                            StrokeThickness="1"
-                            X1="0"
-                            X2="660"
-                            Y1="0"
-                            Y2="0" />
+                        <ItemsControl ItemsSource="{Binding GridLines}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Line
+                                        Stroke="#E2E8F0"
+                                        StrokeThickness="1"
+                                        X1="0"
+                                        X2="1020" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
                         <!--  Y-axis Labels  -->
                         <TextBlock
-                            Canvas.Left="-35"
+                            Canvas.Left="-50"
                             Canvas.Top="-8"
                             FontSize="12"
-                            Foreground="#94A3B8"
-                            Text="6000" />
+                            Foreground="#94A3B8"/>
                         <TextBlock
-                            Canvas.Left="-35"
+                            Canvas.Left="-50"
                             Canvas.Top="82"
                             FontSize="12"
-                            Foreground="#94A3B8"
-                            Text="4500" />
+                            Foreground="#94A3B8"/>
                         <TextBlock
-                            Canvas.Left="-35"
+                            Canvas.Left="-50"
                             Canvas.Top="172"
                             FontSize="12"
-                            Foreground="#94A3B8"
-                            Text="3000" />
+                            Foreground="#94A3B8"/>
                         <TextBlock
-                            Canvas.Left="-35"
+                            Canvas.Left="-50"
                             Canvas.Top="262"
                             FontSize="12"
-                            Foreground="#94A3B8"
-                            Text="1500" />
+                            Foreground="#94A3B8" />
                         <TextBlock
-                            Canvas.Left="-15"
+                            Canvas.Left="-30"
                             Canvas.Top="352"
                             FontSize="12"
                             Foreground="#94A3B8"
                             Text="0" />
 
-                        <!--  Main Line Chart  -->
+                        <!--  Chart Line  -->
                         <Polyline
-                            x:Name="ChartLine"
-                            Points="0,210 110,150 220,180 330,60 440,54 550,75 660,30"
+                            Points="{Binding PolylinePoints}"
                             Stroke="#3B82F6"
                             StrokeLineJoin="Round"
                             StrokeThickness="3" />
 
                         <!--  Data Points  -->
-                        <Ellipse
-                            Canvas.Left="-5"
-                            Canvas.Top="205"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="105"
-                            Canvas.Top="145"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="215"
-                            Canvas.Top="175"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="325"
-                            Canvas.Top="55"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="435"
-                            Canvas.Top="49"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="545"
-                            Canvas.Top="70"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
-                        <Ellipse
-                            Canvas.Left="655"
-                            Canvas.Top="25"
-                            Width="10"
-                            Height="10"
-                            Fill="#3B82F6" />
+                        <ItemsControl ItemsSource="{Binding DataPoints}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Ellipse
+                                        Width="12"
+                                        Height="12"
+                                        Margin="-6,-6,0,0"
+                                        Cursor="Hand"
+                                        Fill="#3B82F6"
+                                        Stroke="White"
+                                        StrokeThickness="2">
+                                        <Ellipse.InputBindings>
+                                            <MouseBinding
+                                                Command="{Binding DataContext.SelectPointCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                CommandParameter="{Binding}"
+                                                MouseAction="LeftClick" />
+                                        </Ellipse.InputBindings>
+                                    </Ellipse>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
 
-                        <!--  Tooltip (T5)  -->
                         <Border
-                            Canvas.Left="310"
-                            Canvas.Top="20"
-                            Padding="10,8"
+                            Canvas.Left="{Binding TooltipX}"
+                            Canvas.Top="{Binding TooltipY}"
+                            MinWidth="120"
+                            Padding="12,10"
                             Background="White"
                             BorderBrush="#E2E8F0"
                             BorderThickness="1"
-                            CornerRadius="6">
+                            CornerRadius="8"
+                            Visibility="{Binding IsTooltipVisible}">
                             <Border.Effect>
                                 <DropShadowEffect
-                                    BlurRadius="10"
-                                    Opacity="0.15"
-                                    ShadowDepth="0"
+                                    BlurRadius="15"
+                                    Opacity="0.2"
+                                    ShadowDepth="2"
                                     Color="#000000" />
                             </Border.Effect>
                             <StackPanel>
                                 <TextBlock
-                                    Margin="0,0,0,4"
-                                    FontSize="12"
+                                    Margin="0,0,0,6"
+                                    FontSize="13"
                                     FontWeight="SemiBold"
                                     Foreground="#64748B"
-                                    Text="T5" />
+                                    Text="{Binding SelectedPoint.Day}" />
                                 <StackPanel Orientation="Horizontal">
                                     <Rectangle
-                                        Width="10"
-                                        Height="10"
-                                        Margin="0,0,6,0"
-                                        Fill="#3B82F6" />
+                                        Width="12"
+                                        Height="12"
+                                        Margin="0,0,8,0"
+                                        Fill="#3B82F6"
+                                        RadiusX="2"
+                                        RadiusY="2" />
                                     <TextBlock
                                         Margin="0,0,8,0"
                                         FontSize="12"
                                         Foreground="#94A3B8"
-                                        Text="Số từ" />
+                                        Text="Word Count:" />
                                     <TextBlock
-                                        FontSize="12"
+                                        FontSize="13"
                                         FontWeight="Bold"
                                         Foreground="#0F172A"
-                                        Text="3,600" />
+                                        Text="{Binding SelectedPoint.WordCount, StringFormat={}{0:N0}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>
 
-                        <!--  Vertical Line for Tooltip  -->
+                        <!--  Vertical Line  -->
                         <Line
                             Stroke="#CBD5E1"
                             StrokeDashArray="4,4"
                             StrokeThickness="1"
-                            X1="330"
-                            X2="330"
-                            Y1="60"
+                            Visibility="{Binding IsTooltipVisible}"
+                            X1="{Binding SelectedPoint.X}"
+                            X2="{Binding SelectedPoint.X}"
+                            Y1="{Binding SelectedPoint.Y}"
                             Y2="360" />
 
                         <!--  X-axis Labels  -->
-                        <TextBlock
-                            Canvas.Left="-10"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="T2" />
-                        <TextBlock
-                            Canvas.Left="100"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="T3" />
-                        <TextBlock
-                            Canvas.Left="210"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="T4" />
-                        <TextBlock
-                            Canvas.Left="320"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            FontWeight="SemiBold"
-                            Foreground="#0F172A"
-                            Text="T5" />
-                        <TextBlock
-                            Canvas.Left="430"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="T6" />
-                        <TextBlock
-                            Canvas.Left="540"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="T7" />
-                        <TextBlock
-                            Canvas.Left="650"
-                            Canvas.Top="370"
-                            FontSize="13"
-                            Foreground="#64748B"
-                            Text="CN" />
+                        <ItemsControl ItemsSource="{Binding DataPoints}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                    <Setter Property="Canvas.Top" Value="375" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Margin="-10,0,0,0"
+                                        FontSize="13"
+                                        FontWeight="Medium"
+                                        Foreground="#64748B"
+                                        Text="{Binding Day}"
+                                        TextAlignment="Center" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
                     </Canvas>
                 </Grid>
             </Grid>
